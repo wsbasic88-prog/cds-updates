@@ -289,8 +289,8 @@ img,svg{max-width:100%}
 #printArea .pt tbody tr:nth-child(odd) td{background:#f5f7fa}
 #printArea .pt tfoot td{background:#eceff4;border-top:1px solid #d9dde5;font-weight:700}
 </style>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1f3a6e">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1b1f2a">
 <link rel="apple-touch-icon" href="icon-192.png">
 </head>
 <body>
@@ -1832,8 +1832,8 @@ const JO=(()=>{
     <div class="jflt${lsd?' lsd':''}"><input id="jsq" placeholder="Search…" value="${esc(J.q)}"><select id="jfs"></select><select id="jfm"></select><select id="jfa"></select><select id="jfp"></select>${lsd?'':'<select id="jsk"></select>'}</div>
     <div class="card tw"><table><thead><tr><th data-sk="dateRequest">Requested / Needed</th><th data-sk="companyCode">Company / Year</th><th data-sk="projectName">Project name</th><th data-sk="category">Category / Size</th><th data-sk="kind">Kind / Qty</th><th data-sk="artist">Artist / Prepared by</th><th data-sk="${lsd?'lsdQty':'layeredFile'}">${lsd?'LSD Qty':'Layered file'}</th>
     ${a?ST.map((s,i)=>`<th class="stc" data-sk="${lsd?'l':'s'}${i+1}">${esc(s)}</th>`).join(''):'<th data-sk="_prog">Progress</th>'}<th data-sk="_s">Status</th><th data-sk="result">Result</th><th data-sk="remarks">Remarks</th><th><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="jall" style="width:auto;margin:0"> All</label></th></tr></thead><tbody id="jbody"></tbody></table></div>
-    <div class="jbar">${a?(lsd?`<div class="jg"><button data-a="print">PRINT</button></div><div class="jg"><button data-a="view">VIEW</button><button data-a="lsdEdit">EDIT</button><button data-a="delL">DELETE</button></div>`:`<div class="jg"><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="add">ADD</button><button data-a="view">VIEW</button><button data-a="edit">EDIT</button><button data-a="del">DELETE</button></div>`)
-     :(lsd?`<div class="jg"><button data-a="more">ADDITIONAL LSD</button><button data-a="follow">FOLLOW UP</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="cancelU">CANCEL</button></div>`:`<div class="jg"><button data-a="follow">FOLLOW UP</button><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="add">NEW</button><button data-a="custom">CUSTOMIZED</button><button data-a="cancelU">CANCEL</button></div>`)}</div></div>`;
+    <div class="jbar">${a?(lsd?`<div class="jg"><button data-a="print">PRINT</button><button data-a="cancelU">CANCEL</button></div><div class="jg"><button data-a="view">VIEW</button><button data-a="lsdEdit">EDIT</button><button data-a="delL">DELETE</button></div>`:`<div class="jg"><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button><button data-a="cancelU">CANCEL</button></div><div class="jg"><button data-a="add">ADD</button><button data-a="view">VIEW</button><button data-a="edit">EDIT</button><button data-a="del">DELETE</button></div>`)
+     :(lsd?`<div class="jg"><button data-a="more">ADDITIONAL LSD</button><button data-a="follow">FOLLOW UP</button><button data-a="print">PRINT</button></div>`:`<div class="jg"><button data-a="follow">FOLLOW UP</button><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="add">NEW</button><button data-a="custom">CUSTOMIZED</button></div>`)}</div></div>`;
     fillFilters();
     let tm;const sq=$('#jsq');
     sq.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{J.q=sq.value;paint()},150)};      // only the rows are redrawn while typing
@@ -1885,9 +1885,9 @@ const JO=(()=>{
       const pj=lsd?pmOf(r.projectId):r;
       if(J.sel.size&&!J.sel.has(String(lsd?r.lsdId:r.id)))return;   // selected rows only
       if((J.sk&&!lsd&&pj.kind!==J.sk)||(J.fa&&pj.artist!==J.fa)||(J.fp&&pj.preparedBy!==J.fp)||(J.fm&&nd(pj.dateRequest).slice(0,7)!==J.fm))return;
-      const s=stat(r,pj.dateNeeded);cnt[s]=(cnt[s]||0)+1;tot++;if(r.result==='Hit')hit++;if(s!=='Cancelled')cr+=credit(r.result,r.remarks||(lsd?pj.remarks:''))});
+      const s=stat(r,pj.dateNeeded);cnt[s]=(cnt[s]||0)+1;if(s!=='Cancelled')tot++;if(r.result==='Hit')hit++;if(s!=='Cancelled')cr+=credit(r.result,r.remarks||(lsd?pj.remarks:''))});
     const c=s=>cnt[s]||0,done=c('Completed');
-    const hr=(tot-c('Cancelled'))>0?Math.round(cr/(tot-c('Cancelled'))*100):0;
+    const hr=tot>0?Math.round(cr/tot*100):0;           // cancelled items are not an item: not in the total, not in the hit rate
     $('#jstats').innerHTML=`<div class="jstat"><span>Total projects${J.fa?' · '+esc(J.fa):''}${J.sel.size?' · '+J.sel.size+' selected':''}</span><b>${tot}</b></div><div class="jstat"><span>Completed</span><b>${done}</b></div>
     <div class="jstat"><span>Pending</span><b>${c('Pending')}</b></div><div class="jstat"><span>Overdue</span><b>${c('Overdue')}</b></div>
     <div class="jstat"><span>Hit rate</span><b>${hr}%</b></div><div class="jstat"><span>Cancelled</span><b>${c('Cancelled')}</b></div>`;
@@ -1920,7 +1920,7 @@ const JO=(()=>{
     const prog=r=>ST.filter((_,i)=>r[sk+(i+1)]).length,pct=r=>Math.round(prog(r)/ST.length*100);
     const title=(lsd?'LSD':'Project')+' Monitoring',scope=set.size?`Selected items (${rows.length}) · in selection order`:`All items (${rows.length})`;
     const cls=v=>String(v||'').toLowerCase();
-    const stats=[['Total projects',rows.length,''],['Completed',c('Completed'),'ok'],['Pending',c('Pending'),'warn'],['Overdue',c('Overdue'),'bad'],['Hit rate',hr+'%',''],['Cancelled',c('Cancelled'),'mute']];
+    const stats=[['Total projects',rows.length-c('Cancelled'),''],['Completed',c('Completed'),'ok'],['Pending',c('Pending'),'warn'],['Overdue',c('Overdue'),'bad'],['Hit rate',hr+'%',''],['Cancelled',c('Cancelled'),'mute']];
     if(mode==='download')return downloadPdf({name:title,title:title.toUpperCase(),sub:scope,stats,fs:6.5,statusCols:[9,10],
       head:['#','Requested / Needed','Company / Year','Project name','Category / Size','Kind / Qty','Artist / Prepared by',lsd?'LSD Qty':'Layered file','Stage details','Status','Result','Remarks'],
       body:rows.map((r,i)=>[i+1,`${dshow(r.dateRequest)}\nneeded ${dshow(r.dateNeeded)}`,`${r.companyCode||''}\n${r.year||''}`,r.projectName,`${r.category||''}\n${r.size||''}`,`${r.kind||''}${r.qty!==''&&r.qty!=null?'\nQty '+r.qty:''}`,`${r.artist||''}\n${r.preparedBy||''}`,lsd?r.lsdQty:r.layeredFile,
@@ -2023,11 +2023,12 @@ const JO=(()=>{
         sel.forEach(r=>{r.followUp=on?'1':'';r.followBy=on?S.user.username:'';r.followUpd=''});touch();save2cache();toast(on?'Marked for follow up.':'Follow up removed.');paint()}
       if(a==='print')return printSel();
       if(a==='more'){const id=one();if(id)return lsdQtyForm(id)}
+      if(a==='cancelU'&&!adm())return toast('Admin access only.',1);
       if(a==='cancelU'&&!lsd){                          // user: cancel the selected project(s) in Project Monitoring; the admin sees them as cancelled and can restore (edit + save) or delete them
         if(!many())return;
         const sel=ids().map(i=>pmOf(i)).filter(p=>p.id&&p.status!=='Cancelled');
         if(!sel.length)return toast('Those projects are already cancelled.',1);
-        if(!(await askCancel(`${sel.length} project(s) will be cancelled.\nThe admin will see them as cancelled.`)))return;
+        if(!(await askCancel(`${sel.length} project(s) will be cancelled.\n${adm()?'They stay in the list marked CANCELLED and are not counted in the total.':'The admin will see them as cancelled.'}`)))return;
         for(const p of sel){await api('cancelProject',{id:p.id});p.status='Cancelled';p.result='';p.followUp=''}
         J.sel.clear();touch();save2cache();toast('Cancelled.');paint();
       }
@@ -2035,7 +2036,7 @@ const JO=(()=>{
         if(!many())return;
         const sel=ids().map(i=>L().find(x=>String(x.lsdId)===i)).filter(l=>l&&l.status!=='Cancelled');
         if(!sel.length)return toast('Those LSD items are already cancelled.',1);
-        if(!(await askCancel(`${sel.length} LSD item(s) will be cancelled.\nThe admin will see them as cancelled.`)))return;
+        if(!(await askCancel(`${sel.length} LSD item(s) will be cancelled.\n${adm()?'They stay in the list marked CANCELLED and are not counted in the total.':'The admin will see them as cancelled.'}`)))return;
         for(const l of sel){await api('cancelLsd',{id:l.lsdId});l.status='Cancelled';jfin(l,true,pmOf(l.projectId).dateNeeded)}
         J.sel.clear();save2cache();toast('Cancelled.');paint();
       }
@@ -2169,14 +2170,15 @@ const JO=(()=>{
   function lsdForm(id){
     const l=L().find(x=>String(x.lsdId)===String(id));if(!l)return;const pr=pmOf(l.projectId);
     modal(`<h2 style="font-size:20px;margin:0 0 12px">Edit LSD <span class="muted" style="font-size:13px;font-weight:400">${esc(pr.projectName||'')}</span></h2>
-    <div class="jgrid"><label>LSD Qty<input id="lq" value="${esc(l.lsdQty)}"></label><label class="s2">Remarks<input id="lr" value="${esc(l.remarks)}"></label>
+    <div class="jgrid"><label>LSD Qty<input id="lq" value="${esc(l.lsdQty)}"></label><label class="s2">Remarks<input id="lr" value="${esc(l.remarks||pr.remarks||'')}" autocomplete="off"></label>
     <label>Status<select id="lc"><option value="">${l.status==='Cancelled'?'Restore to list (auto from stages)':'Auto (from stages)'}</option><option value="1">Cancelled</option></select></label>
     <div class="s4 jsec">Stages <span class="muted" style="font-weight:400">tick = done · the date and time can be corrected</span></div><div class="s4 stg">${LST.map((x,i)=>stageBox(i+1,x,l['l'+(i+1)])).join('')}</div></div>
     <div class="btns" style="margin-top:14px"><button onclick="JO.cancelM()">Cancel</button><button class="pri" id="jsave">Save</button></div>`,true);
     bindStages(7,LST);
     $('#jsave').onclick=async()=>{
       const b=$('#jsave');if(b.disabled)return;const se=stageErr(7,LST);if(se)return toast(se,1);b.disabled=true;
-      const d={lsdQty:$('#lq').value.trim(),remarks:$('#lr').value.trim(),...readStages(7,'l')},cancel=$('#lc').value==='1';
+      let rm=$('#lr').value.trim();if(!rm&&pr.remarks)rm=' ';          // emptied on purpose: keep a blank so the project's remarks do not show again
+      const d={lsdQty:$('#lq').value.trim(),remarks:rm,...readStages(7,'l')},cancel=$('#lc').value==='1';
       const om=orderMsg(d,'l',LST,l);if(om){b.disabled=false;return toast(om,1)}
       try{
         await api('saveLSD',{id,cancel,...d,stages:readStages(7,'l')});
@@ -2568,16 +2570,6 @@ document.addEventListener('keydown',e=>{
   document.addEventListener('visibilitychange',()=>{if(document.hidden)document.querySelectorAll('.pww input').forEach(i=>{if(i.type==='text'&&i.dataset.pwe){i.type='password';const b=i.parentNode.querySelector('.pwe');if(b){b.innerHTML=ON;b.setAttribute('aria-pressed','false')}}})});
 })();
 </script>
-<script>
-/* PWA: lets Chrome/Edge install this page as a desktop app. Updates arrive automatically (network-first). */
-if('serviceWorker' in navigator && location.protocol!=='file:'){
-  window.addEventListener('load',function(){
-    navigator.serviceWorker.register('sw.js').then(function(reg){
-      reg.update();
-      document.addEventListener('visibilitychange',function(){if(!document.hidden)reg.update()});
-    }).catch(function(){});
-  });
-}
-</script>
+<script id="pwaReg">if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});</script>
 </body>
 </html>
