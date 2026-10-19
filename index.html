@@ -1121,7 +1121,7 @@ function drawReqs(){                                 // the approval table at th
 function fuBadge(){
   const b=$('#fu');if(!b)return;
   if(!S.user){b.hidden=true;return}
-  const adm=S.user.role==='admin',n=adm?fuItems(S.jobs).length+cxItems(S.jobs).length+(S.reqs||[]).length+(S.ntf||[]).length:fuUpd(S.jobs).length;
+  const adm=S.user.role==='admin',n=adm?fuItems(S.jobs).length+(S.reqs||[]).length+(S.ntf||[]).length:fuUpd(S.jobs).length;
   b.hidden=false;b.classList.toggle('has',n>0);
   const c=$('#fuN');c.hidden=!n;c.textContent=n>9?'9+':n;
   b.title=adm?(n?`Follow up (${n})`:'Follow up'):(n?`Updates on your follow ups (${n})`:'Notifications');b.setAttribute('aria-label',b.title);
@@ -1135,17 +1135,21 @@ function fuPopup(list,cx,rq,nt){
   ${list.length?`<p style="margin:${gap(rq.length||nt.length)} 0 12px">${list.length} project(s) need a follow up:</p>${rowsOf(list)}`:''}
   ${cx.length?`<p style="margin:${gap(rq.length||list.length||nt.length)} 0 12px">${cx.length} item(s) CANCELLED:</p>${rowsOf(cx)}<p class="muted" style="font-size:11px;margin-top:6px">Edit + Save to restore an item, or select it and DELETE to remove it.</p>`:''}
   ${any?'':'<p>No notifications.</p>'}
-  <div class="row"><button id="fuc">Close</button>${nt.length?'<button id="fur">Mark as read</button>':''}${nt.some(x=>x.k==='lsd')?'<button id="ful">Open LSD Monitoring</button>':''}${nt.some(x=>x.k==='project')&&!list.length&&!cx.length?'<button class="pri" id="fuo">Open Project Monitoring</button>':''}${rq.length?'<button class="pri" id="fua">Review account requests</button>':''}${list.length||cx.length?`<button class="${rq.length?'':'pri'}" id="fuo">Open Project Monitoring</button>`:''}</div></div>`;
+  <div class="row"><button id="fuc">Close</button>${nt.some(x=>x.k==='lsd')?'<button id="ful">Open LSD Monitoring</button>':''}${nt.some(x=>x.k==='project'||x.k==='cancel')&&!list.length&&!cx.length?'<button class="pri" id="fuo">Open Project Monitoring</button>':''}${rq.length?'<button class="pri" id="fua">Review account requests</button>':''}${list.length||cx.length?`<button class="${rq.length?'':'pri'}" id="fuo">Open Project Monitoring</button>`:''}</div></div>`;
   d.hidden=false;
   const done=()=>{d.hidden=true;document.removeEventListener('keydown',k,true)};
   const k=e=>{if(e.key==='Escape'){e.preventDefault();done()}};
   document.addEventListener('keydown',k,true);
   $('#fuc').onclick=done;d.onclick=e=>{if(e.target===d)done()};
-  const o=$('#fuo'),ac=$('#fua'),lb=$('#ful'),rd=$('#fur');if(o)o.onclick=()=>{done();go('jp')};if(ac)ac.onclick=()=>{done();go('accounts')};if(lb)lb.onclick=()=>{done();go('jl')};
-  if(rd)rd.onclick=async()=>{rd.disabled=true;try{await api('notifSeen',{ids:nt.map(x=>x.i)});const gone=new Set(nt.map(x=>x.i));S.ntf=(S.ntf||[]).filter(x=>!gone.has(x.i));fuBadge();done();toast('Marked as read.')}catch(err){rd.disabled=false}};
+  const o=$('#fuo'),ac=$('#fua'),lb=$('#ful');if(o)o.onclick=()=>{done();go('jp')};if(ac)ac.onclick=()=>{done();go('accounts')};if(lb)lb.onclick=()=>{done();go('jl')};
+  if(nt.length){                                   // seen once = removed (follow ups are NOT touched: they stay until the project is done)
+    const ids=nt.map(x=>x.i),gone=new Set(ids);
+    S.ntf=(S.ntf||[]).filter(x=>!gone.has(x.i));fuBadge();
+    api('notifSeen',{ids},true).catch(()=>{});
+  }
   (ac||o||$('#fuc')).focus();
 }
-$('#fu').onclick=()=>S.user&&S.user.role==='admin'?fuPopup(fuItems(S.jobs),cxItems(S.jobs),S.reqs||[],S.ntf||[]):fuUserPopup(fuUpd(S.jobs));
+$('#fu').onclick=()=>S.user&&S.user.role==='admin'?fuPopup(fuItems(S.jobs),[],S.reqs||[],S.ntf||[]):fuUserPopup(fuUpd(S.jobs));
 function logout(){try{CHAT.stop()}catch(e){}try{if(S.user)localStorage.removeItem(warmKey())}catch(e){}S._vr={};S.bootJobs=false;S.optsDone=false;clearTimeout(idleT);idleT=null;S.cache={};S.jobs=null;S.last={};try{JO.reset()}catch(e){}S.token=S.user=null;S.reqs=null;S.ntf=null;S.ntfReady=false;try{$('#fu').hidden=true}catch(e){}S.cart=[];$('#app').hidden=true;$('#login').hidden=false;$('#lp').value=''}
 $('#out').onclick=logout;
 function applyOpts(d){
@@ -1164,7 +1168,7 @@ async function start(){
   S.optsP=S.optsDone?Promise.resolve():loadOpts().catch(()=>{});            // already delivered with the login when possible
   const gp=go('jp');                           // first tab: JOB ORDER > Project Monitoring (its data is loaded ONCE and reused below)
   fuBadge();
-  if(S.user.role==='admin')Promise.all([gp,S.reqs?Promise.resolve({data:S.reqs}):api('accountRequests',{},true).catch(()=>({data:[]}))]).then(([,q])=>{if(!S.user)return;const d=S.jobs,r=q.data||[];S.reqs=r;fuBadge();drawReqs();const l=fuItems(d),c=cxItems(d),nt=S.ntf||[];if(l.length||c.length||r.length||nt.length)fuPopup(l,c,r,nt)}).catch(()=>{});   // admin: follow up news pops up once after login
+  if(S.user.role==='admin')Promise.all([gp,S.reqs?Promise.resolve({data:S.reqs}):api('accountRequests',{},true).catch(()=>({data:[]}))]).then(([,q])=>{if(!S.user)return;const d=S.jobs,r=q.data||[];S.reqs=r;fuBadge();drawReqs();const l=fuItems(d),c=[],nt=S.ntf||[];if(l.length||c.length||r.length||nt.length)fuPopup(l,c,r,nt)}).catch(()=>{});   // admin: follow up news pops up once after login
   else Promise.resolve(gp).then(()=>{if(!S.user||S.user.role==='admin')return;fuBadge();const l=fuUpd(S.jobs);if(l.length)fuUserPopup(l)}).catch(()=>{});   // user: items followed up that changed pop up once after login
   Promise.resolve(gp).catch(()=>{}).then(()=>{                          // warm up the Plates tabs AFTER the first tab is shown (fewer calls at the same time = faster)
     api('warm',{},true).catch(()=>{});                       // Plates + Orders in ONE request
@@ -1782,10 +1786,10 @@ const JO=(()=>{
     const w0=S.wv||0,j=await api('jobs',{},true);
     if(inflight||(S.wv||0)!==w0)return;               // a save happened meanwhile: this read may be old, skip it
     if(JSON.stringify(j.data)===JSON.stringify(S.jobs))return;
-    const cb=S.user&&S.user.role==='admin'?cxItems(S.jobs).length:0,ub=S.user&&S.user.role!=='admin'?fuUpd(S.jobs).length:0;
+    const cb=0,ub=S.user&&S.user.role!=='admin'?fuUpd(S.jobs).length:0;
     S.jobs=S.cache.jobs=j.data;touch();fuBadge();
     if(S.user&&S.user.role!=='admin'&&fuUpd(S.jobs).length>ub)toast('An item you followed up has changes. Click the bell button.',1);
-    if(S.user&&S.user.role==='admin'&&cxItems(S.jobs).length>cb)toast('A user cancelled a project / LSD item. See the Follow up button.',1);
+    
     if(S.view==='jnew')recent();else if(S.view==='jp'||S.view==='jl'){fillFilters();paint()}
   }
   async function refresh(bg){                       // re-read the list from the server (quietly, never while a tick is saving)
