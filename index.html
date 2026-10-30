@@ -31,7 +31,16 @@ nav button:hover{background:#2c3342;color:#fff}nav button.on:hover{background:#f
 #dlg .fl{max-height:260px;overflow:auto;text-align:left;margin:0 0 18px;border:1px solid var(--line);border-radius:10px}#dlg .fl div{padding:8px 12px;border-bottom:1px solid var(--line);font-size:13px}#dlg .fl div:last-child{border-bottom:0}#dlg .fl small{display:block;color:var(--mute)}header>button{background:transparent;color:#fff;border-color:#fff}
 main{padding:24px 28px;max-width:2000px;margin:auto}
 .card{background:var(--card);border:1.5px solid var(--ink);border-radius:18px;padding:18px}
-.split{display:grid;grid-template-columns:380px minmax(0,1fr);gap:24px;align-items:start}
+.split{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;align-items:start;min-width:0}
+/* Accounts list uses all available horizontal space; action buttons wrap instead of forcing page-wide scrolling. */
+#main .split:has(#a_level){width:100%;max-width:none}
+#main .split:has(#a_level)>.tw{min-width:0;width:100%;max-width:none;overflow-x:auto;max-height:calc(100vh - 245px)}
+#main .split:has(#a_level)>.tw table{width:100%;table-layout:auto;white-space:normal;font-size:12.5px}
+#main .split:has(#a_level)>.tw th,#main .split:has(#a_level)>.tw td{padding:8px 10px;vertical-align:middle}
+#main .split:has(#a_level)>.tw td:last-child{min-width:300px;white-space:normal}
+#main .split:has(#a_level)>.tw td:last-child button{margin:2px 2px 2px 0;white-space:nowrap}
+#main .split:has(#a_level)>.form{min-width:0;padding:14px}
+@media(max-width:1100px){#main .split:has(#a_level){grid-template-columns:1fr}#main .split:has(#a_level)>.form{max-width:none}#main .split:has(#a_level)>.tw{max-height:none}}
 .form{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px}.full{grid-column:1/-1}
 .btns{display:flex;justify-content:flex-end;gap:8px;margin-top:6px}
 .tw{padding:0;overflow:auto;max-height:68vh}
@@ -45,7 +54,7 @@ td{padding:9px 12px;border-bottom:1px solid var(--line)}
 th+th,td+td{border-left:1px solid var(--line)}
 tbody tr:hover{background:#f7f8fb}tbody tr.on{background:#dbe6ff}
 .empty{text-align:center;color:var(--mute);padding:40px}
-.bar{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+.bar{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.bar .pfl{margin-right:auto}   /* FOR PROJECT sits at the lower left */
 .top{display:flex;gap:12px;margin-bottom:16px}.flt{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;margin:-4px 0 16px}.flt label{flex:1 1 150px;min-width:130px;margin:0}.flt button{height:38px}.top input{flex:1;border-radius:12px;padding:11px 16px}
 .tag{font-size:12px;color:var(--ok);font-weight:600}.muted{color:var(--mute);font-size:12px}
 #login{min-height:100vh;display:grid;place-items:center;padding:20px;background:var(--ink)}
@@ -121,6 +130,22 @@ header b:empty{display:none}
 .stl{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}.stl span{font-size:10.5px;color:var(--mute);white-space:nowrap;min-height:13px}
 #modal .card{max-height:96vh}#modal .card.wide{width:1140px;overflow-x:hidden}
 #modal input[type=checkbox]{width:16px;height:16px;margin:0;padding:0;accent-color:var(--ink);flex:none}
+ /* New Project page (admin): form on the left and Recently added on the right are the same height as the screen; the form rows are divided equally */
+#joRoot .split:has(#jform){grid-template-columns:minmax(340px,31%) minmax(0,1fr);gap:20px;align-items:stretch;height:calc(100vh - 205px);min-height:700px}
+#joRoot .split:has(#jform)>div:first-child{display:flex;min-width:0;min-height:0}
+#joRoot .split:has(#jform)>div:first-child>.card{flex:1;display:flex;flex-direction:column;min-height:0;padding:18px 22px}
+#joRoot .jnp{flex:1;min-height:0;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:8px 16px;align-items:stretch}
+#joRoot .jnp>label.s4{grid-column:1/-1}
+#joRoot .jnp label{margin:0;min-width:0;display:flex;flex-direction:column;justify-content:flex-end}
+#joRoot .jnp input,#joRoot .jnp select{width:100%;box-sizing:border-box}
+#joRoot .jnp .dt,#joRoot .jnp .dtw{width:100%}
+#joRoot .split:has(#jform) .btns{margin-top:14px!important}
+#joRoot #jrec{display:flex;flex-direction:column;min-width:0;min-height:0}
+#joRoot #jrec>.card.tw{flex:1;min-height:0;overflow:auto}
+#joRoot #jrec>.card.tw>table{min-height:calc(100% - 44px)}
+#joRoot #jrec .jbar{margin-top:12px;min-height:0;padding-left:0}
+#joRoot #jrec>.card.tw>h3{background:#fff!important;color:var(--ink)!important;border-bottom:1.5px solid var(--ink)}   /* "Recently added" bar: same white as the table header, dark text */
+@media(max-width:1100px){#joRoot .split:has(#jform){grid-template-columns:minmax(0,1fr);height:auto;min-height:0}#joRoot .jnp{grid-auto-rows:auto;gap:14px 16px}#joRoot #jrec>.card.tw{flex:none}#joRoot #jrec>.card.tw>table{min-height:0}}
 .jgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px 12px;align-items:end}
 .jgrid .s2{grid-column:span 2}.jgrid .s3{grid-column:span 3}.jgrid .s4{grid-column:1/-1}
 .jgrid label input,.jgrid label select{padding:7px 10px}
@@ -228,6 +253,7 @@ body{touch-action:manipulation;padding-left:env(safe-area-inset-left);padding-ri
 .ch-f button{height:36px;padding:0 14px}
 @media(max-width:640px){#chat{left:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px))}#chatBox{width:calc(100vw - 24px);height:min(70vh,520px)}}
 @media print{#chat{display:none!important}}
+.pdtitle{text-align:center;text-transform:uppercase}.pdbtns{display:flex;align-items:center;gap:8px}.pdbtns>span{display:flex;gap:8px}
 </style>
 <style id="btnIconCss">
 .bi{width:1.2em;height:1.2em;margin-right:7px;vertical-align:-.24em;flex:none;pointer-events:none;overflow:visible}
@@ -273,6 +299,84 @@ img,svg{max-width:100%}
 }
 @media(orientation:landscape) and (max-height:480px){#chatBox{height:calc(100vh - 24px)}#login{place-items:start center}}
 </style>
+<style id="dashCss">
+/* Dashboard + Settings band */
+main:has(#dashRoot){max-width:none;padding-left:clamp(12px,2vw,40px);padding-right:clamp(12px,2vw,40px)}   /* the Dashboard uses the whole screen width */
+#dashRoot{width:100%;font-size:clamp(13px,.5vw + 9px,16px)}
+.dbhead{display:flex;justify-content:space-between;align-items:flex-start;gap:12px 24px;flex-wrap:wrap}
+.dbtools{display:flex;align-items:center;gap:10px;flex:1 1 360px;justify-content:flex-end;min-width:0}
+.dbsearch{position:relative;flex:1 1 auto;max-width:720px;min-width:0}
+.dbsearch svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--mute);pointer-events:none}
+.dbsearch input{margin:0;padding:10px 38px 10px 38px;border-radius:10px;font-size:14px}
+.dbsearch button{position:absolute;right:6px;top:50%;transform:translateY(-50%);border:0;background:transparent;padding:0 9px;font-size:22px;line-height:1.2;color:var(--mute);border-radius:6px}
+.dbsearch button:hover{background:#eef0f5;color:var(--ink)}
+#dbRef{flex:none;white-space:nowrap}.dbhead h2{margin-bottom:4px}.dbhead p{margin:0 0 14px}
+.dbglance,.dbkpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:12px;margin-bottom:12px}
+.dbtile{background:var(--card);border-radius:12px;padding:14px 16px;border-left:5px solid var(--c,#17365d);box-shadow:0 1px 2px rgba(0,0,0,.07);cursor:pointer;transition:transform .12s,box-shadow .12s;display:flex;flex-direction:column;gap:2px;min-width:0}
+.dbtile:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(23,54,93,.16)}
+.dbtile span{font-size:11px;font-weight:600;color:var(--mute);text-transform:uppercase;letter-spacing:.4px}
+.dbtile b{font-size:clamp(24px,1.6vw + 12px,38px);line-height:1.15;color:var(--c,#17365d)}
+.dbtile small{font-size:12px;color:var(--mute)}
+.dbsec{margin:24px 0 6px}
+.dbband{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#17365d;color:#fff;font-weight:700;font-size:13px;letter-spacing:.3px;padding:9px 16px;border-radius:10px;margin-bottom:12px}
+.dblink{font-weight:500;font-size:12px;cursor:pointer;text-decoration:underline;opacity:.9}.dblink:hover{opacity:1}
+.dbgrid{display:flex;flex-wrap:wrap;gap:12px}.dbgrid>.dbcard{flex:1 1 300px}.dbgrid>.dbcard.dbw{flex:1 1 100%}   /* cards stretch to fill each row (no empty slot at the right) */
+.dbcard.dbw{grid-column:1/-1}
+.dbcard{background:var(--card);border-radius:12px;padding:14px 16px;box-shadow:0 1px 2px rgba(0,0,0,.07);min-width:0}
+.dbcard h4{margin:0 0 12px;font-size:13px;color:#17365d}
+.dbcard .empty{margin:6px 0;color:var(--mute);font-size:12.5px}
+.dbdn{display:flex;align-items:center;gap:14px}.dbdn svg{width:128px;height:128px;flex:none}.dbdn ul{list-style:none;margin:0;padding:0;font-size:12.5px;flex:1;min-width:0}
+.dbdn li{display:flex;align-items:center;gap:8px;padding:3px 0}.dbdn li b{margin-left:auto}.dbdn li i{width:10px;height:10px;border-radius:3px;flex:none}
+.dbn{font-size:20px;font-weight:700;fill:#17365d}.dbs{font-size:8px;fill:#6b7280}
+.dbbars{display:flex;flex-direction:column;gap:8px}
+.dbbr{display:grid;grid-template-columns:minmax(80px,40%) 1fr 38px;gap:8px;align-items:center;font-size:12px}
+.dbbr span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dbbr>div{background:#eef0f5;border-radius:6px;height:12px;overflow:hidden}.dbbr em{display:block;height:100%;border-radius:6px}.dbbr b{text-align:right}
+.dbcols{display:flex;gap:8px;height:160px}
+.dbcols>div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;font-size:11.5px}
+.dbcols>div>b{height:16px;font-size:11.5px}.dbcols>div>span{margin-top:4px;color:var(--mute)}
+.dbcb{flex:1;width:100%;display:flex;align-items:flex-end;justify-content:center;min-height:0}
+.dbcb em{display:block;width:100%;max-width:36px;border-radius:5px 5px 0 0}
+.dbtw{overflow-x:auto}
+.dbt{width:100%;border-collapse:collapse;font-size:12px}
+.dbt th{text-align:left;color:var(--mute);font-weight:600;padding:4px 8px 4px 0;border-bottom:1.5px solid var(--line);white-space:nowrap}
+.dbt td{padding:7px 12px 7px 0;border-bottom:1px solid var(--line);vertical-align:top}
+.dbt td:last-child{white-space:nowrap}
+.dbb{background:#eef0f5;color:#4b5263;display:inline-block;padding:1px 8px;border-radius:999px;font-size:11px;font-weight:600;white-space:nowrap}
+.dbb.r{background:#fee2e2;color:var(--bad)}.dbb.a{background:#fef3c7;color:#92400e}.dbb.g{background:#dcfce7;color:var(--ok)}.dbb.b{background:#dbeafe;color:#1e40af}
+.setband{background:#17365d;color:#fff;border-radius:10px;padding:10px 16px;margin:36px 0 8px;font-weight:700;font-size:15px;letter-spacing:.4px}
+/* search results */
+.dbsum{margin:4px 0 6px;font-size:14px}.dbsum small{color:var(--mute)}
+.dbresl{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr));gap:8px}
+.dbres{background:var(--card);border-radius:10px;padding:10px 14px;border-left:4px solid #17365d;box-shadow:0 1px 2px rgba(0,0,0,.07);cursor:pointer;min-width:0}
+.dbres:hover{box-shadow:0 4px 12px rgba(23,54,93,.16)}
+.dbrt{font-weight:600;font-size:13.5px;overflow-wrap:anywhere}
+.dbrm{display:flex;flex-wrap:wrap;gap:2px 14px;margin-top:3px;font-size:12px;color:#374151}.dbrm i{font-style:normal;color:var(--mute)}
+.dbres mark,.dbrm mark{background:#fde68a;color:inherit;border-radius:3px;padding:0 1px}
+.dbmore{text-align:center;margin:10px 0 0}
+@media(max-width:700px){.dbdn{flex-direction:column;align-items:stretch}.dbdn svg{margin:auto}.dbtools{flex-basis:100%;justify-content:stretch}}
+</style>
+
+<style id="pdrfCss">
+/* PDRF form + document look */
+.card.pdcard{max-width:900px;margin:auto;overflow:hidden;padding:0}
+#modal .card.pdm{width:860px;max-width:100%;padding:0}
+.pdd{background:#fff;color:#1b1f2a;font-family:Helvetica,Arial,sans-serif}
+.pdformheading{text-align:center!important;margin:0 0 16px!important}.pdtitle{text-align:center;text-transform:uppercase;background:#17365d;color:#fff;text-align:center;font-weight:700;font-size:18px;letter-spacing:.5px;padding:13px 10px}
+.pdno{text-align:right;padding:7px 16px;font-size:13px;font-weight:700;color:#17365d}
+.pdband{background:#17365d;color:#fff;font-weight:700;font-size:13px;padding:7px 16px;margin-top:6px;letter-spacing:.3px}
+.pdg{display:grid;grid-template-columns:1fr 1fr;gap:10px 22px;padding:12px 16px}.pdg .full{grid-column:1/-1}
+.pdg>label{font-size:12.5px;font-weight:700;color:#17365d}
+.pdg input.pdup,.pdg select{text-transform:uppercase}
+.pdg select{margin-top:4px;font-weight:400}
+.pdpre{position:relative;margin-top:4px}.pdpre span{position:absolute;left:10px;top:50%;transform:translateY(-50%);font-weight:600;color:var(--mute)}.pdpre input{margin-top:0;padding-left:28px}
+.pdbtns{display:flex;justify-content:flex-end;gap:8px;padding:6px 16px 16px}
+.pdc{border-bottom:1px solid var(--line);padding:6px 2px;font-size:12.5px;min-height:32px}.pdc b{color:#17365d;margin-right:6px}
+.pdsg{display:grid;grid-template-columns:1fr 1fr;gap:50px;padding:6px 16px 22px}
+.pdsg>div>p{margin:0;min-height:58px;display:flex;align-items:flex-end;justify-content:center;font-weight:600;font-size:13px}
+.pdsg>div>div{border-top:2px solid #17365d;text-align:center;font-weight:700;font-size:12px;color:#17365d;padding-top:4px}
+#printArea .pdd,#printArea .pdd *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+@media(max-width:700px){.pdg,.pdsg{grid-template-columns:1fr}}
+</style>
 <style id="logoCss">header b img{background:#fff;border-radius:8px;padding:3px 6px;height:34px;box-sizing:border-box}#loginLogo{max-height:80px;max-width:180px}</style>
 <style id="printLook">
 /* PRINT PREVIEW LOOK = DOWNLOADED PDF LOOK (dark title band, dark table head, striped rows, grey grand-total row) */
@@ -288,6 +392,22 @@ img,svg{max-width:100%}
 #printArea .pt tbody td{background:#fff}
 #printArea .pt tbody tr:nth-child(odd) td{background:#f5f7fa}
 #printArea .pt tfoot td{background:#eceff4;border-top:1px solid #d9dde5;font-weight:700}
+/* PDRF PRINT (premium + ink-saving): white page, fine rules, small letter-spaced labels, no filled blocks */
+#printArea .pdi{font-family:Helvetica,Arial,sans-serif;color:#1b1f2a;background:#fff}
+#printArea .pdi .ph{text-align:center;border-top:2.4px solid #1b1f2a;padding:16px 0 4px;margin:0 0 6px}
+#printArea .pdi .orn{display:flex;align-items:center;gap:9px;margin-top:13px}#printArea .pdi .orn:before,#printArea .pdi .orn:after{content:"";flex:1;height:.6px;background:#1b1f2a}#printArea .pdi .orn i{width:5px;height:5px;background:#1b1f2a;transform:rotate(45deg)}
+#printArea .pdi .ph h2{margin:0;font-size:16px;font-weight:700;letter-spacing:2.6px;line-height:1.3;text-transform:uppercase}
+#printArea .pdi .ph .no{margin-top:8px;font-size:10px;letter-spacing:1.4px;color:#4b5263;text-transform:uppercase}
+#printArea .pdi .ph .no b{color:#1b1f2a;letter-spacing:1px;margin-left:6px}
+#printArea .pdi .pb{display:flex;align-items:center;gap:12px;margin:24px 0 5px;font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase}
+#printArea .pdi .pb:after{content:"";flex:1;height:.7px;background:#1b1f2a}
+#printArea .pdi .pg{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}#printArea .pdi .pg .full{grid-column:1/-1}
+#printArea .pdi .pc{padding:9px 2px 5px;border-bottom:.5px solid #cfd4dd;min-height:36px}
+#printArea .pdi .pc span{display:block;font-size:7.5px;letter-spacing:1.1px;text-transform:uppercase;color:#6b7280;font-weight:600;margin-bottom:3px}
+#printArea .pdi .pc b{display:block;font-size:12px;font-weight:600;min-height:15px}
+#printArea .pdi .ps{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:8px 2px 0}
+#printArea .pdi .ps p{margin:0;min-height:56px;display:flex;align-items:flex-end;justify-content:center;font-weight:600;font-size:12px}
+#printArea .pdi .ps div div{border-top:.8px solid #1b1f2a;text-align:center;font-size:7.5px;letter-spacing:1.1px;text-transform:uppercase;color:#6b7280;font-weight:600;padding-top:5px}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1b1f2a">
@@ -326,7 +446,7 @@ img,svg{max-width:100%}
     <button id="fu" class="hic" type="button" hidden aria-label="Follow up" title="Follow up"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span id="fuN" hidden></span></button>
     <div class="um"><button id="usr" class="hic av" type="button" aria-haspopup="true" aria-expanded="false" aria-label="Account menu" title="Account"><span id="avi">?</span></button>
       <div id="umenu" role="menu" hidden><div class="mh"><span id="who"></span></div>
-        <button id="pwb" type="button" role="menuitem"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Change password</button>
+        <button id="pwb" type="button" role="menuitem"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Account settings</button>
         <button id="out" type="button" role="menuitem" class="lo"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5M21 12H9"/></svg>Log out</button></div></div>
   </div></header>
   <main id="main"></main>
@@ -752,7 +872,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 const LOGIN_BG_URL = '';   // <-- login background: a web link (https://...), a file next to this page (e.g. 'login-bg.jpg'), or a data: image. Leave '' to use login-bg.jpg next to this page.
 const LOGO_URL = 'data:image/png;base64,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';   // <-- your logo: a web link (https://...), a file next to this page (e.g. 'logo.png'), or a data: image. Leave '' for no logo.
 const API_URL = 'https://script.google.com/macros/s/AKfycbx0F6D7EZzvMXsy9gym-RA9tXBTUearodnCXSmx5yB9wxF4wZYIaGMCBcV9QKnAhqD9/exec';           // Apps Script web app URL
-const APP_VERSION = '2026.10.21.1';        // must be the SAME as APP_VERSION in the Apps Script. Change both together whenever the script changes.
+const APP_VERSION = '2026.10.30.1';        // must be the SAME as APP_VERSION in the Apps Script. Change both together whenever the script changes.
 const obn=r=>(r&&(r.orderedByName||r.orderedBy))||'';   // full name of the person who ordered (falls back to the username)
 const APP_KEY = 'cds-7f3a9c1e5b2d48a6';     // must be the SAME as APP_KEY in the Apps Script. Without it the server answers "update required" and gives no data.
 function showUpdate(srv){                                 // full-screen block: this page is older than the server, so nobody can use it
@@ -776,7 +896,7 @@ const OPT = {                                        // dropdown choices: edit f
   additional:[],                                     // optional pick-or-type list
   sortBy:['Company Code','Year','Category','Size'],   // choices in the Sort by menu of Plates Log (column names)
   sizeByCategory:{},                                 // filled from the Dropdowns tab
-  kind:['New','Customized','Revision'],qty:[],artist:[],preparedBy:[],layeredFile:['Yes','No'],   // Job Order lists
+  kind:['New','Customized','Revision'],qty:[],artist:[],preparedBy:[],layeredFile:['Yes','No'],pdrfItemType:['NEW ITEM','REVISION'],pdrfSampleMockup:['PROJECT','PROPOSAL'],pdrfClient:[],pdrfSize:[],pdrfPackagingItem:[],pdrfPackConfig:[],pdrfPrimaryPack:[],pdrfSecondaryPack:[],materialType:['CORRUGATED BOARD','FLUTED BOARD','KRAFT PAPER','ART CARD','ART PAPER','PAPERBOARD','WHITE BOARD','PLASTIC (PP)','PLASTIC (PET)','PLASTIC (PE)','BOPP FILM','ALUMINUM FOIL','GLASS','METAL / TIN'],   // Job Order lists
   colors:['CMYK','CMY','CM','C','M','Y','MYK','YK','K','SPOT','CMYK + SPOT C','CMYK + SPOT M','CMYK + SPOT Y','CMYK + SPOT K','CMYK + CK','CMYK + MY','CMYK + YM','CMYK + KC','CMYK + CY','CMYK + CM','CMYK + CC','CMYK + MK','CMYK + MM','CMYK + KY','CMY + CMY','CMK + CMK','MYK + MYK']   // Colors is pick-or-type
 };
 const sizesFor=c=>(OPT.sizeByCategory[c]&&OPT.sizeByCategory[c].length)?OPT.sizeByCategory[c]:OPT.size;
@@ -816,6 +936,12 @@ const platesFor=c=>{
   },0);
 };
 const ccCode=o=>String(o==null?'':o).split(/\s+[-–—]\s+/)[0].trim();      // "PSC - Philippine Seven Corporation" -> "PSC" (only the code is saved)
+const ccFull=v=>{const c=ccCode(v);if(!c)return '';                     // company code -> ENTIRE COMPANY NAME IN CAPS (used by every print preview and PDF)
+  for(const x of [...(OPT.companyCode||[]),...(OPT.pdrfClient||[])]){const t=String(x==null?'':x);
+    if(ccCode(t).toUpperCase()===c.toUpperCase()){const n=t.split(/\s+[-\u2013\u2014]\s+/).slice(1).join(' - ').trim();if(n)return n.toUpperCase()}}
+  return c.toUpperCase()};
+const pdisp=(f,r)=>disp(f[2],f[0]==='companyCode'?ccFull(r[f[0]]):r[f[0]]);       // plates print cell
+const plab=f=>f[0]==='companyCode'?'Company':f[1];                                  // plates print column title
 const ccOptions=(list,sel)=>{const l=[...(list||[])],has=l.some(x=>ccCode(x)===String(sel));
   return(sel!=null&&sel!==''&&!has?`<option value="${esc(sel)}">${esc(sel)}</option>`:'')+l.map(x=>`<option value="${esc(ccCode(x))}"${ccCode(x)===String(sel)?' selected':''}>${esc(x)}</option>`).join('')};
 const colByName=l=>F.find(f=>f[1].toLowerCase()===String(l).toLowerCase()||(f[0]==='promo'&&String(l).toLowerCase()==='promo'));
@@ -915,7 +1041,7 @@ const warmKey=()=>'plates_warm_'+(S.user?S.user.username:'');
 function warmSave(k,d){if(!S.user)return;try{const w=JSON.parse(localStorage.getItem(warmKey())||'{}');w[k]=d;localStorage.setItem(warmKey(),JSON.stringify(w))}catch(e){}}
 function warmLoad(){try{const w=JSON.parse(localStorage.getItem(warmKey())||'{}');if(Array.isArray(w.plates))S.cache.plates=w.plates;if(Array.isArray(w.orders))S.cache.orders=w.orders;if(!S.bootJobs&&w.jobs&&Array.isArray(w.jobs.projects))S.cache.jobs=lsdFix(w.jobs)}catch(e){}}
 async function api(action,data={},quiet){
-  const isW=!['login','plates','orders','options','users','jobs','accountRequests','warm'].includes(action);if(isW)S.wv=(S.wv||0)+1;   // lets the auto refresh ignore a read that was overtaken by a save
+  const isW=!['login','plates','orders','options','users','jobs','accountRequests','warm','pdList'].includes(action);if(isW)S.wv=(S.wv||0)+1;   // lets the auto refresh ignore a read that was overtaken by a save
   const VK=['jobs','plates','orders'],curOf=a=>({jobs:S.jobs,plates:S.plates,orders:S.orders})[a];
   let since='';
   if(quiet&&VK.includes(action)){const vr=S._vr&&S._vr[action];if(vr&&vr.ref&&curOf(action)===vr.ref)since=vr.ver}   // only when the page still holds exactly the data that version describes
@@ -934,7 +1060,7 @@ async function api(action,data={},quiet){
     if(!j.ok){ if(j.error==='session'){logout();throw new Error('Session expired. Please sign in again.')} throw new Error(j.error) }
     if(j.same){const cur=curOf(action);if(cur){S.at[action]=Date.now();return{ok:true,data:cur,same:true}}}     // nothing changed on the server: no download, no redraw
     if(/^(saveProject|deleteProjects|toggleStage|setFlag|sendToLSD|addLSD|addLsdQty|cancelLsd|cancelProject|deleteLsd|toggleLsd|saveLSD)$/.test(action)){delete S.cache.jobs;S.at.jobs=0}          // Job Order change: only the Job Order list is stale
-    else if(!['login','plates','orders','options','users','jobs','accountRequests','warm'].includes(action)){delete S.cache.plates;delete S.cache.orders;S.at.plates=S.at.orders=0} // Plates change: only the Plates lists are stale
+    else if(!['login','plates','orders','options','users','jobs','accountRequests','warm','pdList'].includes(action)){delete S.cache.plates;delete S.cache.orders;S.at.plates=S.at.orders=0} // Plates change: only the Plates lists are stale
     if(action==='jobs')lsdFix(j.data);
     if(action==='plates'||action==='orders'||action==='jobs'){warmSave(action,j.data);S.at[action]=Date.now();if(j.ver){S._vr=S._vr||{};S._vr[action]={ver:j.ver,ref:j.data}}}
     if(action==='warm'&&j.data){['plates','orders'].forEach(k=>{if(Array.isArray(j.data[k])){S.cache[k]=j.data[k];S.at[k]=Date.now();warmSave(k,j.data[k])}})}
@@ -1150,7 +1276,7 @@ function fuPopup(list,cx,rq,nt){
   (ac||o||$('#fuc')).focus();
 }
 $('#fu').onclick=()=>S.user&&S.user.role==='admin'?fuPopup(fuItems(S.jobs),[],S.reqs||[],S.ntf||[]):fuUserPopup(fuUpd(S.jobs));
-function logout(){try{CHAT.stop()}catch(e){}try{if(S.user)localStorage.removeItem(warmKey())}catch(e){}S._vr={};S.bootJobs=false;S.optsDone=false;clearTimeout(idleT);idleT=null;S.cache={};S.jobs=null;S.last={};try{JO.reset()}catch(e){}S.token=S.user=null;S.reqs=null;S.ntf=null;S.ntfReady=false;try{$('#fu').hidden=true}catch(e){}S.cart=[];$('#app').hidden=true;$('#login').hidden=false;$('#lp').value=''}
+function logout(){try{CHAT.stop()}catch(e){}try{if(S.user)localStorage.removeItem(warmKey())}catch(e){}S._vr={};S.bootJobs=false;S.optsDone=false;clearTimeout(idleT);idleT=null;S.cache={};S.jobs=null;S.pdList=S.pdEdit=S.pdSel=null;S.last={};try{JO.reset()}catch(e){}S.token=S.user=null;S.reqs=null;S.ntf=null;S.ntfReady=false;try{$('#fu').hidden=true}catch(e){}S.cart=[];$('#app').hidden=true;$('#login').hidden=false;$('#lp').value=''}
 $('#out').onclick=logout;
 function applyOpts(d){
   Object.keys(d||{}).forEach(k=>{if(OPT[k]&&Array.isArray(d[k])&&d[k].length)OPT[k]=d[k]});
@@ -1166,7 +1292,7 @@ async function start(){
   $('#who').textContent=`${S.user.fullName||S.user.username} (${S.user.role})`;
   loadCart();warmLoad();
   S.optsP=S.optsDone?Promise.resolve():loadOpts().catch(()=>{});            // already delivered with the login when possible
-  const gp=go('jp');                           // first tab: JOB ORDER > Project Monitoring (its data is loaded ONCE and reused below)
+  const gp=go('dash');                         // every account lands on the Dashboard first (it only shows the sections that account may use)
   fuBadge();
   if(S.user.role==='admin')Promise.all([gp,S.reqs?Promise.resolve({data:S.reqs}):api('accountRequests',{},true).catch(()=>({data:[]}))]).then(([,q])=>{if(!S.user)return;const d=S.jobs,r=q.data||[];S.reqs=r;fuBadge();drawReqs();const l=fuItems(d),c=[],nt=S.ntf||[];if(l.length||c.length||r.length||nt.length)fuPopup(l,c,r,nt)}).catch(()=>{});   // admin: follow up news pops up once after login
   else Promise.resolve(gp).then(()=>{if(!S.user||S.user.role==='admin')return;fuBadge();const l=fuUpd(S.jobs);if(l.length)fuUserPopup(l)}).catch(()=>{});   // user: items followed up that changed pop up once after login
@@ -1176,21 +1302,27 @@ async function start(){
 }
 
 /* ====== NAV ====== */
-const JOV=['jnew','jp','jl'],STV=['settings','accounts'];
-const modOf=v=>JOV.includes(v)?'jo':STV.includes(v)?'st':'pl';
-const firstOf=m=>m==='jo'?'jp':m==='st'?'settings':(S.user.role==='admin'?'plates':'log');
+const JOV=['jnew','jp','jl'],STV=['settings','accounts'],PDV=['pdnew','pdlist'],DBV=['dash'];
+const modOf=v=>DBV.includes(v)?'db':PDV.includes(v)?'pd':JOV.includes(v)?'jo':STV.includes(v)?'st':'pl';
+const firstOf=m=>m==='db'?'dash':m==='pd'?'pdlist':m==='jo'?'jp':m==='st'?'settings':(S.user.role==='admin'?'plates':'log');
 function renderNav(){
-  const adm=S.user.role==='admin',m=modOf(S.view);
+  const adm=S.user.role==='admin',m=modOf(S.view),lvl=String(S.user.accountLevel||'ALL ACCESS').toUpperCase(),mods=lvl==='ALL ACCESS'?['pd','jo','pl','st']:lvl==='PDRF ONLY'?['pd']:lvl==='PROJECT ONLY'?['jo']:lvl==='PLATES ONLY'?['pl']:lvl==='CUSTOM ACCESS'?String(S.user.customAccess||'').toUpperCase().split(/[,;| ]+/).map(x=>({PDRF:'pd',PROJECT:'jo',PLATES:'pl'}[x])).filter(Boolean):['pd','jo','pl'];
+  if(adm&&!mods.includes('st'))mods.push('st');
+  mods.push('db');                                  // the Dashboard is open to every account (it only shows the sections the account may use)
   const M={
     jo:[...(adm?[['jnew','New Project']]:[]),['jp','Project Monitoring'],['jl','LSD Monitoring']],
     pl:[...(adm?[['plates','Register Plates']]:[]),['log','Plates Log'],['order',`Plates Order${S.cart.length?` (${S.cart.length})`:''}`],['monitor','Plates Monitoring']],
-    st:[['settings','Dropdowns'],['accounts','Accounts']]};
-  $('#top').innerHTML=[['jo','PROJECT'],['pl','PLATES'],...(adm?[['st','SETTINGS']]:[])].map(([k,l])=>`<button data-m="${k}" class="${m===k?'on':''}">${l}</button>`).join('');
+    st:[['settings','Dropdowns'],['accounts','Accounts']],
+    pd:[['pdnew',(S.pdEdit&&S.view==='pdnew'?'Edit PDRF':'New PDRF')],['pdlist','PDRF List']],
+    db:[['dash','Overview']]};
+  $('#top').innerHTML=[['db','DASHBOARD'],['pd','PDRF'],['jo','PROJECT'],['pl','PLATES'],...(adm?[['st','SETTINGS']]:[])].filter(([k])=>mods.includes(k)).map(([k,l])=>`<button data-m="${k}" class="${m===k?'on':''}">${l}</button>`).join('');
   $('#nav').innerHTML=M[m].map(([k,l])=>`<button data-v="${k}" class="${S.view===k?'on':''}">${l}</button>`).join('');
+  $('#nav').hidden=m==='db';                         // the Dashboard has just one page, so no second menu row
 }
-$('#top').onclick=e=>{const m=e.target.dataset.m;if(m)go(S.last[m]||firstOf(m))};
-$('#nav').onclick=e=>{const v=e.target.dataset.v;if(v)go(v)};
+$('#top').onclick=e=>{const m=e.target.dataset.m;if(m){S.pdEdit=null;go(S.last[m]||firstOf(m))}};
+$('#nav').onclick=e=>{const v=e.target.dataset.v;if(v){if(v==='pdnew')S.pdEdit=null;go(v)}};
 async function go(v){
+  if(S.user){const mod=modOf(v),lvl=String(S.user.accountLevel||'ALL ACCESS').toUpperCase(),custom=String(S.user.customAccess||'').toUpperCase().split(/[,;| ]+/),modName={pd:'PDRF',jo:'PROJECT',pl:'PLATES'};const allowedMods=lvl==='ALL ACCESS'?['pd','jo','pl']:lvl==='PDRF ONLY'?['pd']:lvl==='PROJECT ONLY'?['jo']:lvl==='PLATES ONLY'?['pl']:lvl==='CUSTOM ACCESS'?custom.map(x=>({PDRF:'pd',PROJECT:'jo',PLATES:'pl'}[x])).filter(Boolean):['pd','jo','pl'];if(S.user.role==='admin')allowedMods.push('st');allowedMods.push('db');const allowed=allowedMods.includes(mod)||(S.user.role==='admin'&&mod==='st');if(!allowed){toast('Your account level does not allow this section.',1);const fallback=allowedMods.find(x=>x!=='st')||'pl';v=firstOf(fallback);}}
   if(v==='jnew'&&S.user&&S.user.role!=='admin')v='jp';       // New Project tab is admin only
   const my=++S.nav;S.view=v;S.clearSel=null;S.resetSort=null;S.rowLim=0;S.last[modOf(v)]=v;renderNav();
   const key={plates:'plates',log:'plates',monitor:'orders',jp:'jobs',jl:'jobs'}[v];
@@ -1355,12 +1487,12 @@ log(){
     document.querySelectorAll('.flt [data-f]').forEach(el=>{if(el.value)parts.push(el.closest('label').firstChild.textContent.trim()+': '+el.value)});
     if($('#q').value.trim())parts.push('Search: '+$('#q').value.trim());
     if(mode==='download')return downloadPdf({name:'Plates Log',title:'PLATES LOG',sub:(sel?'Selected plates only, in selection order':'All plates shown')+(parts.length?' | '+parts.join(' | '):''),
-      head:[...(sel?['#']:[]),...F.map(f=>f[1]),'Date Received'],body:rows.map((r,ri)=>[...(sel?[ri+1]:[]),...F.map(f=>disp(f[2],r[f[0]])),show(r.createdAt)]),
+      head:[...(sel?['#']:[]),...F.map(plab),'Date Received'],body:rows.map((r,ri)=>[...(sel?[ri+1]:[]),...F.map(f=>pdisp(f,r)),show(r.createdAt)]),
       foot:[{content:`GRAND TOTAL  (${rows.length} item${rows.length===1?'':'s'})`,colSpan:ci+(sel?1:0),styles:{halign:'right'}},String(tot),{content:'',colSpan:F.length-ci}],fs:6.5});
     $('#printArea').innerHTML=`<div class="rh"><div><h2 style="margin:0;font-size:18px">PLATES LOG</h2><div style="font-size:11px">${sel?'Selected plates only, in selection order':'All plates shown'}${parts.length?' · '+esc(parts.join(' · ')):''}</div></div>
       <div style="font-size:11px;text-align:right">Printed: ${show(todayStr())} ${now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}<br>Printed by: ${esc(S.user.fullName||S.user.username)}</div></div>
-      <table class="pt"><thead><tr>${sel?'<th>#</th>':''}${F.map(f=>`<th>${f[1]}</th>`).join('')}<th>Date Received</th></tr></thead>
-      <tbody>${rows.map((r,ri)=>`<tr>${sel?`<td>${ri+1}</td>`:''}${F.map(f=>`<td>${esc(disp(f[2],r[f[0]]))}</td>`).join('')}<td>${esc(show(r.createdAt))}</td></tr>`).join('')}</tbody>
+      <table class="pt"><thead><tr>${sel?'<th>#</th>':''}${F.map(f=>`<th>${plab(f)}</th>`).join('')}<th>Date Received</th></tr></thead>
+      <tbody>${rows.map((r,ri)=>`<tr>${sel?`<td>${ri+1}</td>`:''}${F.map(f=>`<td>${esc(pdisp(f,r))}</td>`).join('')}<td>${esc(show(r.createdAt))}</td></tr>`).join('')}</tbody>
       <tfoot><tr><td colspan="${ci+(sel?1:0)}" style="text-align:right">GRAND TOTAL &nbsp;(${rows.length} item${rows.length===1?'':'s'})</td><td>${tot}</td><td colspan="${F.length-ci}"></td></tr></tfoot></table>`;
     window.print();
   };
@@ -1468,7 +1600,8 @@ settings(){
   if(S.user.role!=='admin')return go('log');
   const L=[['companyCode','Company Code (write: CODE - Full name)'],['year','Year'],['category','Category'],['size','Size (default list)'],['colors','Colors'],['additional','Additional (optional)'],['position','Position (optional)'],['sortBy','Sort by (Plates Log)']];
   const JL=[['kind','Kind of project (also the All Kind filter in Project / LSD Monitoring)'],['qty','Qty (optional)'],['artist','Artist (optional)'],['preparedBy','Prepared by (optional)'],['layeredFile','Layered file to be sent']];
-  const OPTIONAL=['additional','position','sortBy','kind','qty','artist','preparedBy','layeredFile'];
+  const PL=[['pdrfClient','Client / Account (company code list)'],['pdrfItemType','Item Type'],['pdrfSampleMockup','Project Type'],['pdrfPackagingItem','Packaging Item'],['materialType','Material Type'],['pdrfSize','Size'],['pdrfPackConfig','Packing Configuration'],['pdrfPrimaryPack','Primary Packaging'],['pdrfSecondaryPack','Secondary Packaging']];
+  const OPTIONAL=['additional','position','sortBy','kind','qty','artist','preparedBy','layeredFile','materialType','pdrfClient','pdrfPackagingItem','pdrfSize','pdrfPackConfig','pdrfPrimaryPack','pdrfSecondaryPack'];
   $('#main').innerHTML=`<h2>Dropdown Settings</h2><p class="muted" style="margin:-8px 0 16px">One choice per line. For Company Code you can write the full name, like <b>PSC - Philippine Seven Corporation</b>: the dropdown shows the full name but only the code (PSC) is saved. Changes apply to the Plates, Plates Order and Job Order forms for everyone. <b>Sort by (Plates Log)</b> lists the columns offered in the Sort by menu; use column names such as ${[...F.map(f=>f[1]),'Date Received'].join(', ')}.</p>
     <div class="grid5">${L.map(([k,l])=>`<label class="card">${l}<textarea id="s_${k}" rows="14">${esc(OPT[k].join('\n'))}</textarea></label>`).join('')}</div>
     <h3 style="margin:26px 0 4px">Sizes for each category</h3>
@@ -1477,6 +1610,9 @@ settings(){
     <h3 style="margin:26px 0 4px">Job Order dropdowns</h3>
     <p class="muted" style="margin:0 0 12px">One kind per line. <b>Kind of project</b> feeds both the New Project form and the <b>All Kind</b> filter in Project / LSD Monitoring, in the order you type them. Used in the New Project form. Company Code, Year, Category and Size above are shared with Job Order. Artist and Prepared by are also suggested from past projects.</p>
     <div class="grid5">${JL.map(([k,l])=>`<label class="card">${l}<textarea id="s_${k}" rows="8">${esc(OPT[k].join('\n'))}</textarea></label>`).join('')}</div>
+    <div class="setband">NEW PDRF DROPDOWNS</div>
+    <p class="muted" style="margin:0 0 12px">These lists belong only to the <b>New PDRF</b> form, so changing them does not touch Plates or Job Order. One choice per line. <b>Item Type</b> and <b>Project Type</b> are pick-only lists. <b>Client / Account</b>, <b>Packaging Item</b>, <b>Material Type</b>, <b>Size</b>, <b>Packing Configuration</b>, <b>Primary Packaging</b> and <b>Secondary Packaging</b> are pick-or-type: people can still type something that is not on the list. For Client / Account you can write <b>CODE - Full name</b>. Leave Client / Account or Size empty to keep using the shared Company Code and Size lists.</p>
+    <div class="grid5">${PL.map(([k,l])=>`<label class="card">${l}<textarea id="s_${k}" rows="8">${esc((OPT[k]||[]).join('\n'))}</textarea></label>`).join('')}</div>
     <h3 style="margin:26px 0 4px">Team chat</h3>
     <p class="muted" style="margin:0 0 12px">Removes every message from the team chat for everyone. This cannot be undone.</p>
     <button id="chatClr">Clear chat</button>
@@ -1490,12 +1626,12 @@ settings(){
   };
   $('#sReset').onclick=async()=>{if(await askCancel('Your unsaved changes will be discarded.'))VIEWS.settings()};
   $('#sSave').onclick=async()=>{
-    const o={};[...L,...JL].forEach(([k])=>o[k]=[...new Set($('#s_'+k).value.split('\n').map(x=>x.trim()).filter(Boolean))]);
-    const bad=[...L,...JL].find(([k])=>!OPTIONAL.includes(k)&&!o[k].length);if(bad)return toast(`Add at least one value for ${bad[1]}.`,1);
+    const o={};[...L,...JL,...PL].forEach(([k])=>o[k]=[...new Set($('#s_'+k).value.split('\n').map(x=>x.trim()).filter(Boolean))]);
+    const bad=[...L,...JL,...PL].find(([k])=>!OPTIONAL.includes(k)&&!o[k].length);if(bad)return toast(`Add at least one value for ${bad[1]}.`,1);
     const badSort=o.sortBy.find(x=>x.toLowerCase()!=='date received'&&!colByName(x));if(badSort)return toast(`Sort by: "${badSort}" is not a column name.`,1);
     const b=$('#sSave');if(b.disabled)return;b.disabled=true;
     const sbc={};document.querySelectorAll('[data-cat]').forEach(el=>{const a=[...new Set(el.value.split('\n').map(x=>x.trim()).filter(Boolean))];if(a.length&&o.category.includes(el.dataset.cat))sbc[el.dataset.cat]=a});
-    try{await api('saveOptions',{options:{...o,sizeByCategory:sbc}});[...L,...JL].forEach(([k])=>OPT[k]=o[k]);OPT.sizeByCategory=sbc;toast('Dropdowns saved.');VIEWS.settings()}
+    try{await api('saveOptions',{options:{...o,sizeByCategory:sbc}});[...L,...JL,...PL].forEach(([k])=>OPT[k]=o[k]);OPT.sizeByCategory=sbc;toast('Dropdowns saved.');VIEWS.settings()}
     catch(e){b.disabled=false}
   };
 },
@@ -1504,7 +1640,7 @@ settings(){
 accounts(){
   if(S.user.role!=='admin')return go('log');
   const me=S.user.username;
-  const SA=!!S.user.sa,userRows=()=>sortRows(S.users,SORTS.usr,(u,k)=>u[k]).map(u=>`<tr><td>${esc(u.fullName||'')}</td><td>${esc(u.username)}${u.username===me?' <span class="muted">(you)</span>':''}${u.sup?' <span class="tag">Super admin</span>':''}</td><td>${esc(u.position)}</td><td>${esc(u.employeeNo)}</td><td>${esc(u.role)}</td>${SA?`<td style="font-family:monospace">${u.password?esc(u.password):'<span class="muted" title="Created before passwords were saved. Use Reset password to store one.">—</span>'}</td><td><button class="sm" data-ed="${esc(u.username)}">Edit details</button> <button class="sm" data-pw="${esc(u.username)}">Reset password</button>${u.role==='admin'?` <button class="sm" data-sa="${esc(u.username)}" data-sv="${u.sup?'0':'1'}">${u.sup?'Remove super admin':'Make super admin'}</button>`:''}${u.username===me?'':` <button class="sm" data-del="${esc(u.username)}">Delete</button>`}</td>`:''}</tr>`).join('');   // newest account on top
+  const SA=!!S.user.sa,userRows=()=>sortRows(S.users,SORTS.usr,(u,k)=>u[k]).map(u=>`<tr><td>${esc(u.fullName||'')}</td><td>${esc(u.username)}${u.username===me?' <span class="muted">(you)</span>':''}${u.sup?' <span class="tag">Super admin</span>':''}</td><td>${esc(u.position)}</td><td>${esc(u.employeeNo)}</td><td>${esc(u.role)}</td>${SA?`<td>${esc(String(u.accountLevel||'ALL ACCESS').toUpperCase())}${String(u.accountLevel||'').toUpperCase()==='CUSTOM ACCESS'?' ('+esc(String(u.customAccess||'').toUpperCase())+')':''}</td><td style="font-family:monospace">${u.password?esc(u.password):'<span class="muted" title="Created before passwords were saved. Use Reset password to store one.">—</span>'}</td><td><button class="sm" data-ed="${esc(u.username)}">Edit details</button> <button class="sm" data-pw="${esc(u.username)}">Reset password</button>${u.role==='admin'?` <button class="sm" data-sa="${esc(u.username)}" data-sv="${u.sup?'0':'1'}">${u.sup?'Remove super admin':'Make super admin'}</button>`:''}${u.username===me?'':` <button class="sm" data-del="${esc(u.username)}">Delete</button>`}</td>`:''}</tr>`).join('');   // newest account on top
   $('#main').innerHTML=`<h2>Accounts</h2>${SA?(S.users.some(u=>u.sup)?'':'<p class="muted" style="margin:0 0 10px">No super admin is set yet, so every admin can see passwords and edit all accounts. Click "Make super admin" on the admin(s) who should keep this access.</p>'):''}<div id="reqBox"></div><div class="split">
     <div class="card form">
       <label class="full">Full name<input id="a_fn" maxlength="60" autocomplete="off"></label>
@@ -1512,18 +1648,19 @@ accounts(){
       <label class="full">Password<input id="a_p" type="text" autocomplete="new-password" placeholder="8+ characters, letters and a number"></label>
       <label>Position${comboField('a_pos','position')}</label>
       <label>Employee No. <span class="muted">(optional)</span><input id="a_emp" maxlength="20" autocomplete="off"></label>
-      <label class="full">Role<select id="a_r"><option value="user">User</option>${SA?'<option value="admin">Admin</option>':''}</select></label>
+      <label class="full">Role<select id="a_r"><option value="user">User</option>${SA?'<option value="admin">Admin</option>':''}</select></label>${SA?`<label class="full">Account Level<select id="a_level"><option>ALL ACCESS</option><option>PDRF ONLY</option><option>PROJECT ONLY</option><option>PLATES ONLY</option><option>CUSTOM ACCESS</option></select></label><label class="full" id="a_custom_wrap" hidden>Custom Access (comma-separated: PDRF, PROJECT, PLATES)<input id="a_custom" placeholder="PDRF, PROJECT"></label>`:''}
       <div class="btns full"><button id="a_c">Clear</button><button class="pri" id="a_s">Create account</button></div>
     </div>
-    <div class="card tw"><table><thead><tr><th data-sk="fullName">Full name</th><th data-sk="username">Username</th><th data-sk="position">Position</th><th data-sk="employeeNo">Employee No.</th><th data-sk="role">Role</th>${SA?'<th data-sk="password">Password</th><th>Action</th>':''}</tr></thead><tbody>${userRows()}</tbody></table></div></div>`;
+    <div class="card tw"><table><thead><tr><th data-sk="fullName">Full name</th><th data-sk="username">Username</th><th data-sk="position">Position</th><th data-sk="employeeNo">Employee No.</th><th data-sk="role">Role</th>${SA?'<th>Account Level</th><th data-sk="password">Password</th><th>Action</th>':''}</tr></thead><tbody>${userRows()}</tbody></table></div></div>`;
   {const ut=$('#main').querySelector('.split table');markSort(ut.tHead,SORTS.usr);sortClick(ut.tHead,'usr',()=>{ut.tBodies[0].innerHTML=userRows();markSort(ut.tHead,SORTS.usr)});S.resetSort=()=>{if(SORTS.usr){delete SORTS.usr;ut.tBodies[0].innerHTML=userRows();markSort(ut.tHead,null)}}}
   drawReqs();loadReqs().catch(()=>{});
-  $('#a_c').onclick=()=>{['a_fn','a_u','a_p','a_pos','a_emp'].forEach(i=>$('#'+i).value='');$('#a_r').value='user'};
+  if(SA){$('#a_level').onchange=()=>$('#a_custom_wrap').hidden=$('#a_level').value!=='CUSTOM ACCESS';}
+  $('#a_c').onclick=()=>{['a_fn','a_u','a_p','a_pos','a_emp'].forEach(i=>$('#'+i).value='');$('#a_r').value='user';if(SA){$('#a_level').value='ALL ACCESS';$('#a_custom').value='';$('#a_custom_wrap').hidden=true}};
   $('#a_s').onclick=async()=>{
     const fn=$('#a_fn').value.trim(),pos=$('#a_pos').value.trim(),emp=$('#a_emp').value.trim();
     if(!fn||!pos)return toast('Full name and Position are required.',1);
     const b=$('#a_s');if(b.disabled)return;b.disabled=true;
-    try{await api('addUser',{fullName:fn,username:$('#a_u').value.trim(),password:$('#a_p').value,role:$('#a_r').value,position:pos,employeeNo:emp});toast('Account created.');go('accounts')}
+    try{await api('addUser',{fullName:fn,username:$('#a_u').value.trim(),password:$('#a_p').value,role:$('#a_r').value,position:pos,employeeNo:emp,...(SA?{accountLevel:$('#a_level').value,customAccess:$('#a_custom').value}:{})});toast('Account created.');go('accounts')}
     catch(e){b.disabled=false}
   };
   $('#main').querySelector('tbody').ondblclick=e=>{const tr=e.target.closest('tr');if(!tr||e.target.closest('button'))return;const eb=tr.querySelector('[data-ed]');if(eb)eb.click()};   // double-click = Edit details
@@ -1545,18 +1682,18 @@ accounts(){
         <label class="full">Full name<input id="e_fn" maxlength="60" autocomplete="off"></label>
         <label class="full">Position${comboField('e_pos','position')}</label>
         <label class="full">Employee No. <span class="muted">(optional)</span><input id="e_emp" maxlength="20" autocomplete="off"></label>
-        <label class="full">Role<select id="e_r"><option value="user">User</option><option value="admin">Admin</option></select></label>
+        <label class="full">Role<select id="e_r"><option value="user">User</option><option value="admin">Admin</option></select></label>${SA?`<label class="full">Account Level<select id="e_level"><option>ALL ACCESS</option><option>PDRF ONLY</option><option>PROJECT ONLY</option><option>PLATES ONLY</option><option>CUSTOM ACCESS</option></select></label><label class="full" id="e_custom_wrap" hidden>Custom Access (comma-separated: PDRF, PROJECT, PLATES)<input id="e_custom" placeholder="PDRF, PROJECT"></label>`:''}
         <label class="full">Password <span class="muted">${ed===me?'(use Change password in your account menu to change your own)':'(type a new one to change it)'}</span><input id="e_pw" autocomplete="off" style="font-family:monospace"></label>
         <div class="btns full"><button id="e_x">Cancel</button><button class="pri" id="e_s">Save</button></div></div>`;
       m.hidden=false;$('#e_fn').value=u.fullName||'';$('#e_pos').value=u.position||'';$('#e_emp').value=u.employeeNo||'';
-      $('#e_r').value=u.role||'user';$('#e_pw').value=u.password||'';
+      $('#e_r').value=u.role||'user';$('#e_pw').value=u.password||'';if(SA){$('#e_level').value=u.accountLevel||'ALL ACCESS';$('#e_custom').value=u.customAccess||'';$('#e_custom_wrap').hidden=$('#e_level').value!=='CUSTOM ACCESS';$('#e_level').onchange=()=>$('#e_custom_wrap').hidden=$('#e_level').value!=='CUSTOM ACCESS';}
       if(ed===me){$('#e_r').disabled=true;$('#e_pw').readOnly=true}                // your own role and password are changed elsewhere
       $('#e_x').onclick=async()=>{if(await askCancel('Anything you typed will not be saved.'))m.hidden=true};
       $('#e_s').onclick=async()=>{
         const b=$('#e_s');if(b.disabled)return;b.disabled=true;
         const fn=$('#e_fn').value.trim();if(!fn){b.disabled=false;return toast('Full name is required.',1)}
         const pl={username:ed,fullName:fn,position:$('#e_pos').value.trim(),employeeNo:$('#e_emp').value.trim()};
-        if(ed!==me){pl.role=$('#e_r').value;pl.password=$('#e_pw').value.trim()}
+        if(ed!==me){pl.role=$('#e_r').value;pl.password=$('#e_pw').value.trim()}if(SA){pl.accountLevel=$('#e_level').value;pl.customAccess=$('#e_custom').value}
         try{await api('setUserInfo',pl);m.hidden=true;
           if(ed===S.user.username){S.user.fullName=fn.toUpperCase();$('#who').textContent=`${S.user.fullName} (${S.user.role})`}
           toast('Details updated.');go('accounts')}
@@ -1631,12 +1768,12 @@ monitor(){
     const tot=pend.reduce((n,r)=>n+(parseFloat(r.totalPlates)||0),0);
     const now=new Date();
     if(mode==='download')return downloadPdf({name:sel?'Selected Plates Orders':'Pending Plates Orders',title:sel?'SELECTED PLATES ORDERS':'PENDING PLATES ORDERS',sub:sel?'Selected orders only, in selection order':'Orders not yet received, sorted by Date Needed',
-      head:[...(sel?['#']:[]),...F.map(f=>f[1]),'Ordered by',...(sel?['Status']:[])],body:pend.map((r,ri)=>[...(sel?[ri+1]:[]),...F.map(f=>disp(f[2],r[f[0]])),obn(r),...(sel?[r.status==='Received'?'Received':'Pending']:[])]),
+      head:[...(sel?['#']:[]),...F.map(plab),'Ordered by',...(sel?['Status']:[])],body:pend.map((r,ri)=>[...(sel?[ri+1]:[]),...F.map(f=>pdisp(f,r)),obn(r),...(sel?[r.status==='Received'?'Received':'Pending']:[])]),
       foot:[{content:`GRAND TOTAL  (${pend.length} order${pend.length===1?'':'s'})`,colSpan:ci+(sel?1:0),styles:{halign:'right'}},String(tot),{content:'',colSpan:F.length-ci+(sel?1:0)}],fs:6.5});
     $('#printArea').innerHTML=`<div class="rh"><div><h2 style="margin:0;font-size:18px">${sel?'SELECTED PLATES ORDERS':'PENDING PLATES ORDERS'}</h2><div style="font-size:11px">${sel?'Selected orders only, in selection order':'Orders not yet received, sorted by Date Needed'}</div></div>
       <div style="font-size:11px;text-align:right">Printed: ${show(todayStr())} ${now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})}<br>Printed by: ${esc(S.user.fullName||S.user.username)}</div></div>
-      <table class="pt"><thead><tr>${sel?'<th>#</th>':''}${F.map(f=>`<th>${f[1]}</th>`).join('')}<th>Ordered by</th>${sel?'<th>Status</th>':''}</tr></thead>
-      <tbody>${pend.map((r,ri)=>`<tr>${sel?`<td>${ri+1}</td>`:''}${F.map(f=>`<td>${esc(disp(f[2],r[f[0]]))}</td>`).join('')}<td>${esc(obn(r))}</td>${sel?`<td>${r.status==='Received'?'Received':'Pending'}</td>`:''}</tr>`).join('')}</tbody>
+      <table class="pt"><thead><tr>${sel?'<th>#</th>':''}${F.map(f=>`<th>${plab(f)}</th>`).join('')}<th>Ordered by</th>${sel?'<th>Status</th>':''}</tr></thead>
+      <tbody>${pend.map((r,ri)=>`<tr>${sel?`<td>${ri+1}</td>`:''}${F.map(f=>`<td>${esc(pdisp(f,r))}</td>`).join('')}<td>${esc(obn(r))}</td>${sel?`<td>${r.status==='Received'?'Received':'Pending'}</td>`:''}</tr>`).join('')}</tbody>
       <tfoot><tr><td colspan="${ci+(sel?1:0)}" style="text-align:right">GRAND TOTAL &nbsp;(${pend.length} order${pend.length===1?'':'s'})</td><td>${tot}</td><td colspan="${F.length-ci+(sel?1:0)}"></td></tr></tfoot></table>`;
     window.print();
   };
@@ -1746,6 +1883,473 @@ document.addEventListener('change',e=>{
   }
 });
 
+/* ====== PDRF (Packaging Development Request Form) ====== */
+const PD=(()=>{
+  const SECT=[['','REQUEST DETAILS'],['','CUSTOMER REQUIREMENTS'],['','PROJECT TRACKING'],['','APPROVED BY']];
+  const FL=[ /* key, label, type, section, full width */
+  ['requestDate','Request Date','date','A'],['requestedBy','Requested By','user','A'],
+  ['clientAccount','Client / Account','client','A'],['projectProduct','Project / Product','text','A'],
+  ['targetLaunch','Target Launch Date','date','A'],['itemType','Item Type','type','A'],
+  ['targetCost','Target Cost','money','A'],['sampleMockup','Project Type','sample','A'],
+  ['packagingItem','Packaging Item','pl','B'],['volume','Volume','num','B'],
+  ['materialType','Material Type','mat','B'],['dimensions','Size','size','B'],
+  ['packConfig','Packing Configuration','pl','B',1],['primaryPack','Primary Packaging','pl','B'],['secondaryPack','Secondary Packaging','pl','B'],
+  ['projectReceived','Project Received','dt','C'],['clientApproval','Client Approval','dt','C'],['clientApprovalRemarks','Client Approval Remarks','text','C',1],
+  ['hiResReceived','Date Received Hi-Res Layered File','date','C'],['lsdSubmission','LSD Submission Date','date','C'],
+  ['digitalProofTarget','Digital Proof Target Date','date','C'],
+  ['customerSign','Name and Signature / Customer','text','D'],['wipiSign','Name and Signature / WIPI','text','D']];
+  const REQ=[['requestDate','Request Date'],['requestedBy','Requested By'],['clientAccount','Client / Account'],['projectProduct','Project / Product'],['itemType','New Item or Revision']];
+  const LC=[['pdrfNo','PDRF No.'],['requestDate','Request Date','d'],['requestedBy','Requested By'],['clientAccount','Client / Account'],['projectProduct','Project / Product'],['itemType','Item Type'],
+  ['packagingItem','Packaging Item'],['volume','Volume','n'],['materialType','Material Type'],['targetLaunch','Target Launch','d'],['targetCost','Target Cost','m'],['digitalProofTarget','Digital Proof Target','d'],['clientApproval','Client Approval','dt'],['status','Status']];
+  const clients=()=>(OPT.pdrfClient&&OPT.pdrfClient.length)?OPT.pdrfClient:(OPT.companyCode||[]);   // PDRF's own Client list, or the shared Company Code list when it is empty
+  const CUR='₱';                                   // currency symbol (peso). Change it here if you need another currency
+  const canEdit=r=>S.user.role==='admin'||String(r.createdBy)===S.user.username;
+  const myName=()=>String(S.user.fullName||S.user.username).toUpperCase();
+  const fmtNum=v=>Number(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  const plain=v=>String(v==null?'':v).replace(/,/g,'').trim();
+  const money=v=>{v=plain(v);return v===''||isNaN(v)?'':CUR+' '+fmtNum(v)};
+  const numTxt=v=>{const s=plain(v);return s===''||isNaN(s)?String(v==null?'':v):fmtNum(s)};
+  const dtShow=v=>fmtDT(v)||show(v);                    // yyyy-mm-dd HH:MM -> mm/dd/yyyy hh:mm AM  (date only stays mm/dd/yyyy)
+  const cellTxt=(v,t)=>t==='d'?show(v):t==='dt'?dtShow(v):t==='m'?money(v):t==='n'?numTxt(v):String(v==null?'':v).toUpperCase();
+  const CAL='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>';
+  const dtField=id=>`<div class="dt"><input class="dtt" type="text" inputmode="numeric" id="${id}" maxlength="20" placeholder="mm/dd/yyyy hh:mm AM" autocomplete="off"><button type="button" class="cal" aria-label="Pick a date">${CAL}</button><input class="pk" type="date" tabindex="-1" aria-hidden="true"></div>`;
+  const selHtml=(id,items)=>`<select id="${id}">${items.map(o=>`<option>${esc(o)}</option>`).join('')}</select>`;
+  const inp=([k,l,t,s,full])=>{
+    const w=x=>`<label class="${full?'full':''}">${l}${x}</label>`,txt=(extra='')=>`<input class="pdup" id="pd_${k}" type="text" maxlength="300" autocomplete="off" ${extra}>`;
+    return t==='type'?w(selHtml('pd_'+k,OPT.pdrfItemType||['NEW ITEM','REVISION']))
+     :t==='sample'?w(selHtml('pd_'+k,OPT.pdrfSampleMockup||['PROJECT','PROPOSAL']))
+     :t==='user'?w(txt('list="pd_rb" placeholder="SELECT OR TYPE NAME"')+'<datalist id="pd_rb"></datalist>')
+     :t==='mat'?w(txt('list="pd_mt" placeholder="SELECT OR TYPE MATERIAL"')+'<datalist id="pd_mt"></datalist>')
+     :t==='date'?w(dateField('pd_'+k))
+     :t==='dt'?w(dtField('pd_'+k))
+     :t==='money'?w(`<div class="pdpre"><span>${CUR}</span><input class="pddec pdmoney pdcomma" data-dp="2" id="pd_${k}" type="text" inputmode="decimal" placeholder="0.00" autocomplete="off"></div>`)
+     :t==='num'?w(`<input class="pddec pdnum pdcomma" data-dp="2" id="pd_${k}" type="text" inputmode="decimal" placeholder="0.00" autocomplete="off">`)
+     :t==='client'?w(txt('list="pd_cl" placeholder="SELECT OR TYPE COMPANY CODE"')+'<datalist id="pd_cl"></datalist>')
+     :t==='pl'?w(txt(`list="pd_l_${k}" placeholder="SELECT OR TYPE"`)+`<datalist id="pd_l_${k}"></datalist>`)
+     :t==='size'?w(txt('list="pd_sz" placeholder="SELECT OR TYPE SIZE"')+'<datalist id="pd_sz"></datalist>')
+     :w(txt())};
+
+  /* typing rules for the PDRF form: ALL CAPS, numbers + one decimal point, peso format */
+  document.addEventListener('input',e=>{const t=e.target,c=t.classList;if(!c)return;
+    if(c.contains('pdup')){const a=t.selectionStart,b=t.selectionEnd,u=t.value.toUpperCase();if(u!==t.value){t.value=u;try{t.setSelectionRange(a,b)}catch(_){}}}
+    if(c.contains('pddec')){                                                   // numbers + one decimal point; thousands commas are added while typing (1,234,567.50)
+      const dp=+t.dataset.dp||2,pos=t.selectionStart,before=t.value.slice(0,pos).replace(/[^\d.]/g,'').length;
+      let s=t.value.replace(/[^\d.]/g,'');const i=s.indexOf('.');if(i>=0)s=s.slice(0,i+1)+s.slice(i+1).replace(/\./g,'').slice(0,dp);
+      if(c.contains('pdcomma')){const p=s.split('.');p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,',');s=p.join('.')}
+      t.value=s;if(c.contains('pdcomma')){let n=0,k=0;while(k<s.length&&n<before){if(/[\d.]/.test(s[k]))n++;k++}try{t.setSelectionRange(k,k)}catch(_){}}
+    }});
+  document.addEventListener('focusout',e=>{const t=e.target;if(t.classList&&t.classList.contains('pdcomma')&&t.value.trim()){const s=plain(t.value);if(s&&!isNaN(s))t.value=fmtNum(s)}});     // automatic two-decimal formatting
+
+  /* data: the list is kept in S.pdList and reused for 20 seconds */
+  async function load(force){
+    if(!force&&S.pdList&&Date.now()-(S.pdAt||0)<20000)return;
+    const j=await api('pdList');S.pdList=j.data||[];S.pdUsers=j.users||[];S.pdAt=Date.now();
+  }
+  const nextNo=iso=>{if(!iso)return'';const pre='PDRF-'+iso.replace(/-/g,'')+'-';let n=0;(S.pdList||[]).forEach(r=>{const s=String(r.pdrfNo);if(s.indexOf(pre)===0)n=Math.max(n,+s.slice(pre.length)||0)});return pre+String(n+1).padStart(3,'0')};
+
+  /* ---------- New / Edit form ---------- */
+  async function newPage(){
+    const my=S.nav;
+    $('#main').innerHTML='<p class="muted">Loading…</p>';
+    try{await load()}catch(e){}
+    try{await S.optsP}catch(e){}
+    if(S.nav!==my)return;
+    const rec=S.pdEdit?(S.pdList||[]).find(x=>x.id===S.pdEdit):null;if(S.pdEdit&&!rec)S.pdEdit=null;
+    $('#main').innerHTML=`<h2 class="pdformheading">${rec?'EDIT PDRF':'NEW PDRF'}</h2><div class="card pdcard">
+     <div class="pdtitle">PACKAGING DEVELOPMENT REQUEST FORM (PDRF)</div>
+     <div class="pdno">PDRF No: <span id="pdNo">${rec?esc(rec.pdrfNo):''}</span></div>
+     ${SECT.map(([a,n],i)=>`<div class="pdband">${n}</div><div class="pdg">${FL.filter(f=>f[3]==='ABCD'[i]).map(inp).join('')}</div>`).join('')}
+     <div class="pdbtns" style="justify-content:space-between"><button id="pdPrintForm" type="button">PRINT</button><span><button class="pri" id="pdSave">${rec?'UPDATE':'SAVE'}</button><button id="pdCancel">CANCEL</button></span></div></div>`;
+    const me=myName();
+    FL.forEach(([k,,t])=>{
+      const v=rec?rec[k]:(k==='requestDate'?todayStr():k==='wipiSign'?me:''),e=$('#pd_'+k);
+      if(t==='date')e.value=v?show(v):'';
+      else if(t==='dt')e.value=v?dtShow(v):'';
+      else if(t==='money')e.value=v!==''&&v!=null&&!isNaN(v)?fmtNum(v):'';
+      else if(t==='type')e.value=String(v||((OPT.pdrfItemType||['NEW ITEM','REVISION'])[0])).toUpperCase();
+      else if(t==='sample')e.value=String(v||((OPT.pdrfSampleMockup||['PROJECT','PROPOSAL'])[0])).toUpperCase();
+      else if(t==='num')e.value=v!==''&&v!=null&&!isNaN(plain(v))?fmtNum(plain(v)):'';
+      else e.value=v||'';
+    });
+    const fillSel=(el,list,cur,blank)=>{const all=[...new Set([...list.map(x=>String(x).toUpperCase()),...(cur?[String(cur).toUpperCase()]:[])].filter(Boolean))];el.innerHTML=all.map(u=>`<option>${esc(u)}</option>`).join('')};
+    // Requested By is a normal text box (the name can be typed or changed). The datalist suggests only accounts that have PDRF access.
+    const pdBy=$('#pd_requestedBy');
+    const allowedPdUsers=[...new Set((S.pdUsers||[]).map(x=>String(x).toUpperCase()))];
+    $('#pd_rb').innerHTML=allowedPdUsers.map(u=>`<option value="${esc(u)}">`).join('');
+    const existingBy=rec&&String(rec.requestedBy||'').trim().toUpperCase();
+    pdBy.value=existingBy||(allowedPdUsers.includes(me)?me:(allowedPdUsers[0]||me));        // suggested: the signed-in user when they have PDRF access
+    pdBy.addEventListener('focus',()=>setTimeout(()=>{try{pdBy.select()}catch(_){}},0));   // one click selects the name, so typing replaces it
+    $('#pd_mt').innerHTML=[...new Set([...(OPT.materialType||[]),...(rec&&rec.materialType?[rec.materialType]:[])].map(x=>String(x).trim().toUpperCase()).filter(Boolean))].map(o=>`<option value="${esc(o)}">`).join('');   // Material Type: pick from the list or type a new one
+    $('#pd_cl').innerHTML=clients().map(c=>`<option value="${esc(c)}">`).join('');
+    const sizes=(OPT.pdrfSize&&OPT.pdrfSize.length)?[...OPT.pdrfSize,...(rec&&rec.dimensions?[rec.dimensions]:[])]:[...(OPT.size||[]),...Object.values(OPT.sizeByCategory||{}).flat(),...(S.pdList||[]).map(r=>r.dimensions)];   // PDRF Size list from Settings; the shared lists only when it is empty
+    $('#pd_sz').innerHTML=[...new Set(sizes.map(x=>String(x||'').trim().toUpperCase()).filter(Boolean))].map(o=>`<option value="${esc(o)}">`).join('');
+    Object.entries({packagingItem:'pdrfPackagingItem',packConfig:'pdrfPackConfig',primaryPack:'pdrfPrimaryPack',secondaryPack:'pdrfSecondaryPack'}).forEach(([k,ok])=>{
+      const el=$('#pd_'+k),dl=$('#pd_l_'+k),list=[...new Set([...(OPT[ok]||[]),...(rec&&rec[k]?[rec[k]]:[])].map(x=>String(x).trim().toUpperCase()).filter(Boolean))];
+      if(!list.length){el.removeAttribute('list');el.placeholder='';return}              // no list in Settings: plain typing box
+      dl.innerHTML=list.map(o=>`<option value="${esc(o)}">`).join('');
+    });
+    const upd=()=>{if(!rec)$('#pdNo').textContent=nextNo(toIso($('#pd_requestDate').value))};
+    $('#pd_requestDate').addEventListener('input',upd);upd();
+    $('#pdPrintForm').onclick=()=>{const o={};FL.forEach(([k])=>o[k]=$('#pd_'+k)?.value||'');o.pdrfNo=$('#pdNo').textContent;printOrPdf(o)};
+    $('#pdCancel').onclick=async()=>{if(await askCancel('Anything you typed will not be saved.')){S.pdEdit=null;go(rec?'pdlist':'pdnew')}};
+    $('#pdSave').onclick=async()=>{
+      const o={};
+      for(const [k,l,t] of FL){
+        const el=$('#pd_'+k);
+        if(t==='date'){const raw=el.value.trim();o[k]=raw?toIso(raw):'';if(raw&&!o[k])return toast(l+': enter the date as mm/dd/yyyy.',1)}
+        else if(t==='dt'){const raw=el.value.trim();o[k]=raw?(parseDT(raw)||toIso(raw)):'';if(raw&&!o[k])return toast(l+': enter it as mm/dd/yyyy hh:mm AM.',1)}
+        else if(t==='client')o[k]=ccCode(el.value).toUpperCase();
+        else if(t==='money'||t==='num'){const s=el.value.replace(/,/g,'').trim();if(s&&!/^\d+(\.\d+)?$/.test(s))return toast(l+': numbers only.',1);o[k]=s&&t==='money'?Number(s).toFixed(2):s}
+        else o[k]=el.value.trim().toUpperCase();
+      }
+      const miss=REQ.find(([k])=>!o[k]);if(miss)return toast('Please fill in '+miss[1]+'.',1);
+      const codes=clients().map(c=>ccCode(c).toUpperCase());
+      if(codes.length&&!codes.includes(o.clientAccount)&&!(rec&&String(rec.clientAccount).toUpperCase()===o.clientAccount))return toast('Client / Account must be chosen from the company code list.',1);
+      if(o.targetLaunch&&o.targetLaunch<o.requestDate)return toast('Target Launch Date cannot be before Request Date.',1);
+      const b=$('#pdSave');if(b.disabled)return;b.disabled=true;
+      try{const j=await api('pdSave',{item:{...o,id:rec?rec.id:''}});S.pdEdit=null;S.pdList=null;
+        if(rec){toast('PDRF updated.');go('pdlist')}
+        else{await notice('PDRF No. '+j.pdrfNo+'\n\nRemember this number. Select it in New Project (PROJECT tab) when you add the item for this PDRF.','PDRF saved');go('pdlist')}}
+      catch(e){b.disabled=false}
+    };
+  }
+
+  /* ---------- Document (view + print) ---------- */
+  // Normalize legacy checkbox-style values so Admin and User previews show the same selected item type.
+  function pdrfItemTypeLabel(value){
+    const v=String(value||'').toUpperCase();
+    const newPos=v.indexOf('NEW ITEM'), revPos=v.indexOf('REVISION');
+    const newChecked=newPos>=0 && /(?:☒|☑|✓|✔|\[X\]|\bX\b)\s*NEW ITEM/.test(v);
+    const revChecked=revPos>=0 && /(?:☒|☑|✓|✔|\[X\]|\bX\b)\s*REVISION/.test(v);
+    if(revChecked&&!newChecked)return 'REVISION';
+    if(newChecked&&!revChecked)return 'NEW ITEM';
+    if(v.includes('REVISION')&&!v.includes('NEW ITEM'))return 'REVISION';
+    if(v.includes('NEW ITEM'))return 'NEW ITEM';
+    return v.replace(/[☒☑☐✓✔□\[\]]/g,'').trim();
+  }
+  function docHtml(r){
+    const cell=([k,l,t,,full])=>`<div class="pdc ${full?'full':''}"><b>${esc(l)}:</b>${t==='type'?esc(pdrfItemTypeLabel(r.itemType)):esc(t==='date'?show(r[k]):t==='dt'?dtShow(r[k]):t==='money'?money(r[k]):t==='num'?numTxt(r[k]):r[k])}</div>`;
+    const sec=a=>a==='D'
+     ?`<div class="pdsg"><div><p>${esc(r.customerSign)}</p><div>Name and Signature / Customer</div></div><div><p>${esc(r.wipiSign)}</p><div>Name and Signature / WIPI</div></div></div>`
+     :`<div class="pdg">${FL.filter(f=>f[3]===a).map(cell).join('')}</div>`;
+    return `<div class="pdd"><div class="pdtitle">PACKAGING DEVELOPMENT REQUEST FORM (PDRF)</div><div class="pdno">PDRF No: ${esc(r.pdrfNo)}</div>${SECT.map(([a,n],i)=>`<div class="pdband">${n}</div>${sec('ABCD'[i])}`).join('')}</div>`;
+  }
+  const pdVal=(r,[k,,t])=>t==='client'?ccFull(r[k]):t==='type'?pdrfItemTypeLabel(r.itemType):t==='date'?show(r[k]):t==='dt'?dtShow(r[k]):t==='money'?money(r[k]):t==='num'?numTxt(r[k]):String(r[k]==null?'':r[k]);
+  function docPrintHtml(r){                                  // premium, ink-saving print layout (fine rules only, no filled blocks)
+    const sec=a=>a==='D'
+      ?`<div class="ps"><div><p>${esc(r.customerSign)}</p><div>Name and Signature / Customer</div></div><div><p>${esc(r.wipiSign)}</p><div>Name and Signature / WIPI</div></div></div>`
+      :`<div class="pg">${FL.filter(f=>f[3]===a).map(f=>`<div class="pc ${f[4]?'full':''}"><span>${esc(f[1])}</span><b>${esc(pdVal(r,f))||'&nbsp;'}</b></div>`).join('')}</div>`;
+    return `<div class="pdi"><div class="ph"><h2>Packaging Development Request Form (PDRF)</h2><div class="no">PDRF No.<b>${esc(r.pdrfNo)}</b></div><div class="orn"><i></i></div></div>${SECT.map(([a,n],i)=>`<div class="pb">${n}</div>${sec('ABCD'[i])}`).join('')}</div>`;
+  }
+  function pdrfPdf(r){                                       // downloadable PDF, same premium ink-saving look as the print
+    try{
+      const J=window.jspdf;if(!J||!J.jsPDF)throw new Error('PDF tool did not load. Reload the page and try again.');
+      const doc=new J.jsPDF({orientation:'portrait',unit:'mm',format:'a4'}),W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
+      const s=v=>pdfSafe(String(v==null?'':v).replace(/\u20B1/g,'PHP')),INK=[27,31,42],HAIR=[207,212,221],MUTE=[107,114,128],L=14,R=W-14,CW=R-L,colW=(CW-9)/2;
+      // title block: heavy rule on top, fine rule below
+      doc.setDrawColor(...INK);doc.setLineWidth(.8);doc.line(L,12,R,12);
+      doc.setFont('helvetica','bold');doc.setFontSize(13.5);doc.setTextColor(...INK);doc.text('PACKAGING DEVELOPMENT REQUEST FORM (PDRF)',W/2,21,{align:'center'});
+      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(75,82,99);
+      const lab='PDRF NO.  ',num=s(r.pdrfNo||''),w1=doc.getTextWidth(lab);doc.setFont('helvetica','bold');const w2=doc.getTextWidth(num);
+      const x0=W/2-(w1+w2)/2;doc.setFont('helvetica','normal');doc.text(lab,x0,27.5);doc.setFont('helvetica','bold');doc.setTextColor(...INK);doc.text(num,x0+w1,27.5);
+      doc.setDrawColor(...INK);doc.setLineWidth(.2);doc.line(L,33,W/2-4,33);doc.line(W/2+4,33,R,33);doc.setFillColor(...INK);doc.lines([[1.3,1.3],[-1.3,1.3],[-1.3,-1.3],[1.3,-1.3]],W/2,33-1.3,[1,1],'F',true);
+      let y=35;
+      const room=h=>{if(y+h>H-16){doc.addPage();y=16}};
+      const band=(n,name)=>{room(16);y+=8;doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...INK);const t=s(name).toUpperCase();doc.text(t,L,y,{charSpace:.5});
+        const tw=doc.getTextWidth(t)+t.length*.5;doc.setDrawColor(...INK);doc.setLineWidth(.3);doc.line(L+tw+4,y-1.1,R,y-1.1);y+=3};
+      const drawRow=cells=>{
+        const prep=cells.map(c=>{doc.setFont('helvetica','bold');doc.setFontSize(9.5);return {...c,lines:doc.splitTextToSize(s(pdVal(r,c.f)),c.w-1)}});
+        const h=Math.max(...prep.map(c=>Math.max(1,c.lines.length)))*4.2+8;room(h);
+        prep.forEach(c=>{doc.setFont('helvetica','bold');doc.setFontSize(6.2);doc.setTextColor(...MUTE);doc.text(s(c.f[1]).toUpperCase(),c.x,y+4.2,{charSpace:.25});
+          doc.setFontSize(9.5);doc.setTextColor(...INK);c.lines.forEach((ln,i)=>doc.text(ln,c.x,y+8.6+i*4.2));
+          doc.setDrawColor(...HAIR);doc.setLineWidth(.15);doc.line(c.x,y+h-.8,c.x+c.w,y+h-.8)});
+        y+=h;
+      };
+      SECT.forEach(([,name],i)=>{
+        const a='ABCD'[i];band(i+1,name);
+        if(a==='D'){
+          room(34);y+=18;
+          [['customerSign','Name and Signature / Customer',L],['wipiSign','Name and Signature / WIPI',L+colW+9]].forEach(([k,l,x])=>{
+            doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...INK);doc.text(s(r[k]),x+colW/2,y-2,{align:'center'});
+            doc.setDrawColor(...INK);doc.setLineWidth(.3);doc.line(x,y,x+colW,y);
+            doc.setFontSize(6.2);doc.setTextColor(...MUTE);doc.text(s(l).toUpperCase(),x+colW/2,y+4.5,{align:'center'})});
+          y+=8;return;
+        }
+        let pend=null;
+        FL.filter(f=>f[3]===a).forEach(f=>{
+          if(f[4]){if(pend){drawRow([{f:pend,x:L,w:colW}]);pend=null}drawRow([{f,x:L,w:CW}]);return}
+          if(pend){drawRow([{f:pend,x:L,w:colW},{f,x:L+colW+9,w:colW}]);pend=null}else pend=f;
+        });
+        if(pend)drawRow([{f:pend,x:L,w:colW}]);
+      });
+      const np=doc.getNumberOfPages();
+      for(let i=1;i<=np;i++){doc.setPage(i);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(139,146,163);doc.text('Page '+i+' of '+np,R,H-8,{align:'right'});doc.text(s('PDRF '+(r.pdrfNo||'')),L,H-8)}
+      doc.save('PDRF_'+String(r.pdrfNo||'form').replace(/[^\w\-]+/g,'')+'_'+new Date().toISOString().slice(0,10)+'.pdf');
+      toast('PDF downloaded.');
+    }catch(e){toast(e.message||'Could not create the PDF.',1)}
+  }
+  async function printOrPdf(r){                              // PRINT button: ask Print only / Download PDF
+    const m=await askOutput('PDRF No: '+(r.pdrfNo||''));
+    if(!m)return;
+    if(m==='download')return pdrfPdf(r);
+    printDoc(r);
+  }
+  function printDoc(r){
+    $('#printArea').innerHTML=docPrintHtml(r);
+    const st=document.createElement('style');st.textContent='@page{size:A4 portrait;margin:10mm}';document.head.appendChild(st);
+    const done=()=>{st.remove();$('#printArea').innerHTML='';removeEventListener('afterprint',done)};
+    addEventListener('afterprint',done);print();
+  }
+  function openView(r){
+    const m=$('#modal');
+    m.innerHTML=`<div class="card pdm">${docHtml(r)}<div class="pdbtns"><button id="pvp">PRINT</button><button class="pri" id="pvc">Close</button></div></div>`;
+    m.hidden=false;$('#pvc').onclick=()=>m.hidden=true;$('#pvp').onclick=()=>printOrPdf(r);
+  }
+
+  /* ---------- List ---------- */
+  function listPage(){
+    const adm=S.user.role==='admin';
+    $('#main').innerHTML=`<h2>PDRF List<small id="pdcnt"></small></h2>
+     <div class="top"><input id="pdq" type="search" placeholder="Search any column"><select id="pdft" style="width:170px;flex:none"><option value="">All item types</option><option>NEW ITEM</option><option>REVISION</option></select><select id="pdsample" style="width:170px;flex:none"><option value="">Project Type</option><option value="PROJECT">PROJECT</option><option value="PROPOSAL">PROPOSAL</option></select><button id="pdrf">REFRESH</button></div>
+     <div class="card tw" id="pdtb"></div>
+     <div class="bar"><button id="pdbfp" class="pfl">FOR PROJECT</button><button id="pdbv">VIEW</button><button id="pdbp">PRINT</button><button id="pdbe">EDIT</button>${adm?'<button id="pdbd">DELETE</button>':'<button id="pdbc">CANCELLED</button>'}</div>`;
+    let vis=[];
+    const draw=()=>{
+      if(!S.pdList){$('#pdtb').innerHTML='<p class="empty">Loading…</p>';return}
+      const q=$('#pdq').value.toLowerCase(),ft=$('#pdft').value,st=S.pdSort||(S.pdSort={k:'',asc:true}),d=st.asc?1:-1;
+      const sm=$('#pdsample').value;vis=S.pdList.filter(r=>(!ft||String(r.itemType).toUpperCase()===ft)&&(!sm||String(r.sampleMockup||'').toUpperCase()===sm)&&(!q||LC.some(([k])=>String(r[k]).toLowerCase().includes(q))));
+      vis=st.k?vis.map((r,i)=>[r,i]).sort((x,y)=>d*String(x[0][st.k]).localeCompare(String(y[0][st.k]),undefined,{numeric:true,sensitivity:'base'})||y[1]-x[1]).map(x=>x[0]):[...vis].reverse();   // no sort chosen = newest on top
+      $('#pdcnt').textContent='';
+      $('#pdtb').innerHTML=`<table><thead><tr>${LC.map(([k,l])=>`<th class="srt${st.k===k?' cur':''}" data-k="${k}">${l}${st.k===k?`<i class="ar">${st.asc?'▲':'▼'}</i>`:''}</th>`).join('')}</tr></thead><tbody>${
+        vis.length?vis.map((r,i)=>`<tr data-i="${i}" class="${r.id===S.pdSel?'on':''}">${LC.map(([k,,t])=>`<td>${esc(cellTxt(r[k],t))}</td>`).join('')}</tr>`).join(''):`<tr><td class="empty" colspan="${LC.length}">No PDRF yet. Use New PDRF to add one.</td></tr>`}</tbody></table>`;
+    };
+    const pick=()=>{const r=(S.pdList||[]).find(x=>x.id===S.pdSel);if(!r)toast('Select a row first.',1);return r};
+    $('#pdtb').onclick=e=>{
+      const th=e.target.closest('th[data-k]');if(th){const k=th.dataset.k,s=S.pdSort||{k:'',asc:true};S.pdSort=s.k===k?{k,asc:!s.asc}:{k,asc:true};return draw()}
+      const tr=e.target.closest('tbody tr[data-i]');if(!tr)return;S.pdSel=vis[tr.dataset.i].id;$('#pdtb').querySelectorAll('tr').forEach(r=>r.classList.toggle('on',r===tr));
+    };
+    $('#pdtb').ondblclick=e=>{const tr=e.target.closest('tbody tr[data-i]');if(tr)openView(vis[tr.dataset.i])};
+    let t;$('#pdq').oninput=()=>{clearTimeout(t);t=setTimeout(draw,150)};$('#pdft').onchange=draw;$('#pdsample').onchange=draw;
+    $('#pdbv').onclick=()=>{const r=pick();if(r)openView(r)};
+    $('#pdbp').onclick=()=>{const r=pick();if(r)printOrPdf(r)};
+    $('#pdbe').onclick=()=>{const r=pick();if(!r)return;if(!canEdit(r))return toast('Only the admin or the person who made this PDRF can edit it.',1);S.pdEdit=r.id;go('pdnew')};
+    $('#pdbfp').onclick=()=>{const r=pick();if(!r)return;
+      const st=String(r.status||'ACTIVE').toUpperCase();
+      if(st==='CANCELLED')return toast('This PDRF is cancelled.',1);
+      if(st!=='ACTIVE')return toast(r.pdrfNo+' is already '+st+' and linked to a project.',1);
+      JO.openNew(r.pdrfNo,()=>{S.pdList=null;S.pdSel=null;if(S.view==='pdlist')go('pdlist')})};      // the same New Project pop-up, with this PDRF already chosen
+    if(adm)$('#pdbd').onclick=async()=>{const r=pick();if(!r)return;if(!(await askDelete(r.pdrfNo+' - '+r.projectProduct)))return;
+      try{await api('pdDelete',{ids:[r.id]});S.pdList=S.pdList.filter(x=>x.id!==r.id);S.pdSel=null;draw();toast('PDRF deleted.')}catch(e){}};
+    if(!adm)$('#pdbc').onclick=async()=>{const r=pick();if(!r)return;if(String(r.status||'ACTIVE').toUpperCase()==='CANCELLED')return toast('This PDRF is already cancelled.',1);
+      const lk=((S.jobs&&S.jobs.projects)||[]).some(p=>String(p.pdrfNo||'')===String(r.pdrfNo)&&String(p.status||'')!=='Cancelled');   // a linked project must be cancelled in Project Monitoring first (the server checks this too)
+      if(lk)return toast(r.pdrfNo+' is linked to a project that is not cancelled. Cancel the project in Project Monitoring first.',1);
+      if(!(await askCancel('Cancel '+r.pdrfNo+'? The admin can delete it later.')))return;try{await api('pdCancel',{ids:[r.id]});r.status='CANCELLED';draw();toast('PDRF cancelled.')}catch(e){}};
+    $('#pdrf').onclick=async()=>{const b=$('#pdrf');if(b.disabled)return;b.disabled=true;b.textContent='REFRESHING…';try{await load(true);draw();toast('Refreshed.')}catch(e){}b.disabled=false;b.textContent='REFRESH'};
+    S.pdSel=null;
+    S.resetSort=()=>{if(S.pdSort&&S.pdSort.k){S.pdSort={k:'',asc:true};draw()}};            // click outside the list = back to the normal order
+    S.clearSel=()=>{if(S.pdSel==null)return;S.pdSel=null;$('#pdtb').querySelectorAll('tr.on').forEach(r=>r.classList.remove('on'))};
+    draw();
+    const my=S.nav;
+    load().then(()=>{if(S.nav===my&&S.view==='pdlist')draw()}).catch(e=>{if(!S.pdList)$('#pdtb').innerHTML=`<p class="empty">${esc(e.message)}</p>`});
+  }
+  return {newPage,listPage,load};
+})();
+VIEWS.pdnew=PD.newPage;VIEWS.pdlist=PD.listPage;
+REDRAW.pdnew=()=>{};REDRAW.pdlist=()=>{};
+
+/* ====== DASHBOARD: the whole system at a glance (PDRF, Project, LSD, Plates, Orders). Only the sections this account may open are shown ====== */
+const DASH=(()=>{
+  const MONN={Jan:1,Feb:2,Mar:3,Apr:4,May:5,Jun:6,Jul:7,Aug:8,Sep:9,Oct:10,Nov:11,Dec:12};
+  const ymd=v=>{v=v==null?'':String(v);const m=v.match(/^[A-Z][a-z]{2} ([A-Z][a-z]{2}) (\d{1,2}) (\d{4})/);if(m&&MONN[m[1]])return m[3]+'-'+String(MONN[m[1]]).padStart(2,'0')+'-'+m[2].padStart(2,'0');const f=fmt(v);return /^\d{4}-\d{2}-\d{2}/.test(f)?f.slice(0,10):''};
+  const num=v=>{const n=Number(String(v==null?'':v).replace(/,/g,''));return isFinite(n)?n:0};
+  const n0=v=>Number(v).toLocaleString('en-US',{maximumFractionDigits:0});
+  const pct=(a,b)=>b?Math.round(a/b*100)+'%':'—';
+  const daysTo=iso=>{const [y,m,d]=iso.split('-').map(Number),t=new Date();return Math.round((new Date(y,m-1,d)-new Date(t.getFullYear(),t.getMonth(),t.getDate()))/864e5)};
+  const addDays=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+  const access=()=>{const u=S.user,lvl=String(u.accountLevel||'ALL ACCESS').toUpperCase();return lvl==='ALL ACCESS'?['pd','jo','pl']:lvl==='PDRF ONLY'?['pd']:lvl==='PROJECT ONLY'?['jo']:lvl==='PLATES ONLY'?['pl']:lvl==='CUSTOM ACCESS'?String(u.customAccess||'').toUpperCase().split(/[,;| ]+/).map(x=>({PDRF:'pd',PROJECT:'jo',PLATES:'pl'}[x])).filter(Boolean):['pd','jo','pl']};
+  const PST=['Layout Received','Checking layout (Day 1)','Final Artwork (Day 2)','Digital Send to Supplier (Day 3)','Submit to Sales (Day 4)'];
+  const LST=['Request by Production','Request Plate Proofing','Request Plate Received','Actual Proofing LSD','Submit to Sales','Received sign by Client','Submit to QA'];
+  const COL={blue:'#2563eb',green:'#15803d',amber:'#d97706',red:'#b91c1c',grey:'#9ca3af',navy:'#17365d',teal:'#0f766e'};
+
+  /* ---- small chart helpers (plain HTML / SVG, no outside library) ---- */
+  const lastMonths=n=>{const o=[],t=new Date();for(let i=n-1;i>=0;i--){const x=new Date(t.getFullYear(),t.getMonth()-i,1);o.push({k:x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0'),l:x.toLocaleString('en-US',{month:'short'})})}return o};
+  const byMonth=(rows,get,n=6)=>{const c={};rows.forEach(r=>{const k=ymd(get(r)).slice(0,7);if(k)c[k]=(c[k]||0)+1});return lastMonths(n).map(m=>({label:m.l,value:c[m.k]||0}))};
+  const tally=(rows,get)=>{const c={};rows.forEach(r=>{const k=String(get(r)==null?'':get(r)).trim().toUpperCase();if(k)c[k]=(c[k]||0)+1});return Object.entries(c).map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value)};
+  const sumBy=(rows,get,val)=>{const c={};rows.forEach(r=>{const k=String(get(r)==null?'':get(r)).trim().toUpperCase();if(k)c[k]=(c[k]||0)+val(r)});return Object.entries(c).map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value)};
+  const donut=(parts,big,small)=>{const tot=parts.reduce((a,p)=>a+p.value,0),R=42,C=2*Math.PI*R;let off=0;
+    const segs=tot?parts.filter(p=>p.value>0).map(p=>{const len=p.value/tot*C,s=`<circle cx="60" cy="60" r="${R}" fill="none" stroke="${p.color}" stroke-width="16" stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}" transform="rotate(-90 60 60)"/>`;off+=len;return s}).join(''):'';
+    return `<div class="dbdn"><svg viewBox="0 0 120 120" role="img" aria-label="${esc(small)}"><circle cx="60" cy="60" r="${R}" fill="none" stroke="#e5e8ef" stroke-width="16"/>${segs}<text x="60" y="61" text-anchor="middle" class="dbn">${esc(big)}</text><text x="60" y="75" text-anchor="middle" class="dbs">${esc(small)}</text></svg><ul>${parts.map(p=>`<li><i style="background:${p.color}"></i>${esc(p.label)}<b>${n0(p.value)}</b></li>`).join('')}</ul></div>`};
+  const bars=(items,color,empty)=>{if(!items.length||!items.some(i=>i.value))return `<p class="empty">${empty||'No data yet.'}</p>`;const mx=Math.max(...items.map(i=>i.value),1);
+    return `<div class="dbbars">${items.map(i=>`<div class="dbbr"><span title="${esc(i.label)}">${esc(i.label)}</span><div><em style="width:${Math.max(i.value/mx*100,i.value?2:0)}%;background:${color}"></em></div><b>${n0(i.value)}</b></div>`).join('')}</div>`};
+  const cols=(items,color)=>{const mx=Math.max(...items.map(i=>i.value),1);
+    return `<div class="dbcols">${items.map(i=>`<div><b>${i.value?n0(i.value):''}</b><div class="dbcb"><em style="height:${i.value?Math.max(i.value/mx*100,4):0}%;background:${color}"></em></div><span>${esc(i.label)}</span></div>`).join('')}</div>`};
+  const mini=(heads,rows,empty)=>rows.length?`<div class="dbtw"><table class="dbt"><thead><tr>${heads.map(h=>`<th>${h}</th>`).join('')}</tr></thead><tbody>${rows.map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`:`<p class="empty">${empty}</p>`;
+  const badge=(t,c)=>`<span class="dbb ${c}">${esc(t)}</span>`;
+  const tile=(label,value,sub,color,view)=>`<div class="dbtile" role="link" tabindex="0" data-go="${view}" style="--c:${color}"><span>${esc(label)}</span><b>${value}</b><small>${sub}</small></div>`;
+  const card=(title,body,wide)=>`<div class="dbcard${wide?' dbw':''}"><h4>${esc(title)}</h4>${body}</div>`;
+  const pst=o=>{if(o.status&&o.status!=='Pending')return o.status;const n=ymd(o.dateNeeded);return n&&n<todayStr()?'Overdue':'Pending'};   // Project status incl. Overdue
+  const sec=(title,view,link,kpis,cards)=>`<section class="dbsec"><div class="dbband"><span>${esc(title)}</span><span class="dblink" role="link" tabindex="0" data-go="${view}">${esc(link)}</span></div><div class="dbkpis">${kpis}</div><div class="dbgrid">${cards}</div></section>`;
+  const wait=t=>`<section class="dbsec"><div class="dbband"><span>${esc(t)}</span></div><p class="muted">Loading…</p></section>`;
+  const dayTxt=d=>d===0?'today':d===1?'tomorrow':d>0?`in ${d} days`:`${-d} day${d===-1?'':'s'} ago`;
+
+  /* ---- PDRF ---- */
+  function pdr(){
+    const L=S.pdList,t=todayStr(),st=r=>String(r.status||'ACTIVE').toUpperCase();
+    const act=L.filter(r=>st(r)==='ACTIVE'),inp=L.filter(r=>st(r)==='IN PROGRESS'),can=L.filter(r=>st(r)==='CANCELLED'),live=L.filter(r=>st(r)!=='CANCELLED');
+    const oth=L.length-act.length-inp.length-can.length,cost=live.reduce((a,r)=>a+num(r.targetCost),0);
+    const up=live.filter(r=>{const d=ymd(r.targetLaunch);return d&&d>=t&&d<=addDays(30)}).sort((a,b)=>ymd(a.targetLaunch).localeCompare(ymd(b.targetLaunch)));
+    const late=live.filter(r=>{const d=ymd(r.targetLaunch);return d&&d<t&&st(r)==='ACTIVE'});
+    const parts=[{label:'Active (no project yet)',value:act.length,color:COL.blue},{label:'In progress',value:inp.length,color:COL.green},{label:'Cancelled',value:can.length,color:COL.grey}];
+    if(oth>0)parts.push({label:'Other',value:oth,color:COL.amber});
+    const kp=tile('Total PDRFs',n0(L.length),`${n0(can.length)} cancelled`,COL.navy,'pdlist')+tile('Active',n0(act.length),'waiting for a project',COL.blue,'pdlist')+tile('In progress',n0(inp.length),'linked to a project',COL.green,'pdlist')
+      +tile('Target cost',cost?'₱ '+n0(cost):'—','all PDRFs that are not cancelled',COL.teal,'pdlist')+tile('Past target launch',n0(late.length),'still active, not started',late.length?COL.red:COL.grey,'pdlist');
+    const cds=card('PDRF status',donut(parts,n0(L.length),'PDRFs'))
+      +card('Requests per month (last 6 months)',cols(byMonth(L,r=>r.requestDate),COL.navy))
+      +card('Top clients',bars(tally(live,r=>r.clientAccount).slice(0,6),COL.blue,'No PDRFs yet.'))
+      +card('Item type',bars(tally(live,r=>r.itemType),COL.teal,'No PDRFs yet.'))
+      +card('Target launch in the next 30 days',mini(['PDRF No.','Project / Product','Client','Item type','Requested by','Target launch'],up.slice(0,8).map(r=>{const d=daysTo(ymd(r.targetLaunch));return [esc(r.pdrfNo),esc(r.projectProduct||''),esc(r.clientAccount||''),esc(r.itemType||''),esc(r.requestedBy||''),`${esc(show(ymd(r.targetLaunch)))} ${badge(dayTxt(d),d<=7?'a':'b')}`]}),'No target launch dates coming up.'),1);
+    return {kp,cds,glance:tile('PDRF',n0(act.length+inp.length),`open · ${n0(act.length)} active, ${n0(inp.length)} in progress`,COL.navy,'pdlist')};
+  }
+
+  /* ---- Project + LSD ---- */
+  function jobs(){
+    const P=(S.jobs&&S.jobs.projects)||[],Ls=(S.jobs&&S.jobs.lsd)||[],t=todayStr();
+    const cnt=k=>P.filter(r=>pst(r)===k).length,pend=cnt('Pending'),over=cnt('Overdue'),done=cnt('Completed'),canc=cnt('Cancelled');
+    const hit=P.filter(r=>r.result==='Hit').length,miss=P.filter(r=>r.result==='Miss').length;
+    const livP=P.filter(r=>r.status!=='Cancelled');
+    const stages=PST.map((l,i)=>({label:l,value:livP.filter(r=>r['s'+(i+1)]).length}));
+    const overRows=P.filter(r=>pst(r)==='Overdue').sort((a,b)=>ymd(a.dateNeeded).localeCompare(ymd(b.dateNeeded))).slice(0,8).map(r=>[esc(r.projectName||''),esc(r.companyCode||''),esc(r.kind||''),esc(show(ymd(r.dateRequest))),`${esc(show(ymd(r.dateNeeded)))} ${badge(dayTxt(daysTo(ymd(r.dateNeeded))),'r')}`]);
+    const kp=tile('Projects',n0(P.length),`${n0(done)} completed`,COL.navy,'jp')+tile('Pending',n0(pend),'on schedule',COL.blue,'jp')+tile('Overdue',n0(over),'past Date Needed',over?COL.red:COL.grey,'jp')
+      +tile('On-time rate',pct(hit,hit+miss),`${n0(hit)} hit · ${n0(miss)} miss`,COL.green,'jp');
+    const cds=card('Project status',donut([{label:'Pending',value:pend,color:COL.blue},{label:'Overdue',value:over,color:COL.red},{label:'Completed',value:done,color:COL.green},{label:'Cancelled',value:canc,color:COL.grey}],n0(P.length),'projects'))
+      +card('Stages done (not cancelled)',bars(stages,COL.teal,'No projects yet.'))
+      +card('New projects per month (last 6 months)',cols(byMonth(P,r=>r.dateRequest),COL.navy))
+      +card('Kind of project',bars(tally(livP,r=>r.kind),COL.blue,'No projects yet.'))
+      +card('Overdue projects',mini(['Project','Company','Kind','Requested','Date needed'],overRows,'Nothing overdue. Well done!'),1);
+    const pn=new Map(P.map(p=>[String(p.id),p]));
+    const isOver=l=>!l.l5&&l.status!=='Cancelled'&&l.l4&&lsdDue(ymd(l.l4))<t;
+    const lc=Ls.filter(l=>l.status==='Cancelled').length,ld=Ls.filter(l=>l.l5&&l.status!=='Cancelled').length,lo=Ls.filter(isOver).length;
+    const lp=Ls.filter(l=>!l.l5&&l.status!=='Cancelled').length-lo,lhit=Ls.filter(l=>l.l5&&l.status!=='Cancelled'&&['l1','l2','l3','l4','l5','l6','l7'].every(k=>l[k])).length;
+    const lstages=LST.map((l,i)=>({label:l,value:Ls.filter(r=>r.status!=='Cancelled'&&r['l'+(i+1)]).length}));
+    const lover=Ls.filter(isOver).sort((a,b)=>ymd(a.l4).localeCompare(ymd(b.l4))).slice(0,8).map(l=>{const p=pn.get(String(l.projectId))||{};return [esc(p.projectName||''),esc(p.companyCode||''),esc(l.lsdQty||''),esc(show(ymd(l.l4))),`${esc(show(lsdDue(ymd(l.l4))))} ${badge(dayTxt(daysTo(lsdDue(ymd(l.l4)))),'r')}`]});
+    const lkp=tile('LSD items',n0(Ls.length),`${n0(ld)} submitted to sales`,COL.navy,'jl')+tile('Pending',n0(Math.max(lp,0)),'in progress',COL.blue,'jl')+tile('Overdue',n0(lo),'1 working day passed',lo?COL.red:COL.grey,'jl')
+      +tile('Hit rate',pct(lhit,ld),`${n0(lhit)} of ${n0(ld)} submitted`,COL.green,'jl');
+    const lcds=card('LSD status',donut([{label:'Pending',value:Math.max(lp,0),color:COL.blue},{label:'Overdue',value:lo,color:COL.red},{label:'Submitted to sales',value:ld,color:COL.green},{label:'Cancelled',value:lc,color:COL.grey}],n0(Ls.length),'LSD items'))
+      +card('LSD stages done (not cancelled)',bars(lstages,COL.teal,'No LSD items yet.'))
+      +card('LSD overdue',mini(['Project','Company','Qty','Actual proofing','Was due'],lover,'Nothing overdue. Well done!'),1);
+    return {kp,cds,lkp,lcds,glance:tile('Projects',n0(pend+over),`open · ${n0(over)} overdue`,over?COL.red:COL.blue,'jp')+tile('LSD',n0(Math.max(lp,0)+lo),`open · ${n0(lo)} overdue`,lo?COL.red:COL.teal,'jl')};
+  }
+
+  /* ---- Plates + Orders ---- */
+  function plates(){
+    const PL=(S.cache.plates||[]),OR=(S.cache.orders||[]);
+    const total=PL.reduce((a,r)=>a+num(r.totalPlates),0),pend=OR.filter(o=>String(o.status)==='Pending'),rec=OR.filter(o=>String(o.status)==='Received');
+    const pendQty=pend.reduce((a,o)=>a+num(o.totalPlates),0);
+    const old=pend.slice().sort((a,b)=>ymd(a.orderDate).localeCompare(ymd(b.orderDate))).slice(0,8).map(o=>{const d=ymd(o.orderDate),age=d?-daysTo(d):0;return [esc(o.promo||''),esc(o.companyCode||''),esc(o.category||''),esc(n0(num(o.totalPlates))),esc(o.orderedByName||o.orderedBy||''),`${esc(d?show(d):'')} ${badge(age+' day'+(age===1?'':'s'),age>7?'r':age>3?'a':'b')}`]});
+    const kp=tile('Plates in the log',n0(PL.length),`${n0(total)} plates in total`,COL.navy,'log')+tile('Orders',n0(OR.length),`${n0(rec.length)} received`,COL.teal,'monitor')
+      +tile('Pending orders',n0(pend.length),`${n0(pendQty)} plates waiting`,pend.length?COL.amber:COL.grey,'monitor')+tile('Received',pct(rec.length,OR.length),'of all orders',COL.green,'monitor');
+    const cds=card('Orders',donut([{label:'Pending',value:pend.length,color:COL.amber},{label:'Received',value:rec.length,color:COL.green}],n0(OR.length),'orders'))
+      +card('Orders per month (last 6 months)',cols(byMonth(OR,o=>o.orderDate),COL.teal))
+      +card('Plates by category (top 6)',bars(sumBy(PL,r=>r.category,r=>num(r.totalPlates)).slice(0,6),COL.blue,'No plates registered yet.'))
+      +card('Plates by company (top 6)',bars(sumBy(PL,r=>r.companyCode,r=>num(r.totalPlates)).slice(0,6),COL.navy,'No plates registered yet.'))
+      +card('Oldest pending orders',mini(['Promo / Project','Company','Category','Plates','Ordered by','Ordered'],old,'No pending orders.'),1);
+    return {kp,cds,glance:tile('Plate orders',n0(pend.length),`pending · ${n0(PL.length)} lines in the log`,pend.length?COL.amber:COL.teal,'monitor')};
+  }
+
+  /* ---- SEARCH: every record of every section this account may open. Each list is turned into lowercase search text ONCE (kept until the data is replaced), so typing stays instant ---- */
+  const IDX=new WeakMap();
+  const flat=r=>{const o=[];for(const k in r){const v=r[k];if(v==null||typeof v==='object')continue;const s=String(v);o.push(s);if(/^\d{4}-\d{2}-\d{2}/.test(s))o.push(show(s.slice(0,10)));else if(/^[A-Z][a-z]{2} [A-Z][a-z]{2} \d/.test(s)){const y=ymd(s);if(y)o.push(show(y))}}return o.join(' | ').toLowerCase()};   // dates are searchable as 2026-10-29 and 10/29/2026
+  const index=(arr,extra)=>{let x=IDX.get(arr);if(!x){x=arr.map(r=>({r,t:flat(r)+(extra?' | '+extra(r).toLowerCase():'')}));IDX.set(arr,x)}return x};
+  const sbadge=s=>/overdue/i.test(s)?'r':/complete|received|hit/i.test(s)?'g':/cancel/i.test(s)?'':/pending|active|progress/i.test(s)?'b':'';
+  const dsh=v=>{const d=ymd(v);return d?show(d):''};
+  const hl=(txt,toks)=>{txt=String(txt==null?'':txt);if(!toks.length)return esc(txt);const re=new RegExp('('+toks.map(x=>x.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('|')+')','gi');return txt.split(re).map((p,i)=>i%2?`<mark>${esc(p)}</mark>`:esc(p)).join('')};
+  function groups(a){
+    const G=[],P=(S.jobs&&S.jobs.projects)||[],Ls=(S.jobs&&S.jobs.lsd)||[],pn=new Map(P.map(p=>[String(p.id),p]));
+    if(a.includes('pd')&&S.pdList)G.push({k:'pd',title:'PDRF',go:'pdlist',idx:index(S.pdList),row:r=>({t:`${r.pdrfNo||''} · ${r.projectProduct||''}`,sel:r.id,b:String(r.status||'ACTIVE').toUpperCase(),
+      m:[['Client',r.clientAccount],['Requested by',r.requestedBy],['Item',r.itemType],['Packaging',r.packagingItem],['Material',r.materialType],['Size',r.dimensions],['Launch',dsh(r.targetLaunch)]]})});
+    if(a.includes('jo')&&S.jobs){
+      G.push({k:'jo',title:'PROJECT',go:'jp',idx:index(P),row:r=>({t:r.projectName||'',b:pst(r),m:[['Company',r.companyCode],['Kind',r.kind],['Category',r.category],['Size',r.size],['Needed',dsh(r.dateNeeded)],['PDRF',r.pdrfNo],['Artist',r.artist]]})});
+      G.push({k:'ls',title:'LSD',go:'jl',idx:index(Ls,l=>flat(pn.get(String(l.projectId))||{})),row:l=>{const p=pn.get(String(l.projectId))||{};return {t:(p.projectName||'')+' (LSD)',b:l.l5?'Completed':String(l.status||'Pending'),m:[['Company',p.companyCode],['Qty',l.lsdQty],['Proofing',dsh(l.l4)],['Remarks',l.remarks]]}}});
+    }
+    if(a.includes('pl')){
+      if(S.cache.plates)G.push({k:'pl',title:'PLATES LOG',go:'log',idx:index(S.cache.plates),row:r=>({t:r.promo||'',m:[['Company',r.companyCode],['Year',r.year],['Category',r.category],['Size',r.size],['Rev',r.revisionNo],['Colors',r.colors],['Plates',r.totalPlates],['Remarks',r.remarks]]})});
+      if(S.cache.orders)G.push({k:'or',title:'PLATE ORDERS',go:'monitor',idx:index(S.cache.orders),row:o=>({t:o.promo||'',b:String(o.status||''),m:[['Company',o.companyCode],['Category',o.category],['Size',o.size],['Plates',o.totalPlates],['Ordered by',o.orderedByName||o.orderedBy],['Ordered',dsh(o.orderDate)]]})});
+    }
+    return G;
+  }
+  function results(ctx){
+    const t0=performance.now(),toks=[...new Set(ctx.q.toLowerCase().split(/\s+/).filter(Boolean))],G=groups(ctx.a);let total=0;
+    const html=G.map(g=>{
+      const hits=g.idx.filter(x=>toks.every(t=>x.t.includes(t))).reverse();            // newest added first
+      if(!hits.length)return '';total+=hits.length;
+      const lim=ctx.lim[g.k]||8,rows=hits.slice(0,lim).map(h=>{const d=g.row(h.r);
+        return `<div class="dbres" role="link" tabindex="0" data-go="${g.go}"${d.sel?` data-sel="${esc(d.sel)}"`:''}><div class="dbrt">${hl(d.t,toks)}${d.b?` ${badge(d.b,sbadge(d.b))}`:''}</div><div class="dbrm">${d.m.filter(([,v])=>v!=null&&String(v).trim()!=='').map(([l,v])=>`<span><i>${esc(l)}</i> ${hl(v,toks)}</span>`).join('')}</div></div>`}).join('');
+      return `<section class="dbsec"><div class="dbband"><span>${esc(g.title)}</span><span>${n0(hits.length)} match${hits.length===1?'':'es'}</span></div><div class="dbresl">${rows}</div>${hits.length>lim?`<div class="dbmore"><button type="button" data-more="${g.k}">Show more (${n0(hits.length-lim)} left)</button></div>`:''}</section>`}).join('');
+    const loading=[['pd','PDRF'],['jo','PROJECT / LSD'],['pl','PLATES']].filter(([k])=>ctx.a.includes(k)&&!ctx.have[k]).map(x=>x[1]);
+    const ms=Math.max(1,Math.round(performance.now()-t0));
+    return `<p class="dbsum">${total?`<b>${n0(total)}</b> match${total===1?'':'es'} for “${esc(ctx.q.trim())}” across the system <small>· ${ms} ms</small>`:`No match for “${esc(ctx.q.trim())}”. Try fewer or shorter words.`}${loading.length?` <small>· still loading: ${esc(loading.join(', '))}</small>`:''}</p>${html}`;
+  }
+
+  /* ---- page ---- */
+  const fresh=k=>S.cache[k]&&Date.now()-(S.at[k]||0)<45000;
+  const SEARCH_ICON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>';
+  function shell(ctx,paint){
+    const name=S.user.fullName||S.user.username;
+    $('#main').innerHTML=`<div id="dashRoot"><div class="dbhead"><div><h2>Dashboard<small>${esc(new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'}))}</small></h2><p class="muted">Welcome back, ${esc(name)}. Click any card to open that section.</p></div>
+      <div class="dbtools"><div class="dbsearch">${SEARCH_ICON}<input id="dbQ" type="text" autocomplete="off" spellcheck="false" enterkeyhint="search" placeholder="${esc('Search '+(ctx.a.map(k=>({pd:'PDRF',jo:'projects, LSD',pl:'plates, orders'}[k])).join(', ')||'the system')+'…  (press / )')}" aria-label="Search the whole system"><button id="dbQx" type="button" hidden aria-label="Clear search">×</button></div><button id="dbRef" type="button">Refresh</button></div></div><div id="dbBody"></div></div>`;
+    const root=$('#dashRoot'),q=$('#dbQ'),x=$('#dbQx');let tm=0;
+    root.onclick=e=>{
+      const m=e.target.closest('[data-more]');if(m){ctx.lim[m.dataset.more]=(ctx.lim[m.dataset.more]||8)+40;return paint()}
+      const g=e.target.closest('[data-go]');if(!g)return;if(g.dataset.sel)S.pdSel=g.dataset.sel;go(g.dataset.go)};
+    root.onkeydown=e=>{if((e.key==='Enter'||e.key===' ')&&e.target.closest('[data-go]')){e.preventDefault();const g=e.target.closest('[data-go]');if(g.dataset.sel)S.pdSel=g.dataset.sel;go(g.dataset.go)}};
+    q.oninput=()=>{x.hidden=!q.value;clearTimeout(tm);tm=setTimeout(()=>{ctx.q=q.value;ctx.lim={};paint()},90)};     // wait 90 ms after the last key
+    q.onkeydown=e=>{if(e.key==='Escape'&&q.value){q.value='';q.oninput()}};
+    x.onclick=()=>{q.value='';q.oninput();q.focus()};
+    $('#dbRef').onclick=()=>page(true);
+    if(!window.__dbSlash){window.__dbSlash=1;document.addEventListener('keydown',e=>{const t=e.target;if(e.key==='/'&&S.view==='dash'&&!/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)&&!t.isContentEditable){const i=$('#dbQ');if(i){e.preventDefault();i.focus()}}})}
+  }
+  function body(ctx){
+    const b=$('#dbBody');if(!b)return;
+    const r=$('#dbRef');if(r){const t=ctx.busy?'Refreshing…':'Refresh';if(r.dataset.t!==t){r.dataset.t=t;r.disabled=ctx.busy;r.textContent=t}}
+    if(ctx.q.trim()){b.innerHTML=results(ctx);return}
+    const a=ctx.a,have=ctx.have,g=[],secs=[];
+    if(a.includes('pd')){if(have.pd){const d=pdr();g.push(d.glance);secs.push(sec('PDRF — Packaging Development Requests','pdlist','Open PDRF list',d.kp,d.cds))}else secs.push(wait('PDRF — Packaging Development Requests'))}
+    if(a.includes('jo')){if(have.jo){const d=jobs();g.push(d.glance);secs.push(sec('PROJECT — Project Monitoring','jp','Open Project Monitoring',d.kp,d.cds));secs.push(sec('LSD — LSD Monitoring','jl','Open LSD Monitoring',d.lkp,d.lcds))}else secs.push(wait('PROJECT and LSD'))}
+    if(a.includes('pl')){if(have.pl){const d=plates();g.push(d.glance);secs.push(sec('PLATES — Plates Log and Orders','monitor','Open Plates Monitoring',d.kp,d.cds))}else secs.push(wait('PLATES'))}
+    b.innerHTML=`${g.length?`<div class="dbglance">${g.join('')}</div>`:''}${secs.join('')||'<p class="muted">Your account level has no sections to show here.</p>'}`;
+  }
+  async function page(force){
+    const my=S.nav,a=access();
+    const ctx={a,my,q:'',lim:{},busy:true,have:{pd:!!S.pdList,jo:!!S.cache.jobs,pl:!!(S.cache.plates&&S.cache.orders)}};
+    if(S.cache.jobs)S.jobs=S.cache.jobs;
+    const live=()=>S.view==='dash'&&S.nav===my&&$('#dbBody');
+    let raf=0;const paint=()=>{if(raf)return;raf=requestAnimationFrame(()=>{raf=0;if(live())body(ctx)})};     // many arrivals in one moment = one redraw
+    shell(ctx,paint);body(ctx);                                                  // saved data is shown at once, then refreshed quietly
+    const need=a.some(k=>!ctx.have[k]);
+    if(!force&&!need&&S.dbAt&&Date.now()-S.dbAt<45000){ctx.busy=false;paint();return}   // fetched in the last 45 s: nothing to download
+    const want=a.map(x=>({pd:'PDRF',jo:'PROJECT',pl:'PLATES'}[x])).filter(Boolean),now=()=>Date.now();
+    const take=d=>{                                                                // one answer holds every list this account may see
+      if(d.pd){S.pdList=d.pd;ctx.have.pd=true}
+      if(d.jobs){lsdFix(d.jobs);S.jobs=S.cache.jobs=d.jobs;S.at.jobs=now();ctx.have.jo=true;try{warmSave('jobs',d.jobs)}catch(e){}}
+      if(d.plates){S.plates=S.cache.plates=d.plates;S.at.plates=now();try{warmSave('plates',d.plates)}catch(e){}}
+      if(d.orders){S.orders=S.cache.orders=d.orders;S.at.orders=now();try{warmSave('orders',d.orders)}catch(e){}}
+      ctx.have.pl=!!(S.cache.plates&&S.cache.orders);S.dbAt=now();paint()};
+    const legacy=async()=>{                                                        // older Code.gs without the one-request action: ask for each list in parallel
+      const T=[];
+      if(a.includes('pd'))T.push(PD.load(true).then(()=>{ctx.have.pd=!!S.pdList}).catch(()=>{}).then(paint));
+      if(a.includes('jo'))T.push(api('jobs',{},true).then(j=>{S.jobs=S.cache.jobs=j.data;ctx.have.jo=true}).catch(()=>{}).then(paint));
+      if(a.includes('pl')){const ok=()=>{ctx.have.pl=!!(S.cache.plates&&S.cache.orders);paint()};
+        T.push(api('plates',{},true).then(j=>{S.plates=S.cache.plates=j.data}).catch(()=>{}).then(ok),api('orders',{},true).then(j=>{S.orders=S.cache.orders=j.data}).catch(()=>{}).then(ok))}
+      await Promise.all(T);S.dbAt=now();
+    };
+    try{const j=await api('dash',{mods:want},true);take(j.data||{})}catch(e){if(S.user)await legacy()}
+    ctx.busy=false;paint();
+  }
+  return {page};
+})();
+VIEWS.dash=()=>DASH.page(false);REDRAW.dash=()=>{};
+
+
 /* ====== JOB ORDER (projects & LSD) ====== */
 const JO=(()=>{
   const PST=['Layout Received','Checking layout (Day 1)','Final Artwork (Day 2)','Digital Send to Supplier (Day 3)','Submit to Sales (Day 4)'];
@@ -1767,8 +2371,11 @@ const JO=(()=>{
     if(o.status!=='Pending')return o.status;
     return needed&&nd(needed)<todayStr()?'Overdue':'Pending';
   };
-  const jopts=(a,sel,all)=>{a=[...(a||[])];if(sel!=null&&sel!==''&&!a.map(String).includes(String(sel)))a.unshift(sel);return(all?`<option value="">${all}</option>`:'')+a.map(x=>`<option${String(x)===String(sel)?' selected':''}>${esc(x)}</option>`).join('')};
-  const uniq=k=>[...new Set([...P(),...L()].map(r=>r[k]).filter(Boolean))].sort();
+  const jopts=(a,sel,all)=>{a=[...(a||[])];if(sel!=null&&sel!==''&&!a.some(x=>String(x).trim().toLowerCase()===String(sel).trim().toLowerCase()))a.unshift(sel);return(all?`<option value="">${all}</option>`:'')+a.map(x=>`<option${String(x).trim().toLowerCase()===String(sel==null?'':sel).trim().toLowerCase()&&sel!==''?' selected':''}>${esc(x)}</option>`).join('')};
+  const ci=v=>String(v==null?'':v).trim().replace(/\s+/g,' ').toLowerCase();
+  const dedupe=a=>{const seen=new Set(),o=[];(a||[]).forEach(x=>{const t=String(x==null?'':x).trim().replace(/\s+/g,' ');if(!t||seen.has(t.toLowerCase()))return;seen.add(t.toLowerCase());o.push(t)});return o};   // same name in any capitals = one entry (first spelling wins)
+  const uniq=k=>{const m=new Map();[...P(),...L()].forEach(r=>{const t=String(r[k]==null?'':r[k]).trim().replace(/\s+/g,' ');if(!t)return;const b=m.get(t.toLowerCase())||{n:0,v:{}};b.n++;b.v[t]=(b.v[t]||0)+1;m.set(t.toLowerCase(),b)});
+    return [...m.values()].map(b=>Object.keys(b.v).sort((x,y)=>b.v[y]-b.v[x]||(x===x.toUpperCase()?-1:1))[0]).sort((a,b)=>a.localeCompare(b,undefined,{numeric:true,sensitivity:'base'}))};   // shown as the spelling used most often
   const ids=()=>[...J.sel];
   const modal=(h,wide)=>{const m=$('#modal');m.innerHTML=`<div class="card${wide?' wide':''}">${h}</div>`;m.hidden=false};
   const closeM=()=>{$('#modal').hidden=true};
@@ -1780,7 +2387,7 @@ const JO=(()=>{
       ?L().map(l=>{const p=pOf(l.projectId);return{...p,...l,_id:l.lsdId,_s:stat(l,p.dateNeeded),remarks:l.remarks||p.remarks,qty:p.qty,followUp:l.followUp||''}})
       :P().map(p=>({...p,_id:p.id,_s:stat(p,p.dateNeeded)}));
     const q=J.q.toLowerCase();
-    const out=rs.filter(r=>(!J.fs||r._s===J.fs)&&(!J.fm||nd(r.dateRequest).slice(0,7)===J.fm)&&(!J.fa||r.artist===J.fa)&&(!J.fp||r.preparedBy===J.fp)&&(!q||Object.values(r).join(' ').toLowerCase().includes(q)));
+    const out=rs.filter(r=>(!J.fs||r._s===J.fs)&&(!J.fm||nd(r.dateRequest).slice(0,7)===J.fm)&&(!J.fa||ci(r.artist)===ci(J.fa))&&(!J.fp||ci(r.preparedBy)===ci(J.fp))&&(!q||Object.values(r).join(' ').toLowerCase().includes(q)));
     const kd=J.sk&&!isLsd()?out.filter(r=>String(r.kind||'')===J.sk):out;   // one kind of project
     return sortRows(kd,J.so,jval);                                           // newest added on top unless a column title was clicked
   }
@@ -1830,7 +2437,7 @@ const JO=(()=>{
     const ms=[...new Set((isLsd()?L().map(l=>pmOf(l.projectId)):P()).map(p=>nd(p.dateRequest).slice(0,7)).filter(x=>/^\d{4}-\d{2}$/.test(x)))].sort().reverse();
     if(J.fm&&!ms.includes(J.fm))ms.unshift(J.fm);
     s('jfm','<option value="">All Months</option>'+ms.map(m=>`<option value="${m}"${m===J.fm?' selected':''}>${MN[+m.slice(5)-1]} ${m.slice(0,4)}</option>`).join(''));
-    if(!isLsd())s('jsk',jopts([...new Set([...(OPT.kind||[]),...uniq('kind')])],J.sk,'All Kind'));s('jfa',jopts(uniq('artist'),J.fa,'All Artist'));s('jfp',jopts(uniq('preparedBy'),J.fp,'All Prepared By'));
+    if(!isLsd())s('jsk',jopts(dedupe([...(OPT.kind||[]),...uniq('kind')]),J.sk,'All Kind'));s('jfa',jopts(uniq('artist'),J.fa,'All Artist'));s('jfp',jopts(uniq('preparedBy'),J.fp,'All Prepared By'));
   };
   function render(){
     const main=$('#main');if(!main||!S.user)return;
@@ -1839,10 +2446,10 @@ const JO=(()=>{
     main.innerHTML=`<div id="joRoot"><h2>${lsd?'LSD':'Project'} Monitoring</h2>
     <div class="jstats" id="jstats"></div>
     <div class="jflt${lsd?' lsd':''}"><input id="jsq" placeholder="Search…" value="${esc(J.q)}"><select id="jfs"></select><select id="jfm"></select><select id="jfa"></select><select id="jfp"></select>${lsd?'':'<select id="jsk"></select>'}</div>
-    <div class="card tw"><table><thead><tr><th data-sk="dateRequest">Requested / Needed</th><th data-sk="companyCode">Company / Year</th><th data-sk="projectName">Project name</th><th data-sk="category">Category / Size</th><th data-sk="kind">Kind / Qty</th><th data-sk="artist">Artist / Prepared by</th><th data-sk="${lsd?'lsdQty':'layeredFile'}">${lsd?'LSD Qty':'Layered file'}</th>
+    <div class="card tw"><table><thead><tr><th data-sk="dateRequest">Requested / Needed</th><th data-sk="companyCode">Company / Year</th><th data-sk="projectName">Project name</th><th data-sk="pdrfNo">PDRF No.</th><th data-sk="category">Category / Size</th><th data-sk="kind">Kind / Qty</th><th data-sk="artist">Artist / Prepared by</th><th data-sk="${lsd?'lsdQty':'layeredFile'}">${lsd?'LSD Qty':'Layered file'}</th>
     ${a?ST.map((s,i)=>`<th class="stc" data-sk="${lsd?'l':'s'}${i+1}">${esc(s)}</th>`).join(''):'<th data-sk="_prog">Progress</th>'}<th data-sk="_s">Status</th><th data-sk="result">Result</th><th data-sk="remarks">Remarks</th><th><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="jall" style="width:auto;margin:0"> All</label></th></tr></thead><tbody id="jbody"></tbody></table></div>
     <div class="jbar">${a?(lsd?`<div class="jg"><button data-a="print">PRINT</button><button data-a="cancelU">CANCEL</button></div><div class="jg"><button data-a="view">VIEW</button><button data-a="lsdEdit">EDIT</button><button data-a="delL">DELETE</button></div>`:`<div class="jg"><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button><button data-a="cancelU">CANCEL</button></div><div class="jg"><button data-a="add">ADD</button><button data-a="view">VIEW</button><button data-a="edit">EDIT</button><button data-a="del">DELETE</button></div>`)
-     :(lsd?`<div class="jg"><button data-a="more">ADDITIONAL LSD</button><button data-a="follow">FOLLOW UP</button><button data-a="print">PRINT</button></div>`:`<div class="jg"><button data-a="follow">FOLLOW UP</button><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="add">NEW</button><button data-a="custom">CUSTOMIZED</button></div>`)}</div></div>`;
+     :(lsd?`<div class="jg"><button data-a="more">ADDITIONAL LSD</button><button data-a="follow">FOLLOW UP</button><button data-a="print">PRINT</button></div>`:`<div class="jg"><button data-a="follow">FOLLOW UP</button><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="add">NEW</button><button data-a="custom">CUSTOMIZED</button><button data-a="cancelU">CANCEL</button></div>`)}</div></div>`;
     fillFilters();
     let tm;const sq=$('#jsq');
     sq.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{J.q=sq.value;paint()},150)};      // only the rows are redrawn while typing
@@ -1903,7 +2510,7 @@ const JO=(()=>{
     (lsd?L():P()).forEach(r=>{                        // the cards count only the chosen Artist / Prepared by, so you can compare artists
       const pj=lsd?pmOf(r.projectId):r;
       if(J.sel.size&&!J.sel.has(String(lsd?r.lsdId:r.id)))return;   // selected rows only
-      if((J.sk&&!lsd&&pj.kind!==J.sk)||(J.fa&&pj.artist!==J.fa)||(J.fp&&pj.preparedBy!==J.fp)||(J.fm&&nd(pj.dateRequest).slice(0,7)!==J.fm))return;
+      if((J.sk&&!lsd&&pj.kind!==J.sk)||(J.fa&&ci(pj.artist)!==ci(J.fa))||(J.fp&&ci(pj.preparedBy)!==ci(J.fp))||(J.fm&&nd(pj.dateRequest).slice(0,7)!==J.fm))return;
       const s=stat(r,pj.dateNeeded);cnt[s]=(cnt[s]||0)+1;if(s!=='Cancelled')tot++;if(r.result==='Hit')hit++;if(s!=='Cancelled')cr+=crOf(r,r.remarks||(lsd?pj.remarks:''))});
     const c=s=>cnt[s]||0,done=c('Completed');
     const hr=tot>0?Math.round(cr/tot*100):0;           // cancelled items are not an item: not in the total, not in the hit rate
@@ -1918,6 +2525,7 @@ const JO=(()=>{
       return `<tr data-id="${esc(id)}" class="${on?'on':''}${a&&r._s==='Cancelled'?' cx':''}"><td><div class="two"><span>${esc(dshow(r.dateRequest))}</span><small>needed ${esc(dshow(r.dateNeeded))}</small></div></td>
       <td><div class="two"><span>${esc(r.companyCode)}</span><small>${esc(r.year)}</small></div></td>
       <td><div class="two"><span>${esc(r.projectName)}</span>${r.followUp?'<small style="color:#b45309;font-weight:600">⚑ Follow up</small>':''}</div></td>
+      <td>${esc(r.pdrfNo||'')}</td>
       <td><div class="two"><span>${esc(r.category)}</span><small>${esc(r.size)}</small></div></td>
       <td><div class="two"><span>${esc(r.kind)}</span>${r.qty!==''&&r.qty!=null?`<small>Qty ${esc(r.qty)}</small>`:''}</div></td>
       <td><div class="two"><span>${esc(r.artist)}</span><small>${esc(r.preparedBy)}</small></div></td>
@@ -1940,11 +2548,11 @@ const JO=(()=>{
     const title=(lsd?'LSD':'Project')+' Monitoring',scope=set.size?`Selected items (${rows.length}) · in selection order`:`All items (${rows.length})`;
     const cls=v=>String(v||'').toLowerCase();
     const stats=[['Total projects',rows.length-c('Cancelled'),''],['Completed',c('Completed'),'ok'],['Pending',c('Pending'),'warn'],['Overdue',c('Overdue'),'bad'],['Hit rate',hr+'%',''],['Cancelled',c('Cancelled'),'mute']];
-    if(mode==='download')return downloadPdf({name:title,title:title.toUpperCase(),sub:scope,stats,fs:6.5,statusCols:[9,10],
-      head:['#','Requested / Needed','Company / Year','Project name','Category / Size','Kind / Qty','Artist / Prepared by',lsd?'LSD Qty':'Layered file','Stage details','Status','Result','Remarks'],
-      body:rows.map((r,i)=>[i+1,`${dshow(r.dateRequest)}\nneeded ${dshow(r.dateNeeded)}`,`${r.companyCode||''}\n${r.year||''}`,r.projectName,`${r.category||''}\n${r.size||''}`,`${r.kind||''}${r.qty!==''&&r.qty!=null?'\nQty '+r.qty:''}`,`${r.artist||''}\n${r.preparedBy||''}`,lsd?r.lsdQty:r.layeredFile,
+    if(mode==='download')return downloadPdf({name:title,title:title.toUpperCase(),sub:scope,stats,fs:6.5,statusCols:[10,11],
+      head:['#','Requested / Needed','Company / Year','Project name','PDRF No.','Category / Size','Kind / Qty','Artist / Prepared by',lsd?'LSD Qty':'Layered file','Stage details','Status','Result','Remarks'],
+      body:rows.map((r,i)=>[i+1,`${dshow(r.dateRequest)}\nneeded ${dshow(r.dateNeeded)}`,`${ccFull(r.companyCode)}\n${r.year||''}`,r.projectName,r.pdrfNo||'',`${r.category||''}\n${r.size||''}`,`${r.kind||''}${r.qty!==''&&r.qty!=null?'\nQty '+r.qty:''}`,`${r.artist||''}\n${r.preparedBy||''}`,lsd?r.lsdQty:r.layeredFile,
         ST.map((nm,k)=>{const v=r[sk+(k+1)];return `${v?'[x]':'[  ]'} ${nm}: ${v?recShow(v):'Pending'}`}).join('\n'),r._s,resOf(r),r.remarks||'']),
-      cols:{0:{cellWidth:8},8:{cellWidth:62}}});
+      cols:{0:{cellWidth:8},9:{cellWidth:62}}});
     const logo='';
     const html=`<!doctype html><html><head><meta charset="utf-8"><title>${esc(title)}</title><style>
       @page{size:landscape;margin:11mm 10mm 14mm}
@@ -1973,8 +2581,8 @@ const JO=(()=>{
       </style></head><body>
       <div class="top"><div><h1>${esc(title)}</h1><p>Printed ${esc(recShow(stampNow()))} · by ${esc(S.user.fullName||S.user.username)}</p><span class="scope">${esc(scope)}</span></div>${logo?`<img src="${esc(logo)}" alt="">`:''}</div>
       <div class="st">${stats.map(([k,v,t,n])=>`<div class="${t}"><span>${esc(k)}</span><b>${esc(v)}</b>${n?`<small>${esc(n)}</small>`:''}</div>`).join('')}</div>
-      <table><thead><tr><th>#</th><th>Requested / Needed</th><th>Company / Year</th><th>Project name</th><th>Category / Size</th><th>Kind / Qty</th><th>Artist / Prepared by</th><th>${lsd?'LSD Qty':'Layered file'}</th><th>Stage details</th><th>Status</th><th>Result</th><th>Remarks</th></tr></thead><tbody>
-      ${rows.map((r,i)=>{const rs=resOf(r);return`<tr><td>${i+1}</td><td>${esc(dshow(r.dateRequest))}<small>needed ${esc(dshow(r.dateNeeded))}</small></td><td>${esc(r.companyCode)}<small>${esc(r.year)}</small></td><td><b>${esc(r.projectName)}</b></td><td>${esc(r.category)}<small>${esc(r.size)}</small></td><td>${esc(r.kind)}${r.qty!==''&&r.qty!=null?`<small>Qty ${esc(r.qty)}</small>`:''}</td><td>${esc(r.artist)}<small>${esc(r.preparedBy)}</small></td><td>${esc(lsd?r.lsdQty:r.layeredFile)}</td><td class="sd">${ST.map((nm,i)=>{const v=r[sk+(i+1)];return `<div class="${v?'dn':'pd'}"><span>${v?'&#10003;':'&#9675;'} ${esc(nm)}</span><em>${v?esc(recShow(v)):'Pending'}</em></div>`}).join('')}</td><td><span class="pill ${cls(r._s)}">${esc(upL(r._s))}</span></td><td>${rs?`<span class="pill ${cls(rs)}">${esc(upL(rs))}</span>`:''}</td><td>${esc(upL(r.remarks))}</td></tr>`}).join('')}
+      <table><thead><tr><th>#</th><th>Requested / Needed</th><th>Company / Year</th><th>Project name</th><th>PDRF No.</th><th>Category / Size</th><th>Kind / Qty</th><th>Artist / Prepared by</th><th>${lsd?'LSD Qty':'Layered file'}</th><th>Stage details</th><th>Status</th><th>Result</th><th>Remarks</th></tr></thead><tbody>
+      ${rows.map((r,i)=>{const rs=resOf(r);return`<tr><td>${i+1}</td><td>${esc(dshow(r.dateRequest))}<small>needed ${esc(dshow(r.dateNeeded))}</small></td><td>${esc(ccFull(r.companyCode))}<small>${esc(r.year)}</small></td><td><b>${esc(r.projectName)}</b></td><td>${esc(r.pdrfNo||'')}</td><td>${esc(r.category)}<small>${esc(r.size)}</small></td><td>${esc(r.kind)}${r.qty!==''&&r.qty!=null?`<small>Qty ${esc(r.qty)}</small>`:''}</td><td>${esc(r.artist)}<small>${esc(r.preparedBy)}</small></td><td>${esc(lsd?r.lsdQty:r.layeredFile)}</td><td class="sd">${ST.map((nm,i)=>{const v=r[sk+(i+1)];return `<div class="${v?'dn':'pd'}"><span>${v?'&#10003;':'&#9675;'} ${esc(nm)}</span><em>${v?esc(recShow(v)):'Pending'}</em></div>`}).join('')}</td><td><span class="pill ${cls(r._s)}">${esc(upL(r._s))}</span></td><td>${rs?`<span class="pill ${cls(rs)}">${esc(upL(rs))}</span>`:''}</td><td>${esc(upL(r.remarks))}</td></tr>`}).join('')}
       </tbody></table><div class="foot">${esc(title)} · ${rows.length} item(s)</div></body></html>`;
     const f=document.createElement('iframe');f.style.cssText='position:fixed;right:0;bottom:0;width:0;height:0;border:0';document.body.appendChild(f);
     const d=f.contentWindow.document;d.open();d.write(html);d.close();
@@ -2008,8 +2616,10 @@ const JO=(()=>{
       if(a==='add')return form();
       if(a==='custom'){                                  // one row selected: open the Customized form filled from that project (as a new item)
         const sid=ids().length===1?ids()[0]:null,src=sid?pmOf(sid):null;
-        if(src&&src.id){const c={};['companyCode','projectName','year','category','size','qty','artist','preparedBy','layeredFile','remarks'].forEach(k=>c[k]=src[k]);return form({...c,kind:'Customized',from:src.id})}
-        return form({kind:'Customized'})}
+        if(!src||!src.id)return toast('Select exactly one row to customize.',1);
+        if(src.status==='Cancelled')return toast('This item is cancelled and cannot be customized.',1);
+        const c={};['dateRequest','dateNeeded','companyCode','projectName','year','category','size','kind','qty','artist','preparedBy','layeredFile','remarks'].forEach(k=>c[k]=src[k]);
+        return form({...c,from:src.id,upd:true})}      // UPDATE the selected item (same id), no new item is created
       if(a==='view'){const id=one();if(id)return view(id)}
       if(a==='edit'){const id=one();if(id)return form(pmOf(id))}
       if(a==='lsdEdit'){const id=one();if(id)return lsdForm(id)}
@@ -2042,7 +2652,7 @@ const JO=(()=>{
         sel.forEach(r=>{r.followUp=on?'1':'';r.followBy=on?S.user.username:'';r.followUpd=''});touch();save2cache();toast(on?'Marked for follow up.':'Follow up removed.');paint()}
       if(a==='print')return printSel();
       if(a==='more'){const id=one();if(id)return lsdQtyForm(id)}
-      if(a==='cancelU'&&!adm())return toast('Admin access only.',1);
+      if(a==='cancelU'&&lsd&&!adm())return toast('Admin access only.',1);
       if(a==='cancelU'&&!lsd){                          // user: cancel the selected project(s) in Project Monitoring; the admin sees them as cancelled and can restore (edit + save) or delete them
         if(!many())return;
         const sel=ids().map(i=>pmOf(i)).filter(p=>p.id&&p.status!=='Cancelled');
@@ -2078,10 +2688,18 @@ const JO=(()=>{
     modal(`<h2 style="font-size:20px;margin:0 0 12px">Details</h2><dl class="two2">${D.map(([x,y])=>`<dt>${x}</dt><dd>${esc(y)||'—'}</dd>`).join('')}${ST.map((x,i)=>`<dt>${x}</dt><dd>${r[k+(i+1)]?esc(recShow(r[k+(i+1)])):'—'}</dd>`).join('')}</dl><div class="btns"><button class="pri" onclick="JO.closeM()">Close</button></div>`,true);
   }
 
+  /* Active PDRFs are linked to project items; selecting one copies its client and project name. */
+  let activePdrfs=[];
+  const pdrfOptions=()=>activePdrfs.map(r=>`<option value="${esc(r.pdrfNo)}" label="${esc(r.projectProduct||'')}"></option>`).join('');
+  const pdrfSelect=(selected='')=>`<label class="s4">PDRF No. (required)<input id="j_pdrfNo" type="text" list="j_activePdrfOptions" required autocomplete="off" placeholder="Type or search PDRF No." value="${esc(selected)}"><datalist id="j_activePdrfOptions">${pdrfOptions()}</datalist></label>`;
+  const removeUsedPdrf=no=>{activePdrfs=activePdrfs.filter(r=>String(r.pdrfNo)!==String(no));const dl=$('#j_activePdrfOptions');if(dl)dl.innerHTML=pdrfOptions();};
+  const applyPdrf=()=>{const r=activePdrfs.find(x=>String(x.pdrfNo)===$('#j_pdrfNo')?.value);if(!r)return;const c=$('#f_companyCode'),n=$('#f_projectName');if(c)c.value=String(r.clientAccount||'').toUpperCase();if(n)n.value=String(r.projectProduct||'');
+    const d=$('#f_dateNeeded'),tl=String(r.targetLaunch||'').slice(0,10);                     // Date Needed = the PDRF Target Launch Date (stays editable; a date typed by hand is not overwritten)
+    if(d&&/^\d{4}-\d{2}-\d{2}$/.test(tl)&&(d.value===''||d.value===d.dataset.auto)){d.value=show(tl);d.dataset.auto=d.value}};
   /* ---------- project form (used by the pop-up and by the New Project page) ---------- */
   const dlst=(id,a,v)=>`<input id="${id}" list="jd_${id}" autocomplete="off" placeholder="Select or type" value="${esc(v)}"><datalist id="jd_${id}">${(a||[]).map(x=>`<option value="${esc(x)}">`).join('')}</datalist>`;
-  const artistList=()=>[...new Set([...(OPT.artist||[]),...uniq('artist')])];
-  const prepList=()=>[...new Set([S.user?S.user.username:'',...(OPT.preparedBy||[]),...uniq('preparedBy')].filter(Boolean))];
+  const artistList=()=>dedupe([...(OPT.artist||[]),...uniq('artist')]);
+  const prepList=()=>dedupe([S.user?S.user.username:'',...(OPT.preparedBy||[]),...uniq('preparedBy')]);
   const defPrep=p=>p.preparedBy!=null&&p.preparedBy!==''?p.preparedBy:(p.id||!S.user?'':S.user.username);   // new project: whoever is logged in
   function formBody(p){
     const cat=p.category||(OPT.category||[])[0]||'';
@@ -2141,7 +2759,7 @@ const JO=(()=>{
   const stageErr=(n,names)=>{for(let i=1;i<=n;i++){if($('#st_c'+i).checked&&$('#st_t'+i).value.trim()&&!parseDT($('#st_t'+i).value))return `"${names[i-1]}": enter the date and time as mm/dd/yyyy hh:mm AM/PM.`}return ''};
   const modalBody=p=>{
     const cat=p.category||(OPT.category||[])[0]||'';
-    return `<label>Date Request${dateField('f_dateRequest')}</label><label>Date Needed${dateField('f_dateNeeded')}</label>
+    return `${pdrfSelect(p.pdrfNo||'')}<label>Date Request${dateField('f_dateRequest')}</label><label>Date Needed${dateField('f_dateNeeded')}</label>
     <label class="s2">Company Code<select id="f_companyCode">${ccOptions(OPT.companyCode,p.companyCode)}</select></label>
     <label class="s2">Promo / Project name<input id="f_projectName" value="${esc(p.projectName)}" autocomplete="off"></label>
     <label>Year<select id="f_year">${jopts(OPT.year,p.year||new Date().getFullYear())}</select></label><label>Category<select id="f_category">${jopts(OPT.category,cat)}</select></label>
@@ -2151,23 +2769,27 @@ const JO=(()=>{
   };
   async function form(p={}){
     await S.optsP;
+    try{const pj=await api('pdList');activePdrfs=(pj.data||[]).filter(r=>String(r.status||'ACTIVE').toUpperCase()==='ACTIVE')}catch(e){activePdrfs=[]}
     const edit=!!p.id;
     const st=edit?stat(p,p.dateNeeded):'';
-    modal(`<h2 style="font-size:20px;margin:0 0 12px">${edit?'Edit':p.kind==='Customized'?'Customized':'New'} Project</h2><div class="jgrid">${modalBody(p)}
+    modal(`<h2 style="font-size:20px;margin:0 0 12px">${edit?'Edit':p.upd?'Customized':'New'} Project</h2><div class="jgrid">${modalBody(p)}
     ${edit?`<label>Status<select id="f_status"><option value="">${p.status==='Cancelled'?'Restore to list (auto from stages)':'Auto (from stages)'}</option><option value="Cancelled">Cancelled</option></select></label>
       <div class="s3 jinfo">Now: <span class="jpill ${st}">${esc(st)}</span>${p.result?`<span class="jpill ${p.result}">${esc(upL(p.result))}</span>`:''}<span class="muted">Completed is set automatically when every stage is ticked.</span></div>
       <div class="s4 jsec">Stages <span class="muted" style="font-weight:400">tick = done · the date and time can be corrected</span></div><div class="s4 stg">${PST.map((x,i)=>stageBox(i+1,x,p['s'+(i+1)])).join('')}</div>`:''}</div>
-    <div class="btns" style="margin-top:14px"><button onclick="JO.cancelM()">Cancel</button><button class="pri" id="jsave">${edit?'Save':p.kind==='Customized'?'Update':'Add item'}</button></div>`,true);
+    <div class="btns" style="margin-top:14px"><button onclick="JO.cancelM()">Cancel</button><button class="pri" id="jsave">${edit?'Save':p.upd?'Update':'Add item'}</button></div>`,true);
     bindForm(p);if(edit)bindStages(5,PST);
+    $('#j_pdrfNo').oninput=applyPdrf;$('#j_pdrfNo').onchange=applyPdrf;
+    if(p.pdrfNo)$('#j_pdrfNo').value=p.pdrfNo;
+    if(p.fromPd)applyPdrf();                       // opened from PDRF List > FOR PROJECT: copy company, project name and Date Needed from the PDRF
     $('#jsave').onclick=async()=>{
-      const it=readForm();if(!check(it))return;it.id=p.id;
+      const it=readForm();const chosenPdrf=activePdrfs.find(r=>String(r.pdrfNo)===$('#j_pdrfNo')?.value);if(!chosenPdrf){toast('Select an active PDRF from the suggestions before adding an item.',1);$('#j_pdrfNo')?.focus();return}it.pdrfNo=chosenPdrf.pdrfNo;if(!check(it))return;it.id=p.id||(p.upd?p.from:undefined);if(p.upd)it.custom=true;
       if(edit){const se=stageErr(5,PST);if(se)return toast(se,1);it.status=$('#f_status').value==='Cancelled'?'Cancelled':'Pending';Object.assign(it,readStages(5,'s'));const om=orderMsg(it,'s',PST,p);if(om)return toast(om,1)}
       const b=$('#jsave');if(b.disabled)return;b.disabled=true;
       try{
         const j=await api('saveProject',{item:it});
-        if(edit){const rec=pmOf(p.id);Object.assign(rec,it);rec.followUp='';jfin(rec,false,rec.dateNeeded);touch();save2cache()}else{pushLocal(it,j.id);
-          if(p.from){const src=pmOf(p.from);if(src.id&&src.followUp){try{await api('setFlag',{kind:'project',ids:[src.id],value:false});src.followUp='';touch();save2cache()}catch(e){}}}}   // customized from a followed-up project: its follow up mark is cleared
-        closeM();J.sel.clear();toast(edit?'Saved.':'Project added.');fillFilters();paint();if(S.view==='jnew')recent();refresh(true).catch(()=>{});
+        if(edit||p.upd){const rec=pmOf(it.id);delete it.custom;Object.assign(rec,it);rec.followUp='';jfin(rec,false,rec.dateNeeded);touch();save2cache()}else{pushLocal(it,j.id);removeUsedPdrf(it.pdrfNo)}   // a newly used PDRF moves to IN PROGRESS on the server
+        if(p.fromPd){closeM();toast('Project added. PDRF status changed to IN PROGRESS.');if(p.done)p.done();return}      // from PDRF List: close the pop-up and refresh that list
+        closeM();J.sel.clear();toast(p.upd?'Updated.':edit?'Saved.':'Project added.');fillFilters();paint();if(S.view==='jnew')recent();refresh(true).catch(()=>{});
       }catch(e){b.disabled=false}
     };
   }
@@ -2208,16 +2830,28 @@ const JO=(()=>{
   }
 
   /* ---------- New Project page ---------- */
-  let rsel=null;
+  let rsel=null,rso=null;      // rso = sort of the Recently added list
+  // click anywhere outside the Recently added list (not on its table, buttons or a popup) -> back to the default order
+  if(!window._rsoReset){window._rsoReset=1;document.addEventListener('click',e=>{
+    const box=document.getElementById('jrec');
+    if(!box||!rso)return;
+    const path=e.composedPath?e.composedPath():[];
+    if(path.includes(box)||box.contains(e.target)||e.target.closest('#modal,#dlg,.ovl'))return;
+    rso=null;recent();
+  },true)}   // capture phase: runs before the list redraws itself, so a header click is never mistaken for an outside click
   function recent(){
     const box=$('#jrec');if(!box)return;
-    const rs=[...P()].reverse().slice(0,15);
+    let rs=[...P()].reverse().slice(0,15);
+    if(rso)rs=sortRows(rs,rso,(r,k)=>k==='_s'?stat(r,r.dateNeeded):(k==='dateRequest'||k==='dateNeeded')?nd(r[k]):r[k]);
     if(rsel&&!rs.some(r=>String(r.id)===rsel))rsel=null;
-    box.innerHTML=`<h3 style="margin:0 0 8px">Recently added</h3><div class="card tw"><table><thead><tr><th>Date Request</th><th>Date Needed</th><th>Company</th><th>Project name</th><th>Category</th><th>Size</th><th>Kind</th><th>Qty</th><th>Artist</th><th>Status</th></tr></thead><tbody>${
-      rs.length?rs.map(r=>`<tr data-id="${esc(r.id)}" class="${String(r.id)===rsel?'on':''}" style="cursor:pointer"><td>${esc(dshow(r.dateRequest))}</td><td>${esc(dshow(r.dateNeeded))}</td><td>${esc(r.companyCode)}</td><td>${esc(r.projectName)}</td><td>${esc(r.category)}</td><td>${esc(r.size)}</td><td>${esc(r.kind)}</td><td>${esc(r.qty)}</td><td>${esc(r.artist)}</td><td><span class="jpill ${stat(r,r.dateNeeded)}">${esc(stat(r,r.dateNeeded))}</span></td></tr>`).join('')
-      :'<tr><td class="empty" colspan="10">No projects yet.</td></tr>'}</tbody></table></div>
+    box.innerHTML=`<div class="card tw"><h3 style="margin:0;padding:14px 16px 8px">Recently added</h3><table><thead><tr><th data-sk="dateRequest">Date Request</th><th data-sk="dateNeeded">Date Needed</th><th data-sk="companyCode">Company</th><th data-sk="projectName">Project name</th><th data-sk="pdrfNo">PDRF No.</th><th data-sk="category">Category</th><th data-sk="size">Size</th><th data-sk="kind">Kind</th><th data-sk="qty">Qty</th><th data-sk="artist">Artist</th><th data-sk="_s">Status</th></tr></thead><tbody>${
+      rs.length?rs.map(r=>`<tr data-id="${esc(r.id)}" class="${String(r.id)===rsel?'on':''}" style="cursor:pointer"><td>${esc(dshow(r.dateRequest))}</td><td>${esc(dshow(r.dateNeeded))}</td><td>${esc(r.companyCode)}</td><td>${esc(r.projectName)}</td><td>${esc(r.pdrfNo||'')}</td><td>${esc(r.category)}</td><td>${esc(r.size)}</td><td>${esc(r.kind)}</td><td>${esc(r.qty)}</td><td>${esc(r.artist)}</td><td><span class="jpill ${stat(r,r.dateNeeded)}">${esc(stat(r,r.dateNeeded))}</span></td></tr>`).join('')
+      :'<tr><td class="empty" colspan="11">No projects yet.</td></tr>'}</tbody></table></div>
     <div class="jbar"><button data-r="view">VIEW</button><button data-r="edit">EDIT</button></div>`;
+    markSort(box.querySelector('thead'),rso);
     box.onclick=e=>{
+      const th=e.target.closest('th[data-sk]');
+      if(th){const k=th.dataset.sk;rso=rso&&rso.k===k?{k,asc:!rso.asc}:{k,asc:true};recent();return}
       const tr=e.target.closest('tbody tr[data-id]');
       if(tr){rsel=tr.dataset.id;box.querySelectorAll('tbody tr').forEach(x=>x.classList.toggle('on',x===tr));return}
       const x=e.target.dataset.r;if(!x)return;
@@ -2226,17 +2860,19 @@ const JO=(()=>{
     };
     box.ondblclick=e=>{const tr=e.target.closest('tbody tr[data-id]');if(tr){rsel=tr.dataset.id;form(pmOf(rsel))}};
   }
-  function newPage(){
-    $('#main').innerHTML=`<div id="joRoot"><h2>New Project</h2><div class="split"><div><div class="card"><div class="form" id="jform">${formBody({})}</div>
+  async function newPage(){
+    try{const pj=await api('pdList');activePdrfs=(pj.data||[]).filter(r=>String(r.status||'ACTIVE').toUpperCase()==='ACTIVE')}catch(e){activePdrfs=[]}
+    $('#main').innerHTML=`<div id="joRoot"><h2>New Project</h2><div class="split"><div><div class="card"><div class="form jnp">${pdrfSelect()}<div id="jform" style="display:contents">${formBody({})}</div></div>
       <div class="btns" style="margin-top:14px"><button id="jclr">Clear</button><button class="pri" id="jadd">Add item</button></div></div></div><div id="jrec"></div></div></div>`;
     if(!S.jobs&&S.cache.jobs)S.jobs=S.cache.jobs;
-    bindForm({});recent();
-    const resetForm=()=>{$('#jform').innerHTML=formBody({});bindForm({})};
+    bindForm({});recent();$('#j_pdrfNo').oninput=applyPdrf;$('#j_pdrfNo').onchange=applyPdrf;
+    const resetForm=()=>{$('#jform').innerHTML=formBody({});bindForm({});$('#j_pdrfNo').value='';$('#j_pdrfNo').oninput=applyPdrf;$('#j_pdrfNo').onchange=applyPdrf;const dl=$('#j_activePdrfOptions');if(dl)dl.innerHTML=pdrfOptions()};
     $('#jclr').onclick=resetForm;
     $('#jadd').onclick=async()=>{
-      const it=readForm();if(!check(it))return;
+      const it=readForm();const chosenPdrf=activePdrfs.find(r=>String(r.pdrfNo)===$('#j_pdrfNo').value);if(!chosenPdrf){toast('Select an active PDRF from the suggestions before adding an item.',1);$('#j_pdrfNo').focus();return}it.pdrfNo=chosenPdrf.pdrfNo;if(!check(it))return;
       const b=$('#jadd');if(b.disabled)return;b.disabled=true;
-      try{const j=await api('saveProject',{item:it});pushLocal(it,j.id);toast('Project added.');resetForm();recent();refresh(true).catch(()=>{})}catch(e){}
+      try{const j=await api('saveProject',{item:it});pushLocal(it,j.id);removeUsedPdrf(it.pdrfNo);toast('Project added. PDRF status changed to IN PROGRESS.');
+        resetForm();recent();refresh(true).catch(()=>{})}catch(e){}
       b.disabled=false;
     };
     const sugg=()=>{if(S.view!=='jnew')return;recent();
@@ -2245,7 +2881,8 @@ const JO=(()=>{
     if(S.cache.jobs&&Date.now()-(S.at.jobs||0)<20000){S.jobs=S.cache.jobs;touch();sugg()}      // fresh enough: no new request
     else api('jobs').then(j=>{S.jobs=S.cache.jobs=j.data;touch();sugg()}).catch(()=>{});
   }
-  return{render,newPage,closeM,cancelM,reset,poll};
+  const openNew=async(no,done)=>{await form({pdrfNo:no,fromPd:true,done});const f=$('#j_pdrfNo');if(f&&activePdrfs.every(x=>String(x.pdrfNo)!==String(no))){closeM();toast(no+' is no longer ACTIVE, so it cannot be sent to a project.',1)}};   // used by PDRF List > FOR PROJECT
+  return{render,newPage,closeM,cancelM,reset,poll,openNew};
 })();
 VIEWS.jnew=JO.newPage;VIEWS.jp=JO.render;VIEWS.jl=JO.render;
 REDRAW.jp=JO.render;REDRAW.jl=JO.render;REDRAW.jnew=()=>{};
@@ -2417,6 +3054,51 @@ const CHAT=(()=>{
   };
 })();
 
+/* ====== ACCOUNT SETTINGS: edit my full name, position and password ====== */
+const ACCT={
+  async open(){
+    if(!S.token)return;
+    const m=$('#modal');
+    m.innerHTML='<div class="card"><p class="muted">Loading…</p></div>';m.hidden=false;
+    let me;try{me=await api('myAccount')}catch(e){m.hidden=true;return}
+    m.innerHTML=`<div class="card"><h2 style="font-size:20px;margin-bottom:6px">Account settings</h2>
+<p class="muted" style="margin:0 0 10px">Username <b>${esc(me.username)}</b>${me.employeeNo?` · Employee No. <b>${esc(me.employeeNo)}</b>`:''}</p>
+<div class="form"><label class="full">Full name<input class="pdup" id="as_fn" type="text" maxlength="60" autocomplete="off" value="${esc(me.fullName)}"></label>
+<label class="full">Position<input class="pdup" id="as_pos" type="text" maxlength="60" autocomplete="off" value="${esc(me.position)}"></label>
+<div class="full jsec" style="font-weight:600;margin-top:6px">Change password <span class="muted" style="font-weight:400">(leave empty to keep your password)</span></div>
+<label class="full">Current password<input id="as_p0" type="password" autocomplete="current-password"></label>
+<label class="full">New password<input id="as_p1" type="password" autocomplete="new-password" placeholder="8+ characters, letters and a number"></label>
+<label class="full">Confirm new password<input id="as_p2" type="password" autocomplete="new-password"></label></div>
+<p class="muted" style="font-size:12px;margin:8px 0 0">If you change your full name, it is also updated on your PDRFs (Requested By, WIPI signature), your Prepared by entries and your chat messages.</p>
+<div class="err" id="as_e" style="margin-top:8px"></div><div class="btns"><button type="button" id="as_x">Cancel</button><button type="button" class="pri" id="as_s">Save</button></div></div>`;
+    $('#as_x').onclick=()=>m.hidden=true;
+    $('#as_fn').focus();
+    const save=async()=>{
+      const e=$('#as_e'),fn=$('#as_fn').value.trim(),pos=$('#as_pos').value.trim(),c=$('#as_p0').value,n=$('#as_p1').value;e.textContent='';
+      if(!fn){e.textContent='Enter your full name.';return}
+      if(!pos){e.textContent='Enter your position.';return}
+      if(n||c||$('#as_p2').value){
+        if(!c||!n){e.textContent='To change your password, fill in the current and the new password.';return}
+        if(n!==$('#as_p2').value){e.textContent='The two new passwords do not match.';return}
+      }
+      const nameChanged=fn.toUpperCase()!==String(me.fullName||'').toUpperCase();
+      if(nameChanged&&!(await ask(`Change your name from ${me.fullName||me.username} to ${fn.toUpperCase()}?\n\nYour PDRFs and other records that carry your name will show the new name.`,'Change name')))return;
+      const b=$('#as_s');b.disabled=true;
+      try{
+        const j=await api('updateMyAccount',{fullName:fn,position:pos,current:c,password:n},true);
+        if(j.token)S.token=j.token;
+        S.user.fullName=j.fullName;S.user.position=j.position;
+        $('#who').textContent=`${S.user.fullName} (${S.user.role})`;
+        S.pdList=null;S.pdAt=0;S.jobs=null;if(S.cache){S.cache.jobs=null;S.cache.orders=null}if(S.at){S.at.jobs=0;S.at.orders=0}      // the lists are read again, so they show the new name
+        m.hidden=true;toast(j.token?'Account settings and password saved.':'Account settings saved.');
+        try{go(S.view)}catch(_){}
+      }catch(err){e.textContent=err.message;b.disabled=false}
+    };
+    $('#as_s').onclick=save;
+    m.querySelectorAll('input').forEach(i=>i.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();save()}});
+  }
+};
+
 /* ====== CHANGE OWN PASSWORD ====== */
 const CHPW={
   open(weak){
@@ -2441,7 +3123,7 @@ const CHPW={
     m.querySelectorAll('input').forEach(i=>i.onkeydown=ev=>{if(ev.key==='Enter'){ev.preventDefault();save()}});
   }
 };
-$('#pwb').onclick=()=>CHPW.open();
+$('#pwb').onclick=()=>ACCT.open();
 
 /* ====== BOOT ====== */
 localStorage.removeItem('ps'); // login is never remembered: every open or reload starts at the sign-in screen
@@ -2529,20 +3211,24 @@ document.addEventListener('keydown',e=>{
     monitor:S('<rect x="3" y="4" width="18" height="12" rx="2"/>','<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/>'),
     gear:S('<circle cx="12" cy="12" r="6"/>','<circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/>'),
     list:S('<rect x="4" y="4" width="16" height="16" rx="3"/>','<rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 9h8M8 12h8M8 15h5"/>'),
-    users:S('<circle cx="9" cy="8" r="3.5"/>','<circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0"/><circle cx="17" cy="9" r="2.5"/><path d="M18 14a5 5 0 0 1 4 5"/>')
+    users:S('<circle cx="9" cy="8" r="3.5"/>','<circle cx="9" cy="8" r="3.5"/><path d="M2 20a7 7 0 0 1 14 0"/><circle cx="17" cy="9" r="2.5"/><path d="M18 14a5 5 0 0 1 4 5"/>'),
+    doc:S('<path d="M6 3h8l4 4v14H6z"/>','<path d="M6 3h8l4 4v14H6zM14 3v4h4M9 12h6M9 16h5"/>'),
+    docplus:S('<path d="M6 3h8l4 4v14H6z"/>','<path d="M6 3h8l4 4v14H6zM14 3v4h4M12 11v6M9 14h6"/>'),
+    dash:S('<rect x="3" y="3" width="8" height="10" rx="1.5"/><rect x="13" y="11" width="8" height="10" rx="1.5"/>','<rect x="3" y="3" width="8" height="10" rx="1.5"/><rect x="13" y="3" width="8" height="6" rx="1.5"/><rect x="3" y="15" width="8" height="6" rx="1.5"/><rect x="13" y="11" width="8" height="10" rx="1.5"/>')
   };
   /* first match wins: [pattern on the button's label, icon] */
   const MAP=[
+    [/^dashboard$/,'dash'],[/^overview$/,'dash'],[/^pdrf$/,'doc'],[/^new pdrf/,'docplus'],[/^edit pdrf/,'edit'],[/^pdrf list/,'list'],
     [/^back\b/,'back'],[/^new project/,'folderplus'],[/^register plates/,'layers'],[/^project monitoring/,'folder'],
     [/^lsd monitoring/,'layers'],[/^plates log/,'log'],[/^plates order/,'cart'],[/^plates monitoring/,'monitor'],
     [/^dropdowns/,'list'],[/^accounts$/,'users'],[/^project$/,'folder'],[/^plates$/,'layers'],[/^settings$/,'gear'],
     [/^open project/,'external'],[/^review account/,'clip'],[/^create account/,'userplus'],[/^sign in/,'login'],
-    [/^send request/,'send'],[/^send\b/,'send'],[/^add to order/,'cart'],[/^additional lsd/,'layers'],[/^for lsd/,'layers'],
+    [/^send request/,'send'],[/^send\b/,'send'],[/^add to order/,'cart'],[/^additional lsd/,'layers'],[/^for lsd/,'layers'],[/^for project/,'folderplus'],[/^open\b/,'external'],[/^(approve|received)$/,'check'],
     [/^(add|new)\b/,'plus'],[/^(customi[sz]ed?)\b/,'sliders'],[/^unreceive/,'undo'],[/^follow up/,'bell'],
     [/^print/,'printer'],[/^view\b/,'eye'],[/^edit/,'edit'],[/^delete/,'trash'],[/^download/,'download'],
     [/^(save|save changes)\b/,'save'],[/^(update|refresh|reload)/,'refresh'],[/^clear/,'eraser'],
     [/^reset password/,'key'],[/^(make|remove) super admin/,'shield'],[/^mark as read/,'checkall'],
-    [/^show more/,'chevron'],[/^(submit|ok)$/,'check'],[/^(cancel|close|reject|no)$/,'x']
+    [/^show more/,'chevron'],[/^(submit|ok)$/,'check'],[/^(cancel|cancelled|close|reject|no)$/,'x']
   ];
   function iconFor(t){t=t.toLowerCase();for(const [re,k] of MAP)if(re.test(t))return I[k];return ''}
   function scan(){
