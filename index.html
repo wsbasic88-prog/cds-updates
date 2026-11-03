@@ -14,6 +14,12 @@
 :root{--ink:#1b1f2a;--mute:#6b7280;--line:#d9dde5;--bg:#d1d5db;--card:#fff;--pri:#1d4ed8;--ok:#15803d;--bad:#b91c1c}
 *{box-sizing:border-box}
 body{margin:0;font:14px/1.45 Poppins,system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+/* Register Plates: title on the left column, editing note over the list column */
+.ttlrow{display:grid;grid-template-columns:300px minmax(0,1fr);gap:14px;align-items:start;margin:0 0 16px}
+.ttlrow h2{margin:0;line-height:38px}
+#pHint{display:flex;align-items:center;gap:10px;box-sizing:border-box;min-height:38px;padding:6px 14px;font-size:13px;line-height:1.4;color:#7a5a12;background:#fbe8b8;border:1px solid #d9b45a;border-radius:10px}
+#pHint .pi{flex:none;display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#7a5a12;color:#fff;font-weight:700;font-size:12px}
+@media(max-width:1600px){.ttlrow{grid-template-columns:1fr}}
 [hidden]{display:none!important}
 h2{font-size:26px;margin:0 0 16px}h2 small{font-size:14px;font-weight:400;color:var(--mute);margin-left:8px}
 button,input,select{font:inherit}
@@ -443,6 +449,12 @@ main:has(#dashRoot){max-width:none;padding-left:clamp(12px,2vw,40px);padding-rig
 <meta name="theme-color" content="#1b1f2a">
 <link rel="apple-touch-icon" href="icon-192.png">
 <style id="pastelBtn">
+/* Revision tags in Plates Log: mint = latest, grey = old */
+.rvt{display:inline-block;margin-left:6px;padding:1px 7px;border-radius:999px;font-size:9px;font-weight:700;letter-spacing:.6px;vertical-align:1px;line-height:1.5}
+.rvt.rv-new{background:#CDEBD8;color:#1F5C3A;border:1px solid #1F5C3A}
+.rvt.rv-old{background:#E8EAF0;color:#6b7280;border:1px solid #b9bfcc}
+tr.rv-oldrow td{color:#8b93a3}
+tr.rv-newrow td:first-child{box-shadow:inset 3px 0 0 #3fa876}
 /* Pastel buttons: color follows function. Classes are added by the small script at the bottom. */
 :root{--b-save:#CDEBD8;--b-save-t:#1F5C3A;--b-ok:#BFE8D2;--b-ok-t:#14532D;--b-view:#D6E6FA;--b-view-t:#1E4E8C;--b-edit:#FBE8B8;--b-edit-t:#7A5A12;--b-print:#E3DAF5;--b-print-t:#4B3A86;--b-ref:#CFEFF0;--b-ref-t:#1D5F63;--b-send:#FDDDC8;--b-send-t:#8A4A1F;--b-del:#F8D4D8;--b-del-t:#8E2A36;--b-neu:#E8EAF0;--b-neu-t:#4B5263}
 button.b-save,button.b-ok,button.b-view,button.b-edit,button.b-print,button.b-ref,button.b-send,button.b-del,button.b-neu{font-weight:600;transition:filter .15s,transform .05s}
@@ -1165,8 +1177,16 @@ document.addEventListener('click',e=>{
 },true);
 const renum=(root,set,attr)=>{const m=new Map();[...set].forEach((v,i)=>m.set(String(v),i+1));root.querySelectorAll('input['+attr+']').forEach(cb=>{const b=cb.parentNode.querySelector('.rk');if(b)b.textContent=m.get(String(cb.getAttribute(attr)))||''})};
 const inRank=(set,list,idOf)=>{const by=new Map(list.map(x=>[String(idOf(x)),x]));return [...set].map(id=>by.get(String(id))).filter(Boolean)};
+/* Revision tags (Plates Log only): plates with the same Company + Project + Category + Size are one family. The highest revision is LATEST, the lower ones are OLD. */
+let REVMAP=null;
+const revKey=p=>[p.companyCode,p.promo,p.category,p.size].map(v=>String(v==null?'':v).trim().toUpperCase()).join('|');
+const revNum=p=>parseInt(String(p.revisionNo==null?'':p.revisionNo).replace(/\D/g,''),10)||1;
+const revBuild=rows=>{const m={};rows.forEach(p=>{const k=revKey(p),n=revNum(p),o=m[k]||(m[k]={max:0,revs:new Set()});o.revs.add(n);if(n>o.max)o.max=n});REVMAP=m};
+const revState=p=>{if(!REVMAP)return'';const o=REVMAP[revKey(p)];if(!o||o.revs.size<2)return'';return revNum(p)===o.max?'latest':'old'};
+const revCell=p=>{const st=revState(p),t=esc(padRev(p.revisionNo));if(!st)return t;const o=REVMAP[revKey(p)];return st==='latest'?`${t}<span class="rvt rv-new" title="Latest of ${o.revs.size} revisions">LATEST</span>`:`${t}<span class="rvt rv-old" title="Newer revision: ${padRev(o.max)}">OLD</span>`};
+const revDone=h=>{REVMAP=null;return h};
 const tbl=(rows0,head,cell,sel,extra=[],srt=null)=>{const lim=S.rowLim||100000,rows=rows0.length>lim?rows0.slice(0,lim):rows0,more=rows0.length>rows.length?`<tr><td colspan="${F.length+extra.length+(head?1:0)}" style="text-align:center;padding:12px"><button class="sm" data-more="1">Show more</button> <span class="muted">showing ${rows.length} of ${rows0.length}</span></td></tr>`:'';return `<div class="card tw"><table><thead><tr>${F.map(f=>srt?`<th class="srt${srt.k===f[0]?' cur':''}" data-sk="${f[0]}" title="Click to sort">${f[1]}${srt.k===f[0]?`<i class="ar">${srt.asc?'▲':'▼'}</i>`:''}</th>`:`<th>${f[1]}</th>`).join('')}${extra.map(x=>srt&&x[2]?`<th class="srt${srt.k===x[2]?' cur':''}" data-sk="${x[2]}" title="Click to sort">${x[0]}${srt.k===x[2]?`<i class="ar">${srt.asc?'▲':'▼'}</i>`:''}</th>`:`<th>${x[0]}</th>`).join('')}${head?`<th>${head}</th>`:''}</tr></thead><tbody>${
-  rows.length?rows.map((r,i)=>`<tr data-i="${i}" class="${sel&&sel(r)?'on':''}">${F.map(f=>`<td>${esc(disp(f[2],r[f[0]]))}</td>`).join('')}${extra.map(x=>`<td>${x[1](r)}</td>`).join('')}${head?`<td>${cell(r,i)}</td>`:''}</tr>`).join('')
+  rows.length?rows.map((r,i)=>`<tr data-i="${i}" class="${sel&&sel(r)?'on':''}${REVMAP?({latest:' rv-newrow',old:' rv-oldrow'}[revState(r)]||''):''}">${F.map(f=>`<td>${f[0]==='revisionNo'&&REVMAP?revCell(r):esc(disp(f[2],r[f[0]]))}</td>`).join('')}${extra.map(x=>`<td>${x[1](r)}</td>`).join('')}${head?`<td>${cell(r,i)}</td>`:''}</tr>`).join('')
   :`<tr><td class="empty" colspan="${F.length+extra.length+(head?1:0)}">No records yet.</td></tr>`}${more}</tbody></table></div>`};
 document.addEventListener('click',e=>{if(!(e.target.dataset&&e.target.dataset.more))return;S.rowLim=(S.rowLim||300)+300;const f=REDRAW[S.view];if(f)f()});
 /* received time helpers: receivedDate is 'yyyy-MM-dd HH:mm' (older records: date only = end of that day) */
@@ -1442,19 +1462,19 @@ const VIEWS={
 plates(){
   if(S.user.role!=='admin')return go('log');
   S.sel=null;S.editId=null;
-  $('#main').innerHTML=`<h2>Register Plates</h2><div class="split">
+  $('#main').innerHTML=`<div class="ttlrow"><h2>Register Plates</h2><div id="pHint" hidden><span class="pi">i</span><span><b>Editing this item.</b> <b>UPDATE</b> changes it. <b>ADD</b> saves a new item: change the Revision No. so the old and latest are tagged.</span></div></div><div class="split">
     ${formHtml('p_','<button class="pri" id="pa">ADD</button><button class="pri" id="pu" disabled>UPDATE</button><button id="pc">CANCEL</button>')}
     <div><div class="top"><input id="pq" type="search" placeholder="Search any column"><button id="pr">REFRESH</button></div><div id="pt"></div>
     <div class="bar"><button id="bView">VIEW</button><button id="bEdit">EDIT</button><button id="bDel">DELETE</button></div></div></div>`;
   setF('p_');
-  const mode=ed=>{$('#pa').disabled=ed;$('#pu').disabled=!ed};            // ADD when new, UPDATE when a row is being edited
+  const mode=ed=>{$('#pa').disabled=false;$('#pu').disabled=!ed;$('#pHint').hidden=!ed};   // ADD is always available; UPDATE only while a row is being edited (admin chooses update or add as new)
   const reset=()=>{S.editId=null;setF('p_');mode(false)};
   const pick=()=>S.plates.find(p=>p.id===S.sel);
   const need=()=>{const p=pick();if(!p)toast('Select a row first.',1);return p};
   const drawP=()=>{
     const q=($('#pq')?$('#pq').value:'').toLowerCase();
     S.pvis=sortRows(S.plates.filter(p=>!q||F.some(([k])=>String(p[k]).toLowerCase().includes(q))),SORTS.reg,plateVal);   // newest added on top
-    $('#pt').innerHTML=tbl(S.pvis,'',null,r=>r.id===S.sel,[],curSort('reg'));
+    revBuild(S.plates);$('#pt').innerHTML=revDone(tbl(S.pvis,'',null,r=>r.id===S.sel,[],curSort('reg')));   // OLD / LATEST tags
   };
   S.drawP=drawP;drawP();sortClick($('#pt'),'reg',drawP);
   S.resetSort=()=>{if(SORTS.reg){delete SORTS.reg;drawP()}};
@@ -1473,7 +1493,11 @@ plates(){
   const save=async btn=>{
     const o=getF('p_');if(!valid(o))return;
     if(btn.disabled)return;
-    const label=btn.textContent,editing=!!S.editId;
+    if(btn.id==='pa'&&S.editId){                                   // ADD while editing = save as another item (new revision)
+      const base=S.plates.find(p=>p.id===S.editId);
+      if(base&&padRev(base.revisionNo)===o.revisionNo&&!(await ask('Revision No. '+o.revisionNo+' is the same as the selected item.\nAdd it as another item with the same revision?','Add anyway')))return;
+    }
+    const label=btn.textContent,editing=btn.id==='pu'&&!!S.editId;
     $('#pa').disabled=$('#pu').disabled=true;btn.textContent='SAVING…';
     try{
       if(editing){
@@ -1481,7 +1505,7 @@ plates(){
         S.plates=S.plates.map(p=>p.id===o.id?{...p,...o}:p);toast('Item updated.');
       }else{
         const j=await api('addPlate',{item:o});
-        S.plates=[...S.plates,{...o,id:j.id||('tmp'+Date.now()),createdAt:'ADDED PLATES'}];toast('Item added.');
+        S.plates=[...S.plates,{...o,id:j.id||('tmp'+Date.now()),createdAt:'ADDED PLATES'}];toast(S.editId?`Added as a new item (REV ${o.revisionNo}).`:'Item added.');
       }
       S.cache={};reset();REDRAW.plates();           // show the change instantly, no reload
       api('plates').then(j=>{S.plates=S.cache.plates=j.data;if(S.view==='plates')REDRAW.plates()}).catch(()=>{});  // quiet refresh
@@ -1501,7 +1525,7 @@ log(){
     <div class="flt">${[['companyCode','Company Code'],['year','Year'],['category','Category'],['size','Size']].map(([k,l])=>`<label>${l}<select data-f="${k}"></select></label>`).join('')}
       <label>Sort by<select id="sortBy"><option value="">Default (newest first)</option>${(OPT.sortBy||[]).map(l=>String(l).toLowerCase()==='date received'?['createdAt','Date Received']:colByName(l)).filter(Boolean).map(f=>`<option value="${f[0]}">${f[1]}</option>`).join('')}</select></label>
       <label style="flex:0 1 150px">Date by<select id="ldk"><option value="createdAt">Date Received</option><option value="dateRequest">Date Request</option><option value="dateNeeded">Date Needed</option></select></label>
-      <label style="flex:0 1 170px">Date${dateField('ld')}</label><button id="fClear">Clear filters</button></div><div id="lt"></div>${S.user.role==='admin'?'<div class="jbar"><div class="jg"></div><div class="jg"><button id="notRec">UNRECEIVE</button><button id="delPl">DELETE</button></div></div>':''}`;
+      <label style="flex:0 1 170px">Date${dateField('ld')}</label><label style="flex:0 1 150px">Revision<select id="rvf"><option value="">All</option><option value="latest">Latest only</option><option value="old">Old only</option><option value="revised">Revised plates</option></select></label><button id="fClear">Clear filters</button></div><div id="lt"></div>${S.user.role==='admin'?'<div class="jbar"><div class="jg"></div><div class="jg"><button id="notRec">UNRECEIVE</button><button id="delPl">DELETE</button></div></div>':''}`;
   S.picked=new Set([...S.picked].filter(id=>S.plates.some(p=>p.id===id)));
   let vis=[];
   const count=()=>{
@@ -1516,11 +1540,12 @@ log(){
     const q=$('#q').value.toLowerCase();
     const fv={};document.querySelectorAll('.flt [data-f]').forEach(el=>fv[el.dataset.f]=el.value);
     const dk=$('#ldk').value,di=toIso($('#ld').value.trim());          // one specific date (mm/dd/yyyy)
-    vis=S.plates.filter(p=>(!q||F.some(([k])=>String(p[k]).toLowerCase().includes(q))||show(p.createdAt).toLowerCase().includes(q))&&Object.keys(fv).every(k=>!fv[k]||String(p[k])===fv[k])&&(!di||fmt(p[dk]).slice(0,10)===di));
+    revBuild(S.plates);const rvf=$('#rvf').value;
+    vis=S.plates.filter(p=>(!rvf||(rvf==='old'?revState(p)==='old':rvf==='latest'?revState(p)!=='old':revState(p)!==''))&&(!q||F.some(([k])=>String(p[k]).toLowerCase().includes(q))||show(p.createdAt).toLowerCase().includes(q))&&Object.keys(fv).every(k=>!fv[k]||String(p[k])===fv[k])&&(!di||fmt(p[dk]).slice(0,10)===di));
     const rkp=rkm(S.picked);
     const sk=sortKey;vis=sortRows(vis,sk?{k:sk,asc:sortAsc}:null,plateVal);        // default: newest added on top
     const so=$('#sortBy');if(so)so.value=[...so.options].some(o=>o.value===sk)?sk:'';
-    $('#lt').innerHTML=tbl(vis,'<label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="selAll" style="width:auto;margin:0"> All</label>',r=>`<input type="checkbox" data-id="${r.id}" ${S.picked.has(r.id)?'checked':''} aria-label="Select row" style="width:auto;margin:0">${rkp(r.id)}`,r=>S.picked.has(r.id),[['Date Received',r=>esc(show(r.createdAt)),'createdAt']],{k:sortKey,asc:sortAsc});
+    $('#lt').innerHTML=tbl(vis,'<label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="selAll" style="width:auto;margin:0"> All</label>',r=>`<input type="checkbox" data-id="${r.id}" ${S.picked.has(r.id)?'checked':''} aria-label="Select row" style="width:auto;margin:0">${rkp(r.id)}`,r=>S.picked.has(r.id),[['Date Received',r=>esc(show(r.createdAt)),'createdAt']],{k:sortKey,asc:sortAsc});revDone(0);
     count();
   };
   S.redraw=()=>{S.picked=new Set([...S.picked].filter(id=>S.plates.some(p=>p.id===id)));fill();draw()};
@@ -1548,7 +1573,7 @@ log(){
   $('#ldk').onchange=draw;
   $('.flt').addEventListener('input',e=>{if(e.target.id==='ld')setTimeout(draw,0)});                                   // after the date is auto-formatted
   $('.flt').addEventListener('change',e=>{if(e.target.classList.contains('pk'))setTimeout(draw,0)});                  // picked from the calendar
-  $('#fClear').onclick=()=>{$('#ld').value='';$('#ldk').value='createdAt';document.querySelectorAll('.flt [data-f]').forEach(el=>el.value='');sortKey='';sortAsc=true;$('#q').value='';draw()};
+  $('#fClear').onclick=()=>{$('#rvf').value='';$('#ld').value='';$('#ldk').value='createdAt';document.querySelectorAll('.flt [data-f]').forEach(el=>el.value='');sortKey='';sortAsc=true;$('#q').value='';draw()};
   $('#lt').onchange=e=>{
     if(e.target.id==='selAll'){vis.forEach(p=>e.target.checked?S.picked.add(p.id):S.picked.delete(p.id));return draw()}
     const id=e.target.dataset.id;if(!id)return;
