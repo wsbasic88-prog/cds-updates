@@ -214,7 +214,12 @@ body{touch-action:manipulation;padding-left:env(safe-area-inset-left);padding-ri
 #fu.has{background:#b45309;border-color:#b45309;color:#fff}#fu.has:hover{background:#92400e}#fu.has svg{animation:ring 2.4s ease-in-out infinite;transform-origin:50% 10%}
 @keyframes ring{0%,70%,100%{transform:rotate(0)}74%{transform:rotate(14deg)}80%{transform:rotate(-12deg)}86%{transform:rotate(8deg)}92%{transform:rotate(-4deg)}}
 @media(prefers-reduced-motion:reduce){#fu.has svg{animation:none}}
-#fuN{position:absolute;top:-5px;right:-5px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:var(--bad);color:#fff;font-size:11px;font-weight:600;line-height:16px;text-align:center;border:2px solid var(--ink)}
+.nb{position:absolute;top:-6px;right:-6px;min-width:19px;height:19px;padding:0 5px;box-sizing:border-box;border-radius:10px;background:linear-gradient(135deg,#ff6b6b,#e11d48);color:#fff;font:700 10.5px/15px Poppins,system-ui,sans-serif;font-style:normal;text-align:center;border:2px solid #fff;box-shadow:0 2px 6px #e11d4880;pointer-events:none;letter-spacing:0;animation:nbpulse 2.4s ease-out infinite}
+@keyframes nbpulse{0%{box-shadow:0 2px 6px #e11d4880,0 0 0 0 #e11d4866}70%,100%{box-shadow:0 2px 6px #e11d4880,0 0 0 7px #e11d4800}}
+@media(prefers-reduced-motion:reduce){.nb,#fuN,#chatBadge{animation:none!important}}
+#top button,#nav button{position:relative}
+#top .nb{top:2px;right:2px;border-color:var(--bg)}#nav .nb{top:-4px;right:-4px;border-color:var(--ink)}
+#fuN{position:absolute;top:-4px;right:-4px;min-width:18px;height:18px;padding:0 5px;box-sizing:border-box;border-radius:9px;background:linear-gradient(135deg,#ff6b6b,#e11d48);color:#fff;font-size:10.5px;font-weight:700;line-height:14px;text-align:center;border:2px solid var(--ink);box-shadow:0 2px 6px #e11d4880;pointer-events:none;animation:nbpulse 2.4s ease-out infinite}
 .hic.av{background:#fff;color:var(--ink);border-color:#fff;font-weight:600;font-size:14px;letter-spacing:.3px}
 .hic.av:hover{background:#e3eafc}
 .um{position:relative}
@@ -229,7 +234,7 @@ body{touch-action:manipulation;padding-left:env(safe-area-inset-left);padding-ri
 #chat{position:fixed;left:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));z-index:4;font-family:Poppins,system-ui,sans-serif}
 #chatFab{position:relative;width:56px;height:56px;padding:0;border-radius:50%;background:var(--ink);color:#fff;border:0;display:grid;place-items:center;box-shadow:0 6px 20px #0004}
 #chatFab:hover{background:#000}
-#chatBadge{position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;padding:0 5px;border-radius:10px;background:var(--bad);color:#fff;font-size:11px;font-weight:600;line-height:20px;text-align:center;border:2px solid var(--bg)}
+#chatBadge{position:absolute;top:-3px;right:-3px;min-width:20px;height:20px;padding:0 5px;box-sizing:border-box;border-radius:10px;background:linear-gradient(135deg,#ff6b6b,#e11d48);color:#fff;font-size:11px;font-weight:700;line-height:16px;text-align:center;border:2px solid var(--bg);box-shadow:0 2px 6px #e11d4880;pointer-events:none;animation:nbpulse 2.4s ease-out infinite}
 #chatBox{position:absolute;left:0;bottom:0;width:340px;height:min(480px,calc(100vh - 40px));display:flex;flex-direction:column;background:var(--card);border:1.5px solid var(--ink);border-radius:18px;overflow:hidden;box-shadow:0 14px 44px #0004}
 #chatBox[hidden]{display:none}
 .ch-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px 10px 16px;background:var(--ink);color:#fff}
@@ -360,6 +365,46 @@ main:has(#dashRoot){max-width:none;padding-left:clamp(12px,2vw,40px);padding-rig
 /* PDRF form + document look */
 .card.pdcard{max-width:900px;margin:auto;overflow:hidden;padding:0}
 #modal .card.pdm{width:860px;max-width:100%;padding:0}
+#modal .pdm{max-height:92vh;overflow:auto}
+/* PDRF form: print, PDF and preview share this layout */
+#printArea .pdi{font-family:Helvetica,Arial,sans-serif;color:#1b1f2a;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#printArea .pdi .s1{--ac:#17365d;--tn:#f3f6fa}#printArea .pdi .s2{--ac:#3e7cb1;--tn:#f1f6fb}#printArea .pdi .s3{--ac:#2b9a8e;--tn:#eff8f6}#printArea .pdi .s4{--ac:#17365d;--tn:#f3f6fa}
+#printArea .pdi .ph{display:flex;justify-content:space-between;align-items:center;gap:16px;background:#17365d;border-radius:6px;padding:14px 18px 14px 24px;box-shadow:inset 5px 0 0 #e5b454}
+#printArea .pdi .ph h2{margin:0;font-size:15px;font-weight:800;letter-spacing:1.8px;line-height:1.35;text-transform:uppercase;color:#fff}
+#printArea .pdi .ph h2 em{font-style:normal;color:#a9c1e3}
+#printArea .pdi .ph .no{flex:none;background:#fff;border-radius:5px;padding:7px 14px;text-align:center;min-width:150px}
+#printArea .pdi .ph .no span{display:block;font-size:7px;letter-spacing:1.6px;color:#6b7280;text-transform:uppercase;font-weight:700}
+#printArea .pdi .ph .no b{display:block;font-size:13px;letter-spacing:.8px;color:#17365d;margin-top:2px}
+#printArea .pdi .pb{display:flex;align-items:center;gap:9px;margin:18px 0 8px;font-size:9.5px;font-weight:800;letter-spacing:1.8px;text-transform:uppercase;color:#17365d}
+#printArea .pdi .pb:before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--ac)}
+#printArea .pdi .pb:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--ac),rgba(255,255,255,0));opacity:.5}
+#printArea .pdi .pg{display:grid;grid-template-columns:1fr 1fr;gap:6px 10px}#printArea .pdi .pg .full{grid-column:1/-1}
+#printArea .pdi .pc{background:var(--tn);border-radius:4px;border-left:2.6px solid var(--ac);padding:7px 10px 6px;min-height:34px;break-inside:avoid}
+#printArea .pdi .pc span{display:block;font-size:6.8px;letter-spacing:1.1px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-bottom:3px}
+#printArea .pdi .pc b{display:block;font-size:11px;font-weight:700;color:#111827;min-height:14px;word-break:break-word}#printArea .pdi .pc b.em{color:#b3bac6;font-weight:400}
+#printArea .pdi .ps{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:6px 2px 0}
+#printArea .pdi .ps p{margin:0;min-height:58px;display:flex;align-items:flex-end;justify-content:center;font-weight:700;font-size:11px;color:#111827}
+#printArea .pdi .ps div div{border-top:1.2px solid #17365d;text-align:center;font-size:7px;letter-spacing:1.1px;text-transform:uppercase;color:#6b7280;font-weight:600;padding-top:5px}
+#modal .pdm .pdi{padding:26px 40px 14px;font-family:Helvetica,Arial,sans-serif;color:#1b1f2a;background:#fff;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+#modal .pdm .pdi .s1{--ac:#17365d;--tn:#f3f6fa}#modal .pdm .pdi .s2{--ac:#3e7cb1;--tn:#f1f6fb}#modal .pdm .pdi .s3{--ac:#2b9a8e;--tn:#eff8f6}#modal .pdm .pdi .s4{--ac:#17365d;--tn:#f3f6fa}
+#modal .pdm .pdi .ph{display:flex;justify-content:space-between;align-items:center;gap:19.52px;background:#17365d;border-radius:7.32px;padding:17.08px 21.96px 17.08px 29.28px;box-shadow:inset 6.1px 0 0 #e5b454}
+#modal .pdm .pdi .ph h2{margin:0;font-size:18.3px;font-weight:800;letter-spacing:2.2px;line-height:1.35;text-transform:uppercase;color:#fff}
+#modal .pdm .pdi .ph h2 em{font-style:normal;color:#a9c1e3}
+#modal .pdm .pdi .ph .no{flex:none;background:#fff;border-radius:6.1px;padding:8.54px 17.08px;text-align:center;min-width:183px}
+#modal .pdm .pdi .ph .no span{display:block;font-size:8.54px;letter-spacing:1.95px;color:#6b7280;text-transform:uppercase;font-weight:700}
+#modal .pdm .pdi .ph .no b{display:block;font-size:15.86px;letter-spacing:.9.76px;color:#17365d;margin-top:2.44px}
+#modal .pdm .pdi .pb{display:flex;align-items:center;gap:10.98px;margin:21.96px 0 9.76px;font-size:11.59px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;color:#17365d}
+#modal .pdm .pdi .pb:before{content:"";flex:none;width:8.54px;height:8.54px;border-radius:50%;background:var(--ac)}
+#modal .pdm .pdi .pb:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--ac),rgba(255,255,255,0));opacity:.5}
+#modal .pdm .pdi .pg{display:grid;grid-template-columns:1fr 1fr;gap:7.32px 12.2px}#modal .pdm .pdi .pg .full{grid-column:1/-1}
+#modal .pdm .pdi .pc{background:var(--tn);border-radius:4.88px;border-left:3.17px solid var(--ac);padding:8.54px 12.2px 7.32px;min-height:41.48px;break-inside:avoid}
+#modal .pdm .pdi .pc span{display:block;font-size:8.3px;letter-spacing:1.34px;text-transform:uppercase;color:#6b7280;font-weight:700;margin-bottom:3.66px}
+#modal .pdm .pdi .pc b{display:block;font-size:13.42px;font-weight:700;color:#111827;min-height:17.08px;word-break:break-word}#modal .pdm .pdi .pc b.em{color:#b3bac6;font-weight:400}
+#modal .pdm .pdi .ps{display:grid;grid-template-columns:1fr 1fr;gap:53.68px;padding:7.32px 2.44px 0}
+#modal .pdm .pdi .ps p{margin:0;min-height:70.76px;display:flex;align-items:flex-end;justify-content:center;font-weight:700;font-size:13.42px;color:#111827}
+#modal .pdm .pdi .ps div div{border-top:1.46px solid #17365d;text-align:center;font-size:8.54px;letter-spacing:1.34px;text-transform:uppercase;color:#6b7280;font-weight:600;padding-top:6.1px}
+#modal .pdm{max-height:92vh;overflow:auto}#modal .pdm .pdbtns{border-top:1px solid #eceff4;margin-top:6px;padding-top:14px}
+@media(max-width:640px){#modal .pdm .pdi{padding:16px 14px 6px}#modal .pdm .pdi .pg,#modal .pdm .pdi .ps,#modal .pdm .pdi .ph{grid-template-columns:1fr;display:block}#modal .pdm .pdi .sum{grid-template-columns:1fr 1fr}#modal .pdm .pdi .ph .no{margin-top:10px}}
 .pdd{background:#fff;color:#1b1f2a;font-family:Helvetica,Arial,sans-serif}
 .pdformheading{text-align:center!important;margin:0 0 16px!important}.pdtitle{text-align:center;text-transform:uppercase;background:#17365d;color:#fff;text-align:center;font-weight:700;font-size:18px;letter-spacing:.5px;padding:13px 10px}
 .pdno{text-align:right;padding:7px 16px;font-size:13px;font-weight:700;color:#17365d}
@@ -393,25 +438,31 @@ main:has(#dashRoot){max-width:none;padding-left:clamp(12px,2vw,40px);padding-rig
 #printArea .pt tbody tr:nth-child(odd) td{background:#f5f7fa}
 #printArea .pt tfoot td{background:#eceff4;border-top:1px solid #d9dde5;font-weight:700}
 /* PDRF PRINT (premium + ink-saving): white page, fine rules, small letter-spaced labels, no filled blocks */
-#printArea .pdi{font-family:Helvetica,Arial,sans-serif;color:#1b1f2a;background:#fff}
-#printArea .pdi .ph{text-align:center;border-top:2.4px solid #1b1f2a;padding:16px 0 4px;margin:0 0 6px}
-#printArea .pdi .orn{display:flex;align-items:center;gap:9px;margin-top:13px}#printArea .pdi .orn:before,#printArea .pdi .orn:after{content:"";flex:1;height:.6px;background:#1b1f2a}#printArea .pdi .orn i{width:5px;height:5px;background:#1b1f2a;transform:rotate(45deg)}
-#printArea .pdi .ph h2{margin:0;font-size:16px;font-weight:700;letter-spacing:2.6px;line-height:1.3;text-transform:uppercase}
-#printArea .pdi .ph .no{margin-top:8px;font-size:10px;letter-spacing:1.4px;color:#4b5263;text-transform:uppercase}
-#printArea .pdi .ph .no b{color:#1b1f2a;letter-spacing:1px;margin-left:6px}
-#printArea .pdi .pb{display:flex;align-items:center;gap:12px;margin:24px 0 5px;font-size:10px;font-weight:700;letter-spacing:2.2px;text-transform:uppercase}
-#printArea .pdi .pb:after{content:"";flex:1;height:.7px;background:#1b1f2a}
-#printArea .pdi .pg{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}#printArea .pdi .pg .full{grid-column:1/-1}
-#printArea .pdi .pc{padding:9px 2px 5px;border-bottom:.5px solid #cfd4dd;min-height:36px}
-#printArea .pdi .pc span{display:block;font-size:7.5px;letter-spacing:1.1px;text-transform:uppercase;color:#6b7280;font-weight:600;margin-bottom:3px}
-#printArea .pdi .pc b{display:block;font-size:12px;font-weight:600;min-height:15px}
-#printArea .pdi .ps{display:grid;grid-template-columns:1fr 1fr;gap:56px;padding:8px 2px 0}
-#printArea .pdi .ps p{margin:0;min-height:56px;display:flex;align-items:flex-end;justify-content:center;font-weight:600;font-size:12px}
-#printArea .pdi .ps div div{border-top:.8px solid #1b1f2a;text-align:center;font-size:7.5px;letter-spacing:1.1px;text-transform:uppercase;color:#6b7280;font-weight:600;padding-top:5px}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#1b1f2a">
 <link rel="apple-touch-icon" href="icon-192.png">
+<style id="pastelBtn">
+/* Pastel buttons: color follows function. Classes are added by the small script at the bottom. */
+:root{--b-save:#CDEBD8;--b-save-t:#1F5C3A;--b-ok:#BFE8D2;--b-ok-t:#14532D;--b-view:#D6E6FA;--b-view-t:#1E4E8C;--b-edit:#FBE8B8;--b-edit-t:#7A5A12;--b-print:#E3DAF5;--b-print-t:#4B3A86;--b-ref:#CFEFF0;--b-ref-t:#1D5F63;--b-send:#FDDDC8;--b-send-t:#8A4A1F;--b-del:#F8D4D8;--b-del-t:#8E2A36;--b-neu:#E8EAF0;--b-neu-t:#4B5263}
+button.b-save,button.b-ok,button.b-view,button.b-edit,button.b-print,button.b-ref,button.b-send,button.b-del,button.b-neu{font-weight:600;transition:filter .15s,transform .05s}
+button.b-save:hover,button.b-ok:hover,button.b-view:hover,button.b-edit:hover,button.b-print:hover,button.b-ref:hover,button.b-send:hover,button.b-del:hover,button.b-neu:hover{filter:brightness(.95)}
+button.b-save:active,button.b-ok:active,button.b-view:active,button.b-edit:active,button.b-print:active,button.b-ref:active,button.b-send:active,button.b-del:active,button.b-neu:active{transform:translateY(1px)}
+button.b-save{background:var(--b-save);color:var(--b-save-t);border-color:var(--b-save-t)}
+button.b-ok{background:var(--b-ok);color:var(--b-ok-t);border-color:var(--b-ok-t)}
+button.b-view{background:var(--b-view);color:var(--b-view-t);border-color:var(--b-view-t)}
+button.b-edit{background:var(--b-edit);color:var(--b-edit-t);border-color:var(--b-edit-t)}
+button.b-print{background:var(--b-print);color:var(--b-print-t);border-color:var(--b-print-t)}
+button.b-ref{background:var(--b-ref);color:var(--b-ref-t);border-color:var(--b-ref-t)}
+button.b-send{background:var(--b-send);color:var(--b-send-t);border-color:var(--b-send-t)}
+button.b-del{background:var(--b-del);color:var(--b-del-t);border-color:var(--b-del-t)}
+button.b-neu{background:var(--b-neu);color:var(--b-neu-t);border-color:#b9bfcc}
+/* Hover effect like the dashboard cards: lifts 2px and gets a soft navy shadow. Buttons only; tabs, nav and menus keep their own look. */
+button:not(:disabled):not(nav button):not(#top button):not(#umenu button):not(header button):not(.dbsearch button):not(.pwe){transition:transform .15s ease,box-shadow .15s ease,background .15s,filter .15s}
+button:not(:disabled):not(nav button):not(#top button):not(#umenu button):not(header button):not(.dbsearch button):not(.pwe):hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(23,54,93,.16)}
+button:not(:disabled):not(nav button):not(#top button):not(#umenu button):not(header button):not(.dbsearch button):not(.pwe):active{transform:translateY(0);box-shadow:0 2px 6px rgba(23,54,93,.18)}
+button:disabled{box-shadow:none;transform:none}
+</style>
 </head>
 <body>
 
@@ -1059,7 +1110,7 @@ async function api(action,data={},quiet){
     if(!j.ok&&j.error==='busy')throw new Error('Server is busy with another save. Please wait a few seconds and try again.');
     if(!j.ok){ if(j.error==='session'){logout();throw new Error('Session expired. Please sign in again.')} throw new Error(j.error) }
     if(j.same){const cur=curOf(action);if(cur){S.at[action]=Date.now();return{ok:true,data:cur,same:true}}}     // nothing changed on the server: no download, no redraw
-    if(/^(saveProject|deleteProjects|toggleStage|setFlag|sendToLSD|addLSD|addLsdQty|cancelLsd|cancelProject|deleteLsd|toggleLsd|saveLSD)$/.test(action)){delete S.cache.jobs;S.at.jobs=0}          // Job Order change: only the Job Order list is stale
+    if(/^(saveProject|deleteProjects|toggleStage|setFlag|sendToLSD|addLSD|addLsdQty|cancelLsd|cancelProject|deleteLsd|toggleLsd|saveLSD)$/.test(action)){delete S.cache.jobs;S.at.jobs=0;S.pdList=null;S.pdAt=0}          // Job Order change: the Job Order list is stale, and so is the PDRF List (its status follows the job)
     else if(!['login','plates','orders','options','users','jobs','accountRequests','warm','pdList'].includes(action)){delete S.cache.plates;delete S.cache.orders;S.at.plates=S.at.orders=0} // Plates change: only the Plates lists are stale
     if(action==='jobs')lsdFix(j.data);
     if(action==='plates'||action==='orders'||action==='jobs'){warmSave(action,j.data);S.at[action]=Date.now();if(j.ver){S._vr=S._vr||{};S._vr[action]={ver:j.ver,ref:j.data}}}
@@ -1178,7 +1229,7 @@ const ntfIcon=k=>k==='lsd'?'LSD':'NEW';
 function ntfIn(list){                              // admin: new project / LSD notifications from the server (login + every chat check)
   if(!S.user||S.user.role!=='admin'||!Array.isArray(list))return;
   const old=new Set((S.ntf||[]).map(x=>x.i)),fresh=list.filter(x=>!old.has(x.i));
-  S.ntf=list;fuBadge();
+  S.ntf=list;markSeen(S.view);fuBadge();
   if(fresh.length&&S.ntfReady){                     // something arrived while the admin is working
     const f=fresh[fresh.length-1];toast((f.n||f.u)+': '+f.x);
     try{if(navigator.vibrate)navigator.vibrate(60)}catch(e){}
@@ -1244,12 +1295,47 @@ function drawReqs(){                                 // the approval table at th
     }
   };
 }
+const SEEN={set:null,key(){return 'seenN_'+(S.user&&S.user.username)},load(){if(this.set)return;try{this.set=new Set(JSON.parse(localStorage.getItem(this.key())||'[]'))}catch(e){this.set=new Set()}},
+  has(k){this.load();return this.set.has(k)},
+  add(ks){this.load();let c=0;ks.forEach(k=>{if(!this.set.has(k)){this.set.add(k);c++}});if(c){try{localStorage.setItem(this.key(),JSON.stringify([...this.set].slice(-600)))}catch(e){}}return c},
+  reset(){this.set=null}};
+function noteKeys(){                                  // one key per notification item, so "seen" is remembered per item (Project / LSD / Accounts)
+  const k={jp:[],jl:[],accounts:[]};if(!S.user)return k;
+  const d=S.jobs,P=(d&&d.projects)||[],L=(d&&d.lsd)||[];
+  if(S.user.role==='admin'){
+    const ok=x=>x.followUp&&x.status!=='Completed'&&x.status!=='Cancelled';
+    k.jp=P.filter(ok).map(p=>'f:'+p.id);k.jl=L.filter(ok).map(l=>'f:'+l.lsdId);k.accounts=(S.reqs||[]).map(r=>'r:'+(r.username||r.id||r.employeeNo||r.fullName));
+  }else{
+    const me=S.user.username,mine=x=>x.followBy===me&&x.followUpd;
+    k.jp=P.filter(mine).map(p=>'u:'+p.id+'|'+p.followUpd);k.jl=L.filter(mine).map(l=>'u:'+l.lsdId+'|'+l.followUpd);
+  }
+  return k;
+}
+function navCounts(){                                // numbers NOT seen yet, per place: Project Monitoring (jp), LSD Monitoring (jl), Accounts
+  const c={jp:0,jl:0,accounts:0};if(!S.user)return c;
+  const k=noteKeys();['jp','jl','accounts'].forEach(v=>{c[v]=k[v].filter(x=>!SEEN.has(x)).length});
+  if(S.user.role==='admin')(S.ntf||[]).forEach(x=>{const isL=x.k==='lsd'||(x.k==='cancel'&&/\(LSD\)/i.test(String(x.x||'')));isL?c.jl++:c.jp++});
+  return c;
+}
+function markSeen(v){                                 // the page was opened: everything it holds counts as seen and its number goes away
+  if(!S.user)return;
+  if(v==='jp'||v==='jl'||v==='accounts')SEEN.add(noteKeys()[v]);
+  ntfView(v);
+}
+function ntfView(v){                                  // admin opened Project / LSD Monitoring: its new-activity numbers are cleared (the notice was shown)
+  if(!S.user||S.user.role!=='admin'||(v!=='jp'&&v!=='jl')||!(S.ntf||[]).length)return;
+  const isL=x=>x.k==='lsd'||(x.k==='cancel'&&/\(LSD\)/i.test(String(x.x||'')));
+  const gone=S.ntf.filter(x=>v==='jl'?isL(x):!isL(x));if(!gone.length)return;
+  const g=new Set(gone.map(x=>x.i));S.ntf=S.ntf.filter(x=>!g.has(x.i));
+  api('notifSeen',{ids:[...g]},true).catch(()=>{});fuBadge();
+}
+function tabTitle(){const n=(S._fuN||0)+(S._chN||0);if(!S._t0)S._t0=document.title.replace(/^\(\d+\+?\)\s*/,'');document.title=(n?'('+(n>99?'99+':n)+') ':'')+S._t0}
 function fuBadge(){
   const b=$('#fu');if(!b)return;
   if(!S.user){b.hidden=true;return}
-  const adm=S.user.role==='admin',n=adm?fuItems(S.jobs).length+(S.reqs||[]).length+(S.ntf||[]).length:fuUpd(S.jobs).length;
+  const adm=S.user.role==='admin';markSeen(S.view);const NC0=navCounts(),n=NC0.jp+NC0.jl+NC0.accounts;
   b.hidden=false;b.classList.toggle('has',n>0);
-  const c=$('#fuN');c.hidden=!n;c.textContent=n>9?'9+':n;
+  const c=$('#fuN');c.hidden=!n;c.textContent=n>99?'99+':n;S._fuN=n;tabTitle();if(S.view&&$('#top')&&S.user){try{renderNav()}catch(e){}}
   b.title=adm?(n?`Follow up (${n})`:'Follow up'):(n?`Updates on your follow ups (${n})`:'Notifications');b.setAttribute('aria-label',b.title);
 }
 function fuPopup(list,cx,rq,nt){
@@ -1268,15 +1354,10 @@ function fuPopup(list,cx,rq,nt){
   document.addEventListener('keydown',k,true);
   $('#fuc').onclick=done;d.onclick=e=>{if(e.target===d)done()};
   const o=$('#fuo'),ac=$('#fua'),lb=$('#ful');if(o)o.onclick=()=>{done();go('jp')};if(ac)ac.onclick=()=>{done();go('accounts')};if(lb)lb.onclick=()=>{done();go('jl')};
-  if(nt.length){                                   // seen once = removed (follow ups are NOT touched: they stay until the project is done)
-    const ids=nt.map(x=>x.i),gone=new Set(ids);
-    S.ntf=(S.ntf||[]).filter(x=>!gone.has(x.i));fuBadge();
-    api('notifSeen',{ids},true).catch(()=>{});
-  }
   (ac||o||$('#fuc')).focus();
 }
 $('#fu').onclick=()=>S.user&&S.user.role==='admin'?fuPopup(fuItems(S.jobs),[],S.reqs||[],S.ntf||[]):fuUserPopup(fuUpd(S.jobs));
-function logout(){try{CHAT.stop()}catch(e){}try{if(S.user)localStorage.removeItem(warmKey())}catch(e){}S._vr={};S.bootJobs=false;S.optsDone=false;clearTimeout(idleT);idleT=null;S.cache={};S.jobs=null;S.pdList=S.pdEdit=S.pdSel=null;S.last={};try{JO.reset()}catch(e){}S.token=S.user=null;S.reqs=null;S.ntf=null;S.ntfReady=false;try{$('#fu').hidden=true}catch(e){}S.cart=[];$('#app').hidden=true;$('#login').hidden=false;$('#lp').value=''}
+function logout(){try{CHAT.stop()}catch(e){}try{if(S.user)localStorage.removeItem(warmKey())}catch(e){}S._vr={};S.bootJobs=false;S.optsDone=false;clearTimeout(idleT);idleT=null;S.cache={};S.jobs=null;S.pdList=S.pdEdit=S.pdSel=null;S.last={};try{JO.reset()}catch(e){}try{SEEN.reset()}catch(e){}S.token=S.user=null;S.reqs=null;S.ntf=null;S.ntfReady=false;try{$('#fu').hidden=true}catch(e){}S.cart=[];$('#app').hidden=true;$('#login').hidden=false;$('#lp').value=''}
 $('#out').onclick=logout;
 function applyOpts(d){
   Object.keys(d||{}).forEach(k=>{if(OPT[k]&&Array.isArray(d[k])&&d[k].length)OPT[k]=d[k]});
@@ -1315,8 +1396,9 @@ function renderNav(){
     st:[['settings','Dropdowns'],['accounts','Accounts']],
     pd:[['pdnew',(S.pdEdit&&S.view==='pdnew'?'Edit PDRF':'New PDRF')],['pdlist','PDRF List']],
     db:[['dash','Overview']]};
-  $('#top').innerHTML=[['db','DASHBOARD'],['pd','PDRF'],['jo','PROJECT'],['pl','PLATES'],...(adm?[['st','SETTINGS']]:[])].filter(([k])=>mods.includes(k)).map(([k,l])=>`<button data-m="${k}" class="${m===k?'on':''}">${l}</button>`).join('');
-  $('#nav').innerHTML=M[m].map(([k,l])=>`<button data-v="${k}" class="${S.view===k?'on':''}">${l}</button>`).join('');
+  const NC=navCounts(),nb=n=>n?`<i class="nb">${n>99?'99+':n}</i>`:'',TC={jo:NC.jp+NC.jl,st:NC.accounts};
+  $('#top').innerHTML=[['db','DASHBOARD'],['pd','PDRF'],['jo','PROJECT'],['pl','PLATES'],...(adm?[['st','SETTINGS']]:[])].filter(([k])=>mods.includes(k)).map(([k,l])=>`<button data-m="${k}" class="${m===k?'on':''}">${l}${nb(TC[k])}</button>`).join('');
+  $('#nav').innerHTML=M[m].map(([k,l])=>`<button data-v="${k}" class="${S.view===k?'on':''}">${l}${nb(NC[k])}</button>`).join('');
   $('#nav').hidden=m==='db';                         // the Dashboard has just one page, so no second menu row
 }
 $('#top').onclick=e=>{const m=e.target.dataset.m;if(m){S.pdEdit=null;go(S.last[m]||firstOf(m))}};
@@ -1324,7 +1406,7 @@ $('#nav').onclick=e=>{const v=e.target.dataset.v;if(v){if(v==='pdnew')S.pdEdit=n
 async function go(v){
   if(S.user){const mod=modOf(v),lvl=String(S.user.accountLevel||'ALL ACCESS').toUpperCase(),custom=String(S.user.customAccess||'').toUpperCase().split(/[,;| ]+/),modName={pd:'PDRF',jo:'PROJECT',pl:'PLATES'};const allowedMods=lvl==='ALL ACCESS'?['pd','jo','pl']:lvl==='PDRF ONLY'?['pd']:lvl==='PROJECT ONLY'?['jo']:lvl==='PLATES ONLY'?['pl']:lvl==='CUSTOM ACCESS'?custom.map(x=>({PDRF:'pd',PROJECT:'jo',PLATES:'pl'}[x])).filter(Boolean):['pd','jo','pl'];if(S.user.role==='admin')allowedMods.push('st');allowedMods.push('db');const allowed=allowedMods.includes(mod)||(S.user.role==='admin'&&mod==='st');if(!allowed){toast('Your account level does not allow this section.',1);const fallback=allowedMods.find(x=>x!=='st')||'pl';v=firstOf(fallback);}}
   if(v==='jnew'&&S.user&&S.user.role!=='admin')v='jp';       // New Project tab is admin only
-  const my=++S.nav;S.view=v;S.clearSel=null;S.resetSort=null;S.rowLim=0;S.last[modOf(v)]=v;renderNav();
+  const my=++S.nav;S.view=v;markSeen(v);S.clearSel=null;S.resetSort=null;S.rowLim=0;S.last[modOf(v)]=v;renderNav();
   const key={plates:'plates',log:'plates',monitor:'orders',jp:'jobs',jl:'jobs'}[v];
   const loading=()=>{$('#main').innerHTML='<p class="muted">Loading…</p>'};
   const stale=key&&(!S.cache[key]||Date.now()-(S.at[key]||0)>20000);   // data fetched in the last 20s is reused: tab switches are instant
@@ -2035,55 +2117,58 @@ const PD=(()=>{
     return `<div class="pdd"><div class="pdtitle">PACKAGING DEVELOPMENT REQUEST FORM (PDRF)</div><div class="pdno">PDRF No: ${esc(r.pdrfNo)}</div>${SECT.map(([a,n],i)=>`<div class="pdband">${n}</div>${sec('ABCD'[i])}`).join('')}</div>`;
   }
   const pdVal=(r,[k,,t])=>t==='client'?ccFull(r[k]):t==='type'?pdrfItemTypeLabel(r.itemType):t==='date'?show(r[k]):t==='dt'?dtShow(r[k]):t==='money'?money(r[k]):t==='num'?numTxt(r[k]):String(r[k]==null?'':r[k]);
-  function docPrintHtml(r){                                  // premium, ink-saving print layout (fine rules only, no filled blocks)
+  const pdfld=k=>FL.find(f=>f[0]===k);
+  function docPrintHtml(r){                                  // refined layout, shared by Print, PDF and the VIEW preview
+    const val=f=>{const v=pdVal(r,f);return String(v||'').trim()?`<b>${esc(v)}</b>`:'<b class="em">—</b>'};
     const sec=a=>a==='D'
       ?`<div class="ps"><div><p>${esc(r.customerSign)}</p><div>Name and Signature / Customer</div></div><div><p>${esc(r.wipiSign)}</p><div>Name and Signature / WIPI</div></div></div>`
-      :`<div class="pg">${FL.filter(f=>f[3]===a).map(f=>`<div class="pc ${f[4]?'full':''}"><span>${esc(f[1])}</span><b>${esc(pdVal(r,f))||'&nbsp;'}</b></div>`).join('')}</div>`;
-    return `<div class="pdi"><div class="ph"><h2>Packaging Development Request Form (PDRF)</h2><div class="no">PDRF No.<b>${esc(r.pdrfNo)}</b></div><div class="orn"><i></i></div></div>${SECT.map(([a,n],i)=>`<div class="pb">${n}</div>${sec('ABCD'[i])}`).join('')}</div>`;
+      :`<div class="pg">${FL.filter(f=>f[3]===a).map(f=>`<div class="pc ${f[4]?'full':''}"><span>${esc(f[1])}</span>${val(f)}</div>`).join('')}</div>`;
+    return `<div class="pdi"><div class="ph"><div><h2>Packaging Development<br><em>Request Form</em></h2></div><div class="no"><span>PDRF No.</span><b>${esc(r.pdrfNo)}</b></div></div>${SECT.map(([a,n],i)=>`<div class="pb s${i+1}">${n}</div>${sec('ABCD'[i]).replace('class="pg"','class="pg s'+(i+1)+'"')}`).join('')}</div>`;
   }
-  function pdrfPdf(r){                                       // downloadable PDF, same premium ink-saving look as the print
+  function pdrfPdf(r){                                       // downloadable PDF, same layout as the print and the preview
     try{
       const J=window.jspdf;if(!J||!J.jsPDF)throw new Error('PDF tool did not load. Reload the page and try again.');
       const doc=new J.jsPDF({orientation:'portrait',unit:'mm',format:'a4'}),W=doc.internal.pageSize.getWidth(),H=doc.internal.pageSize.getHeight();
-      const s=v=>pdfSafe(String(v==null?'':v).replace(/\u20B1/g,'PHP')),INK=[27,31,42],HAIR=[207,212,221],MUTE=[107,114,128],L=14,R=W-14,CW=R-L,colW=(CW-9)/2;
-      // title block: heavy rule on top, fine rule below
-      doc.setDrawColor(...INK);doc.setLineWidth(.8);doc.line(L,12,R,12);
-      doc.setFont('helvetica','bold');doc.setFontSize(13.5);doc.setTextColor(...INK);doc.text('PACKAGING DEVELOPMENT REQUEST FORM (PDRF)',W/2,21,{align:'center'});
-      doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(75,82,99);
-      const lab='PDRF NO.  ',num=s(r.pdrfNo||''),w1=doc.getTextWidth(lab);doc.setFont('helvetica','bold');const w2=doc.getTextWidth(num);
-      const x0=W/2-(w1+w2)/2;doc.setFont('helvetica','normal');doc.text(lab,x0,27.5);doc.setFont('helvetica','bold');doc.setTextColor(...INK);doc.text(num,x0+w1,27.5);
-      doc.setDrawColor(...INK);doc.setLineWidth(.2);doc.line(L,33,W/2-4,33);doc.line(W/2+4,33,R,33);doc.setFillColor(...INK);doc.lines([[1.3,1.3],[-1.3,1.3],[-1.3,-1.3],[1.3,-1.3]],W/2,33-1.3,[1,1],'F',true);
-      let y=35;
-      const room=h=>{if(y+h>H-16){doc.addPage();y=16}};
-      const band=(n,name)=>{room(16);y+=8;doc.setFont('helvetica','bold');doc.setFontSize(9);doc.setTextColor(...INK);const t=s(name).toUpperCase();doc.text(t,L,y,{charSpace:.5});
-        const tw=doc.getTextWidth(t)+t.length*.5;doc.setDrawColor(...INK);doc.setLineWidth(.3);doc.line(L+tw+4,y-1.1,R,y-1.1);y+=3};
+      const s=v=>pdfSafe(String(v==null?'':v).replace(/\u20B1/g,'PHP')),NAVY=[23,54,93],INK=[27,31,42],TINT=[246,248,251],MUTE=[107,114,128],L=14,R=W-14,CW=R-L,GAP=5,colW=(CW-GAP)/2;
+      // header: navy block with a gold edge, white title, white PDRF No. badge
+      const AMB=[229,180,84],SOFT=[169,193,227],ACC=[NAVY,[62,124,177],[43,154,142],NAVY],TN=[[243,246,250],[241,246,251],[239,248,246],[243,246,250]],tint=(c,k)=>c.map(v=>Math.round(v+(255-v)*k));
+      doc.setFillColor(...AMB);doc.roundedRect(L,10,CW,24,2,2,'F');doc.setFillColor(...NAVY);doc.roundedRect(L+1.6,10,CW-1.6,24,2,2,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(13.5);doc.setTextColor(255,255,255);doc.text('PACKAGING DEVELOPMENT',L+9,20.6,{charSpace:.45});doc.setTextColor(...SOFT);doc.text('REQUEST FORM',L+9,27.2,{charSpace:.45});
+      const bw=52,bh=15,bx=R-bw-7,by=14.5;doc.setFillColor(255,255,255);doc.roundedRect(bx,by,bw,bh,1.8,1.8,'F');
+      doc.setFont('helvetica','bold');doc.setFontSize(6);doc.setTextColor(...MUTE);doc.text('PDRF NO.',bx+bw/2,by+5,{align:'center',charSpace:.5});
+      doc.setFontSize(11.5);doc.setTextColor(...NAVY);doc.text(s(r.pdrfNo||''),bx+bw/2,by+11.6,{align:'center'});
+      let y=34,cur=0;
+      const room=n=>{if(y+n>H-12){doc.addPage();y=16}};
+      const band=(n,name)=>{room(22);y+=8;cur=n-1;const ac=ACC[cur];
+        doc.setFillColor(...ac);doc.circle(L+1.3,y-1.3,1.3,'F');
+        doc.setFont('helvetica','bold');
+        doc.setFontSize(8.8);doc.setTextColor(...NAVY);const t=s(name).toUpperCase();doc.text(t,L+5,y-.2,{charSpace:.6});
+        const tw=doc.getTextWidth(t)+t.length*.6;doc.setDrawColor(...tint(ac,.55));doc.setLineWidth(.3);doc.line(L+5+tw+4,y-1.4,R,y-1.4);y+=3.8};
       const drawRow=cells=>{
-        const prep=cells.map(c=>{doc.setFont('helvetica','bold');doc.setFontSize(9.5);return {...c,lines:doc.splitTextToSize(s(pdVal(r,c.f)),c.w-1)}});
-        const h=Math.max(...prep.map(c=>Math.max(1,c.lines.length)))*4.2+8;room(h);
-        prep.forEach(c=>{doc.setFont('helvetica','bold');doc.setFontSize(6.2);doc.setTextColor(...MUTE);doc.text(s(c.f[1]).toUpperCase(),c.x,y+4.2,{charSpace:.25});
-          doc.setFontSize(9.5);doc.setTextColor(...INK);c.lines.forEach((ln,i)=>doc.text(ln,c.x,y+8.6+i*4.2));
-          doc.setDrawColor(...HAIR);doc.setLineWidth(.15);doc.line(c.x,y+h-.8,c.x+c.w,y+h-.8)});
-        y+=h;
+        const prep=cells.map(c=>{doc.setFont('helvetica','bold');doc.setFontSize(9.3);const t=s(pdVal(r,c.f)).trim();return {...c,t,lines:doc.splitTextToSize(t||'-',c.w-8)}});
+        const h=Math.max(...prep.map(c=>c.lines.length))*4.1+7.8;room(h+2);
+        prep.forEach(c=>{doc.setFillColor(...TN[cur]);doc.roundedRect(c.x,y,c.w,h,1.2,1.2,'F');doc.setFillColor(...ACC[cur]);doc.rect(c.x,y+.4,.9,h-.8,'F');
+          doc.setFont('helvetica','bold');doc.setFontSize(5.8);doc.setTextColor(...MUTE);doc.text(s(c.f[1]).toUpperCase(),c.x+4,y+4.1,{charSpace:.3});
+          doc.setFontSize(9.3);doc.setTextColor(...(c.t?[17,24,39]:[179,186,198]));c.lines.forEach((ln,i)=>doc.text(ln,c.x+4,y+8+i*4.1))});
+        y+=h+1.8;
       };
       SECT.forEach(([,name],i)=>{
         const a='ABCD'[i];band(i+1,name);
         if(a==='D'){
-          room(34);y+=18;
-          [['customerSign','Name and Signature / Customer',L],['wipiSign','Name and Signature / WIPI',L+colW+9]].forEach(([k,l,x])=>{
+          room(24);y+=13;
+          [['customerSign','Name and Signature / Customer',L],['wipiSign','Name and Signature / WIPI',L+colW+GAP]].forEach(([k,l,x])=>{
             doc.setFont('helvetica','bold');doc.setFontSize(10);doc.setTextColor(...INK);doc.text(s(r[k]),x+colW/2,y-2,{align:'center'});
-            doc.setDrawColor(...INK);doc.setLineWidth(.3);doc.line(x,y,x+colW,y);
-            doc.setFontSize(6.2);doc.setTextColor(...MUTE);doc.text(s(l).toUpperCase(),x+colW/2,y+4.5,{align:'center'})});
+            doc.setDrawColor(...NAVY);doc.setLineWidth(.4);doc.line(x,y,x+colW,y);
+            doc.setFontSize(5.8);doc.setTextColor(...MUTE);doc.text(s(l).toUpperCase(),x+colW/2,y+4.4,{align:'center',charSpace:.3})});
           y+=8;return;
         }
         let pend=null;
         FL.filter(f=>f[3]===a).forEach(f=>{
           if(f[4]){if(pend){drawRow([{f:pend,x:L,w:colW}]);pend=null}drawRow([{f,x:L,w:CW}]);return}
-          if(pend){drawRow([{f:pend,x:L,w:colW},{f,x:L+colW+9,w:colW}]);pend=null}else pend=f;
+          if(pend){drawRow([{f:pend,x:L,w:colW},{f,x:L+colW+GAP,w:colW}]);pend=null}else pend=f;
         });
         if(pend)drawRow([{f:pend,x:L,w:colW}]);
       });
-      const np=doc.getNumberOfPages();
-      for(let i=1;i<=np;i++){doc.setPage(i);doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(139,146,163);doc.text('Page '+i+' of '+np,R,H-8,{align:'right'});doc.text(s('PDRF '+(r.pdrfNo||'')),L,H-8)}
       doc.save('PDRF_'+String(r.pdrfNo||'form').replace(/[^\w\-]+/g,'')+'_'+new Date().toISOString().slice(0,10)+'.pdf');
       toast('PDF downloaded.');
     }catch(e){toast(e.message||'Could not create the PDF.',1)}
@@ -2102,7 +2187,7 @@ const PD=(()=>{
   }
   function openView(r){
     const m=$('#modal');
-    m.innerHTML=`<div class="card pdm">${docHtml(r)}<div class="pdbtns"><button id="pvp">PRINT</button><button class="pri" id="pvc">Close</button></div></div>`;
+    m.innerHTML=`<div class="card pdm">${docPrintHtml(r)}<div class="pdbtns"><button id="pvp">PRINT</button><button class="pri" id="pvc">Close</button></div></div>`;
     m.hidden=false;$('#pvc').onclick=()=>m.hidden=true;$('#pvp').onclick=()=>printOrPdf(r);
   }
 
@@ -2130,7 +2215,9 @@ const PD=(()=>{
       if(adm&&e.target.id==='pdall'){const on=e.target.checked;vis.forEach(r=>on?MS.add(r.id):MS.delete(r.id));draw();return}
       if(adm&&e.target.classList.contains('pdck')){const tr=e.target.closest('tr[data-i]'),id=vis[tr.dataset.i].id;e.target.checked?MS.add(id):MS.delete(id);tr.classList.toggle('on',MS.has(id)||id===S.pdSel);dbtn();const a=$('#pdall');if(a)a.checked=vis.length>0&&vis.every(r=>MS.has(r.id));return}
       const th=e.target.closest('th[data-k]');if(th){const k=th.dataset.k,s=S.pdSort||{k:'',asc:true};S.pdSort=s.k===k?{k,asc:!s.asc}:{k,asc:true};return draw()}
-      const tr=e.target.closest('tbody tr[data-i]');if(!tr)return;S.pdSel=vis[tr.dataset.i].id;$('#pdtb').querySelectorAll('tr').forEach(r=>r.classList.toggle('on',r===tr));
+      const tr=e.target.closest('tbody tr[data-i]');if(!tr)return;const rid=vis[tr.dataset.i].id;
+      if(S.pdSel===rid&&!MS.size){S.pdSel=null}else{S.pdSel=rid;MS.clear();const a=$('#pdall');if(a)a.checked=false;dbtn()}      // a click selects just this row, no tick needed
+      $('#pdtb').querySelectorAll('tbody tr[data-i]').forEach(r=>{r.classList.toggle('on',vis[r.dataset.i].id===S.pdSel);const c=r.querySelector('.pdck');if(c)c.checked=false});
     };
     $('#pdtb').ondblclick=e=>{const tr=e.target.closest('tbody tr[data-i]');if(tr)openView(vis[tr.dataset.i])};
     let t;$('#pdq').oninput=()=>{clearTimeout(t);t=setTimeout(draw,150)};$('#pdft').onchange=draw;$('#pdsample').onchange=draw;
@@ -2202,13 +2289,13 @@ const DASH=(()=>{
   /* ---- PDRF ---- */
   function pdr(){
     const L=S.pdList,t=todayStr(),st=r=>String(r.status||'ACTIVE').toUpperCase();
-    const act=L.filter(r=>st(r)==='ACTIVE'),inp=L.filter(r=>st(r)==='IN PROGRESS'),can=L.filter(r=>st(r)==='CANCELLED'),live=L.filter(r=>st(r)!=='CANCELLED');
-    const oth=L.length-act.length-inp.length-can.length,cost=live.reduce((a,r)=>a+num(r.targetCost),0);
+    const act=L.filter(r=>st(r)==='ACTIVE'),inp=L.filter(r=>st(r)==='IN PROGRESS'),cmp=L.filter(r=>st(r)==='COMPLETED'),can=L.filter(r=>st(r)==='CANCELLED'),live=L.filter(r=>st(r)!=='CANCELLED');
+    const oth=L.length-act.length-inp.length-cmp.length-can.length,cost=live.reduce((a,r)=>a+num(r.targetCost),0);
     const up=live.filter(r=>{const d=ymd(r.targetLaunch);return d&&d>=t&&d<=addDays(30)}).sort((a,b)=>ymd(a.targetLaunch).localeCompare(ymd(b.targetLaunch)));
     const late=live.filter(r=>{const d=ymd(r.targetLaunch);return d&&d<t&&st(r)==='ACTIVE'});
-    const parts=[{label:'Active (no project yet)',value:act.length,color:COL.blue},{label:'In progress',value:inp.length,color:COL.green},{label:'Cancelled',value:can.length,color:COL.grey}];
+    const parts=[{label:'Active (no project yet)',value:act.length,color:COL.blue},{label:'In progress',value:inp.length,color:COL.green},{label:'Completed',value:cmp.length,color:COL.teal},{label:'Cancelled',value:can.length,color:COL.grey}];
     if(oth>0)parts.push({label:'Other',value:oth,color:COL.amber});
-    const kp=tile('Total PDRFs',n0(L.length),`${n0(can.length)} cancelled`,COL.navy,'pdlist')+tile('Active',n0(act.length),'waiting for a project',COL.blue,'pdlist')+tile('In progress',n0(inp.length),'linked to a project',COL.green,'pdlist')
+    const kp=tile('Total PDRFs',n0(L.length),`${n0(can.length)} cancelled`,COL.navy,'pdlist')+tile('Active',n0(act.length),'waiting for a project',COL.blue,'pdlist')+tile('In progress',n0(inp.length),'project or LSD not completed',COL.green,'pdlist')+tile('Completed',n0(cmp.length),'project / LSD done',COL.teal,'pdlist')
       +tile('Target cost',cost?'₱ '+n0(cost):'—','all PDRFs that are not cancelled',COL.teal,'pdlist')+tile('Past target launch',n0(late.length),'still active, not started',late.length?COL.red:COL.grey,'pdlist');
     const cds=card('PDRF status',donut(parts,n0(L.length),'PDRFs'))
       +card('Requests per month (last 6 months)',cols(byMonth(L,r=>r.requestDate),COL.navy))
@@ -2460,6 +2547,7 @@ const JO=(()=>{
   function render(){
     const main=$('#main');if(!main||!S.user)return;
     if(J.seen!==S.view){J.sel.clear();J.seen=S.view}
+    if(J.pre&&isLsd()){const hit=L().filter(l=>J.pre.has(String(l.projectId)));if(hit.length){hit.forEach(l=>J.sel.add(String(l.lsdId)));J.pre=null}}      // rows just sent from Project Monitoring are shown selected
     const lsd=isLsd(),a=adm(),ST=lsd?LST:PST;
     main.innerHTML=`<div id="joRoot"><h2>${lsd?'LSD':'Project'} Monitoring</h2>
     <div class="jstats" id="jstats"></div>
@@ -2467,7 +2555,7 @@ const JO=(()=>{
     <div class="card tw"><table><thead><tr><th data-sk="dateRequest">Requested / Needed</th><th data-sk="companyCode">Company / Year</th><th data-sk="projectName">Project name</th><th data-sk="pdrfNo">PDRF No.</th><th data-sk="category">Category / Size</th><th data-sk="kind">Kind / Qty</th><th data-sk="artist">Artist / Prepared by</th><th data-sk="${lsd?'lsdQty':'layeredFile'}">${lsd?'LSD Qty':'Layered file'}</th>
     ${a?ST.map((s,i)=>`<th class="stc" data-sk="${lsd?'l':'s'}${i+1}">${esc(s)}</th>`).join(''):'<th data-sk="_prog">Progress</th>'}<th data-sk="_s">Status</th><th data-sk="result">Result</th><th data-sk="remarks">Remarks</th><th><label style="display:flex;gap:6px;align-items:center;margin:0"><input type="checkbox" id="jall" style="width:auto;margin:0"> All</label></th></tr></thead><tbody id="jbody"></tbody></table></div>
     <div class="jbar">${a?(lsd?`<div class="jg"><button data-a="print">PRINT</button><button data-a="cancelU">CANCEL</button></div><div class="jg"><button data-a="view">VIEW</button><button data-a="lsdEdit">EDIT</button><button data-a="delL">DELETE</button></div>`:`<div class="jg"><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button><button data-a="cancelU">CANCEL</button></div><div class="jg"><button data-a="add">ADD</button><button data-a="view">VIEW</button><button data-a="edit">EDIT</button><button data-a="del">DELETE</button></div>`)
-     :(lsd?`<div class="jg"><button data-a="more">ADDITIONAL LSD</button><button data-a="follow">FOLLOW UP</button><button data-a="print">PRINT</button></div>`:`<div class="jg"><button data-a="follow">FOLLOW UP</button><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="add">NEW</button><button data-a="custom">CUSTOMIZED</button><button data-a="cancelU">CANCEL</button></div>`)}</div></div>`;
+     :(lsd?`<div class="jg"><button data-a="more">ADDITIONAL LSD</button><button data-a="follow">FOLLOW UP</button><button data-a="print">PRINT</button></div><div class="jg" style="margin-left:auto"><button data-a="cancelU">CANCEL</button></div>`:`<div class="jg"><button data-a="follow">FOLLOW UP</button><button data-a="toLsd">FOR LSD</button><button data-a="print">PRINT</button></div><div class="jg"><button data-a="add">NEW</button><button data-a="custom">CUSTOMIZED</button><button data-a="cancelU">CANCEL</button></div>`)}</div></div>`;
     fillFilters();
     let tm;const sq=$('#jsq');
     sq.oninput=()=>{clearTimeout(tm);tm=setTimeout(()=>{J.q=sq.value;paint()},150)};      // only the rows are redrawn while typing
@@ -2658,7 +2746,9 @@ const JO=(()=>{
         if(!fresh.length){await notice(dup.length===1?`\"${dup[0].projectName||'This project'}\" is already in LSD Monitoring.\nJust click ADDITIONAL LSD to add more quantity.`:`These ${dup.length} projects are already in LSD Monitoring.\nJust click ADDITIONAL LSD to add more quantity.`,'Already in LSD');return}
         if(!(await ask(`Are you sure you want to request ${fresh.length>1?fresh.length+' projects':'it'} for LSD?`,'Yes, request')))return;
         const j=await api('sendToLSD',{ids:fresh.map(p=>p.id)});J.sel.clear();
-        toast((j.done?j.done+' project(s) sent to LSD.':'Already sent to LSD.')+(dup.length?` ${dup.length} skipped (already in LSD).`:''),!j.done);await refresh()}
+        toast((j.done?j.done+' project(s) sent to LSD.':'Already sent to LSD.')+(dup.length?` ${dup.length} skipped (already in LSD).`:''),!j.done);
+        if(j.done&&!lsd){const fid=new Set(fresh.map(p=>String(p.id)));S.pdList=null;S.pdAt=0;J.pre=fid;await go('jl');return}   // show LSD Monitoring so the request can be seen there
+        await refresh()}
       if(a==='follow'){                                  // FOLLOW UP: flag / unflag the selected projects (Project page) or LSD items (LSD page)
         if(!many())return;
         const sel=lsd?ids().map(i=>L().find(x=>String(x.lsdId)===i)).filter(Boolean):ids().map(i=>pmOf(i)).filter(p=>p.id);
@@ -2670,7 +2760,6 @@ const JO=(()=>{
         sel.forEach(r=>{r.followUp=on?'1':'';r.followBy=on?S.user.username:'';r.followUpd=''});touch();save2cache();toast(on?'Marked for follow up.':'Follow up removed.');paint()}
       if(a==='print')return printSel();
       if(a==='more'){const id=one();if(id)return lsdQtyForm(id)}
-      if(a==='cancelU'&&lsd&&!adm())return toast('Admin access only.',1);
       if(a==='cancelU'&&!lsd){                          // user: cancel the selected project(s) in Project Monitoring; the admin sees them as cancelled and can restore (edit + save) or delete them
         if(!many())return;
         const sel=ids().map(i=>pmOf(i)).filter(p=>p.id&&p.status!=='Cancelled');
@@ -2683,7 +2772,7 @@ const JO=(()=>{
         if(!many())return;
         const sel=ids().map(i=>L().find(x=>String(x.lsdId)===i)).filter(l=>l&&l.status!=='Cancelled');
         if(!sel.length)return toast('Those LSD items are already cancelled.',1);
-        if(!(await askCancel(`${sel.length} LSD item(s) will be cancelled.\n${adm()?'They stay in the list marked CANCELLED and are not counted in the total.':'The admin will see them as cancelled.'}`)))return;
+        if(!(await askCancel(`${sel.length} LSD item(s) will be cancelled.\n${adm()?'They stay in the list marked CANCELLED and are not counted in the total.':'The admin will see them as CANCELLED and decide whether to delete them.'}`)))return;
         for(const l of sel){await api('cancelLsd',{id:l.lsdId});l.status='Cancelled';jfin(l,true,pmOf(l.projectId).dateNeeded)}
         J.sel.clear();save2cache();toast('Cancelled.');paint();
       }
@@ -2990,7 +3079,7 @@ const CHAT=(()=>{
   }
   const nearEnd=()=>{const l=$c('#chatList');return l.scrollHeight-l.scrollTop-l.clientHeight<60};
   const scrollEnd=()=>{const l=$c('#chatList');l.scrollTop=l.scrollHeight};
-  function drawBadge(){const b=$c('#chatBadge');b.hidden=!unread;b.textContent=unread>9?'9+':unread}
+  function drawBadge(){const b=$c('#chatBadge');b.hidden=!unread;b.textContent=unread>99?'99+':unread;S._chN=unread;tabTitle()}
   function drawOnline(){
     const on=online.some(o=>o.u===me())?online:[{u:me(),n:'You'}].concat(online);
     const names=on.map(o=>o.u===me()?'You':o.n);
@@ -3296,5 +3385,36 @@ document.addEventListener('keydown',e=>{
 })();
 </script>
 <script id="pwaReg">if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol))window.addEventListener('load',()=>{navigator.serviceWorker.register('sw.js').catch(()=>{})});</script>
+<script id="pastelBtnJs">
+/* Gives each button its pastel class from its label. Also covers buttons the app draws later. */
+(function(){
+  var MAP={
+    save:['SAVE','SAVE CHANGES','UPDATE','ADD','NEW','ADD ITEM','ADD QTY','ADD TO ORDER','SUBMIT','SEND','SEND REQUEST','SIGN IN','CREATE ACCOUNT','OK'],
+    ok:['APPROVE','RECEIVED'],
+    view:['VIEW','OPEN PROJECT MONITORING','OPEN LSD MONITORING','REVIEW ACCOUNT REQUESTS','SHOW MORE'],
+    edit:['EDIT','EDIT DETAILS','CUSTOMIZE','CUSTOMIZED','RESET PASSWORD'],
+    print:['PRINT','PRINT PENDING','PRINT ONLY','DOWNLOAD PDF'],
+    ref:['REFRESH','RELOAD PAGE','CLEAR FILTERS'],
+    send:['FOR LSD','FOR PROJECT','FOLLOW UP','ADDITIONAL LSD'],
+    del:['DELETE','REJECT','UNRECEIVE'],
+    neu:['CANCEL','CLOSE','BACK TO SIGN IN','CLEAR','CLEAR CHAT','NO','MARK AS READ']
+  },LOOK={};
+  Object.keys(MAP).forEach(function(k){MAP[k].forEach(function(l){LOOK[l]=k})});
+  var SKIP='nav,#top,#umenu,header,.dbsearch,.pwe,.bi-only';
+  function tag(root){
+    (root||document).querySelectorAll('button:not([data-pb])').forEach(function(b){
+      if(b.closest(SKIP))return;
+      var t=(b.textContent||'').replace(/\s+/g,' ').trim().toUpperCase().replace(/\s*\(.*\)$/,'');
+      var k=LOOK[t]||(t.indexOf('SHOW MORE')===0?'view':'');
+      b.setAttribute('data-pb',k||'-');
+      if(k)b.classList.add('b-'+k);
+    });
+  }
+  var q=0;
+  function soon(){if(q)return;q=requestAnimationFrame(function(){q=0;tag()})}
+  function start(){tag();new MutationObserver(soon).observe(document.body,{childList:true,subtree:true,characterData:true})}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+})();
+</script>
 </body>
 </html>
